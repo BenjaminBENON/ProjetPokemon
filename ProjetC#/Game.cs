@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 
 public enum State
@@ -21,6 +23,12 @@ public class Game
     public Game()
     {
         currentState = State.GameMenu;
+        GameMenu.OnEnterGameMenu();
+    }
+
+    public void SetState(State state)
+    {
+        currentState = state;
     }
 
     public void Start()
@@ -28,7 +36,7 @@ public class Game
         switch (currentState)
         {
             case State.GameMenu:
-                DisplayMenu();
+                GameMenu.SelectChoice(this);
                 break;
             case State.OnMap:
                 StartMap();
@@ -42,28 +50,6 @@ public class Game
         }
     }
 
-    private void DisplayMenu()
-    {
-        Console.WriteLine("=== MENU ===");
-        Console.WriteLine("1. Jouer");
-        Console.WriteLine("2. Quitter");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        switch (choice)
-        {
-            case "1":
-                currentState = State.OnMap;
-                break;
-            case "2":
-                Environment.Exit(0);
-                break;
-            default:
-                Console.WriteLine("Choix invalide.");
-                break;
-        }
-    }
 
     private void StartMap()
     {
@@ -81,6 +67,8 @@ public class Game
                 break;
             case "2":
                 currentState = State.GameMenu;
+                Console.Clear();
+                GameMenu.OnEnterGameMenu();
                 break;
             default:
                 Console.WriteLine("Choix invalide.");
