@@ -31,7 +31,7 @@ public class Game
         currentState = state;
     }
 
-    public void Start()
+    public void Play()
     {
         switch (currentState)
         {
@@ -39,39 +39,13 @@ public class Game
                 GameMenu.SelectChoice(this);
                 break;
             case State.OnMap:
-                StartMap();
+                MapManager.SwitchFromMap(this);
                 break;
             case State.OnFight:
                 StartFight();
                 break;
             default:
                 Console.WriteLine("État du jeu non géré.");
-                break;
-        }
-    }
-
-
-    private void StartMap()
-    {
-        Console.WriteLine("Vous êtes sur la carte.");
-        Console.WriteLine("1. Combattre");
-        Console.WriteLine("2. Retourner au menu");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        switch (choice)
-        {
-            case "1":
-                currentState = State.OnFight;
-                break;
-            case "2":
-                currentState = State.GameMenu;
-                Console.Clear();
-                GameMenu.OnEnterGameMenu();
-                break;
-            default:
-                Console.WriteLine("Choix invalide.");
                 break;
         }
     }
@@ -83,6 +57,8 @@ public class Game
         Console.WriteLine("Combat terminé.");
 
         currentState = State.OnMap;
+        //Console.Clear();
+        MapManager.OnEnterMap();
     }
 }
 

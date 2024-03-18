@@ -7,7 +7,7 @@ class Program
         Game game = new Game();
         while (true)
         {
-            game.Start();
+            game.Play();
         }
     }
 }

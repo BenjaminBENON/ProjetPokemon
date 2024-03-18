@@ -67,6 +67,7 @@ internal class GameMenu
             case "1":
                 oGame.SetState(State.OnMap);
                 Console.Clear();
+                MapManager.OnEnterMap();
                 break;
             case "2":
                 Environment.Exit(0);
