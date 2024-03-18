@@ -13,10 +13,11 @@ internal class GameMenu
     }
     private static void DisplayMenu()
     {
-        string textMenu = "=== MENU ===";
-
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
+
+        //texte MENU
+        string textMenu = "=== MENU ===";
         int xPosition = (windowWidth - textMenu.Length) / 2;
         Console.SetCursorPosition(xPosition, 3);
         Console.WriteLine("|" + textMenu + "|");
@@ -25,25 +26,39 @@ internal class GameMenu
         Console.SetCursorPosition(xPosition + 1, 4);
         Console.WriteLine("------------");
 
-        //Console.Write("Choix : ");
-        //string choice = Console.ReadLine();
+        //texte JOUER
+        string textJeu = "=== PLAY ===";
+        Console.SetCursorPosition(windowWidth/3 - 10 , 18);
+        Console.WriteLine("|  " + textJeu + "  |");
+        Console.SetCursorPosition(windowWidth / 3 - 10 , 17);
+        Console.WriteLine("|                |");
+        Console.SetCursorPosition(windowWidth / 3 - 10 , 16);
+        Console.WriteLine("------------------");
+        Console.SetCursorPosition(windowWidth / 3 - 10 , 19);
+        Console.WriteLine("|                |");
+        Console.SetCursorPosition(windowWidth / 3 - 10 , 20);
+        Console.WriteLine("------------------");
 
-        //switch (choice)
-        //{
-        //    case "1":
-        //        currentState = State.OnMap;
-        //        break;
-        //    case "2":
-        //        Environment.Exit(0);
-        //        break;
-        //    default:
-        //        Console.WriteLine("Choix invalide.");
-        //        break;
-        //}
+        //texte Quitter
+        string textOut = "=== QUIT ===";
+        Console.SetCursorPosition(2 * windowWidth / 3, 18);
+        Console.WriteLine("|  " + textOut + "  |");
+        Console.SetCursorPosition(2 * windowWidth / 3, 17);
+        Console.WriteLine("|                |");
+        Console.SetCursorPosition(2 * windowWidth / 3, 16);
+        Console.WriteLine("------------------");
+        Console.SetCursorPosition(2 * windowWidth / 3, 19);
+        Console.WriteLine("|                |");
+        Console.SetCursorPosition(2 * windowWidth / 3, 20);
+        Console.WriteLine("------------------");
     }
 
     public static void SelectChoice(Game oGame)
     {
+        Console.SetCursorPosition(0, 0);
+        Console.WriteLine("1. Jouer");
+        Console.WriteLine("2. Quitter");
+
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
