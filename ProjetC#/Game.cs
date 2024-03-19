@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using ProjetC_;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 
 public enum GameMenuStates
@@ -28,45 +29,16 @@ public enum GameMenuStates
     Save_AddMenu, // Menu to add a party
 
     // Play Button Redirect on Character Creation if no character in save 
-    Game_CharacterCreationMenu,
+    CharacterCreationMenu,
 
-
+    ShutDown //Fin du jeu pour quitter la fenêtre
 
 }
 
-// HUD Part, Can be draw in same time
 
 public class Game
-{
-    private struct StartMenuLabels
-    {
-        public string PlayText;
-        public string GameManagementText;
-        public string LeaveText;
-
-        public StartMenuLabels()
-        {
-            // si déja une partie, texte -> "Continuer la partie actuelle / Jouer"
-            PlayText = "Commencer le jeu";
-            // si déja une partie, texte -> "Gérer les sauvegardes"
-            GameManagementText = "Créer une partie";
-            LeaveText = "Quitter le jeu";
-        }
-    }
-
-    private struct OnMapLabels
-    {
-        public string FightText;
-        public string LeaveText;
-
-        // Constructeur explicite pour initialiser les champs avec des valeurs par défaut
-        public OnMapLabels()
-        {
-            FightText = "Combattre";
-            LeaveText = "Quitter le monde ouvert";
-        }
-    }
-
+{ 
+    //---------------------------LES CHAMPS------------------------
 
     // Game Data One part will be in the save
     private GameMenuStates currentGameState;
@@ -74,6 +46,9 @@ public class Game
     private Character botCharacter;
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
+
+
+    //---------------------------LES METHODES-----------------------
 
     public Game()
     {
@@ -90,8 +65,8 @@ public class Game
             // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
 
             // Game Menus
-            { GameMenuStates.InGameMenu, Display_StartMenu },
-            { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu },
+            { GameMenuStates.InGameMenu, StartMenu },
+            { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
             // Inventory Menus
             { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
             { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
@@ -104,13 +79,14 @@ public class Game
             { GameMenuStates.InSaveMenu, Display_Save_Menu },
             { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
             // Play Menu | No sub type
-            { GameMenuStates.OnMap, Play_Map },
+            { GameMenuStates.OnMap, StartMap },
             { GameMenuStates.OnFight, Play_Fight },
+            { GameMenuStates.ShutDown, Quit }
             
         };
         Run();
     }
-    public void Run()
+    private void Run()
     {
         foreach (var item in bindFunctionsToGameMenuStates)
         {
@@ -122,38 +98,31 @@ public class Game
         }
     }
 
-    private void Display_StartMenu()
+    private void Quit()
     {
-        Console.WriteLine("=== MENU DE DEPART ===");
-        Console.WriteLine("1. Jouer");
-        Console.WriteLine("2. Créer une nouvelle partie");
-        Console.WriteLine("3. Quitter");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        // Next State when you click Play
-        GameMenuStates nextPlayState = GameMenuStates.Game_CharacterCreationMenu; // Can be On map || Character Creation
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, nextPlayState },
-            { 2, GameMenuStates.InGameMenu } // Leave
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
+        Environment.Exit(0);
     }
 
-    private void Display_Game_CharacterCreationMenu()
+    public void SetCharacterName(string cName)
     {
-        Console.WriteLine("=== CREATION DE PERSONNAGE ===");
-        Console.Write("Nom de votre personnage : ");
-        // character name
-        string cName = Console.ReadLine();
-        Console.Write("Votre personnage " + cName + " est désormais disponible");
         currentCharacter = new Character(cName);
+    }
 
-        currentGameState = GameMenuStates.OnMap;
+    private void StartMenu()
+    {   
+        Console.Clear();
+        GameMenu.OnEnterGameMenu();
+        GameMenu.StartChoice(this);
+    }
+    private void CharacterCreationMenu()
+    {
+        Console.Clear();
+        GameMenu.CharacterMenu(this);
+    }
+    private void StartMap()
+    {
+        Console.Clear();
+        Map.Play_Map(this);
     }
 
     private void Display_Inventory_Menu()
@@ -185,11 +154,6 @@ public class Game
     private void Display_Inventory_ObjectsMenu()
     {
         Console.WriteLine("Voici tout vos objets"); // Show all caught objects
-    }
-
-    private void Display_Inventory_Sh()
-    {
-
     }
 
     private void Display_Pokedex_Menu()
@@ -247,24 +211,6 @@ public class Game
     }
 
 
-    private void Play_Map()
-    {
-        Console.WriteLine("Vous êtes sur la carte.");
-        Console.WriteLine("1. Combattre");
-        Console.WriteLine("2. Retourner au menu");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, GameMenuStates.OnFight },
-            { 2, GameMenuStates.InGameMenu }
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
-    }
-
     private void Play_Fight()
     {
 
@@ -273,7 +219,7 @@ public class Game
         currentGameState = GameMenuStates.OnMap;
     }
 
-    private void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)
+    public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)
     {
         int option;
         int.TryParse(choice, out option);
@@ -285,6 +231,21 @@ public class Game
                 return; 
             }
         }
+    }
+    public void UpdateCurrentGameState(int choice, Dictionary<int, GameMenuStates> transitionArray)
+    {
+        foreach (var item in transitionArray)
+        {
+            if (item.Key == choice)
+            {
+                currentGameState = item.Value;
+                return;
+            }
+        }
+    }
+    public void UpdateCurrentGameState(GameMenuStates state)
+    {
+        currentGameState = state;
     }
 }
 
