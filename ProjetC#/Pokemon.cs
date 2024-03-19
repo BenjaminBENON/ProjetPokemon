@@ -79,6 +79,12 @@ namespace ProjetC_
             set { m_level = value; }
         }
 
+
+        public List<Attack> GetAttackList()
+        {
+            return m_vAttacks;
+        }
+
         // Constructor
         public Pokemon()
         {
