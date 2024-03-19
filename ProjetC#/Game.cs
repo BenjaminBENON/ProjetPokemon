@@ -88,13 +88,25 @@ public class Game
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action>
         {
             // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
+
+            // Game Menus
             { GameMenuStates.InGameMenu, Display_StartMenu },
+            { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu },
+            // Inventory Menus
             { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
+            { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
+            { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
+                
+    
+            // Pokedex Menus
             { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
+            // Save Menus
             { GameMenuStates.InSaveMenu, Display_Save_Menu },
+            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
+            // Play Menu | No sub type
             { GameMenuStates.OnMap, Play_Map },
             { GameMenuStates.OnFight, Play_Fight },
-            { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu }
+            
         };
         Run();
     }
@@ -147,8 +159,9 @@ public class Game
     private void Display_Inventory_Menu()
     {
         Console.WriteLine("=== MENU D'INVENTAIRE ===");
-        Console.WriteLine("1. Afficher les Pokémons");
-        Console.WriteLine("2. Afficher les Objets");
+
+        Console.WriteLine("1. Afficher les Pokémons"); // Show all caught pokemon
+        Console.WriteLine("2. Afficher les Objets"); // Show all caught objects
         Console.WriteLine("3. Retourner au menu principal");
 
         Console.Write("Choix : ");
@@ -164,15 +177,32 @@ public class Game
         UpdateCurrentGameState(choice, stateTransitions);
     }
 
+    private void Display_Inventory_PokemonsMenu()
+    {
+        Console.WriteLine("Voici tout vos pokemons"); // Show all caught pokemon
+    }
+
+    private void Display_Inventory_ObjectsMenu()
+    {
+        Console.WriteLine("Voici tout vos objets"); // Show all caught objects
+    }
+
+    private void Display_Inventory_Sh()
+    {
+
+    }
+
     private void Display_Pokedex_Menu()
     {
         Console.WriteLine("=== MENU DU POKEDEX ===");
-        Console.WriteLine("1. Découvrir les Pokémons");
+
+        Console.WriteLine("1. Découvrir les Pokémons découvert"); // Show all current character Discovered Pokemons
         Console.WriteLine("2. Retourner au menu principal");
 
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
+        // #TO REMEMBER -> THE CHOICE STATE is RELATIF, we need UpdateCurrentGameState to adapt our choice to global Menus States
         Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
             { 1, GameMenuStates.Pokedex_ShowDiscoverPokemon },
@@ -185,9 +215,10 @@ public class Game
     private void Display_Save_Menu()
     {
         Console.WriteLine("=== MENU DE SAUVEGARDE ===");
+
         Console.WriteLine("Ajouter une nouvelle partie");
-        Console.WriteLine("Supprimer une partie");
-        Console.WriteLine("Voir les parties sauvegardées");
+        Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
+        Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
         Console.WriteLine("Retourner au menu principal");
 
         Console.Write("Choix : ");
@@ -205,20 +236,14 @@ public class Game
 
     private void Display_Save_AddMenu()
     {
-        Console.WriteLine("=== AJOUTER UNE SAUVEGARDE ===");
-        Console.WriteLine("Ajouter une nouvelle partie");
-        Console.WriteLine("Retourner au menu principal");
+        Console.Write("Nom de de votre partie : ");
+        // save name
+        string name = Console.ReadLine();
 
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
+        Console.Write("Votre partie : " + name + " est désormais disponible");
+        //currentCharacter = new Character(cName);
 
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-    {
-        { 1, GameMenuStates.Game_CharacterCreationMenu },
-        { 2, GameMenuStates.InGameMenu }
-    };
-
-        UpdateCurrentGameState(choice, stateTransitions);
+        currentGameState = GameMenuStates.InGameMenu;
     }
 
 
