@@ -12,7 +12,8 @@ namespace ProjetC_
     {
         private string m_name;
         List<Pokemon> m_vPokemonsCaught;
-        List<Pokemon> m_vPokemonsDiscovered; // Inventory Class -> ?
+        List<Pokemon> m_vPokemonsDiscovered; 
+        List<Pokemon> m_vPokemonsFighter; 
         List<Item> m_vObject;
 
         // + attribute 
@@ -26,6 +27,28 @@ namespace ProjetC_
             m_vObject = new List<Item>();
         }
 
+
+        // * Inventory 
+        public void AddPokemon(Pokemon pokemon)
+        {
+            m_vPokemonsCaught.Add(pokemon);
+        }
+
+        public void RemovePokemon(Pokemon pokemon)
+        {
+            m_vPokemonsCaught.Remove(pokemon);
+        }
+
+        public void AddObject(Item item)
+        {
+            m_vObject.Add(item);
+        }
+
+        public void RemoveObject(Item item)
+        {
+            m_vObject.Remove(item);
+        }
+
         public List<Pokemon> GetPokemonList()
         {
             return m_vPokemonsCaught;
@@ -35,5 +58,7 @@ namespace ProjetC_
         {
             return m_vObject;
         }
+
+        // Inventory *
     }
 }

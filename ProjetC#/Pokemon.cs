@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+
 namespace ProjetC_
 {
+
     public class Pokemon
     {
         private string m_name;
+        private string m_type;
 
         private int baseLifePoints;
         private int currentLifePoints;
@@ -24,11 +28,17 @@ namespace ProjetC_
         // Attack list (4)
         List<Attack> m_vAttacks;
 
-        // Getter / Setter
+        // Getter / Setter -> Attribute
         public string Name
         {
             get { return m_name; }
             set { m_name = value; }
+        }
+
+        public string Type
+        {
+            get { return m_type; }
+            set { m_type = value; }
         }
 
         public int BaseLifePoints
@@ -85,9 +95,25 @@ namespace ProjetC_
             return m_vAttacks;
         }
 
-        // Constructor
-        public Pokemon()
+        public void AddAttack(Attack attack)
         {
+            m_vAttacks.Add(attack);
         }
+
+        // Constructor
+        public Pokemon(string name, string type, int baseLifePoints, int speedAttackPoints, int attackPoints, int defensePoints, int precisionPoints, int esquivePoints)
+        {
+            Name = name;
+            Type = type;
+            BaseLifePoints = baseLifePoints;
+            CurrentLifePoints = baseLifePoints;
+            SpeedAttackPoint = speedAttackPoints;
+            AttackPoint = attackPoints;
+            DefensePoint = defensePoints;
+            PrecisionPoint = precisionPoints;
+            EsquivePoint = esquivePoints;
+            Level = 0;
+        }
+
     }
 }

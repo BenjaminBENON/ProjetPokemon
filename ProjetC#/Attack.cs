@@ -9,5 +9,16 @@ namespace ProjetC_
     {
         private string m_name;
 
+        public string Name
+        {
+            get { return m_name; }
+            set { m_name = value; }
+        }
+
+        public Attack(string name)
+        {
+            Name = name;
+        }
+
     }
 }

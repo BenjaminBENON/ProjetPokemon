@@ -81,34 +81,102 @@ public class Game
 
         // Generate multiple opponent / enemy
         botCharacter = new Character("Bot");
+
+
     }
 
     public void Start()
     {
-        bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action>
-        {
-            // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
+        //bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action>
+        //{
+        //    // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
 
-            // Game Menus
-            { GameMenuStates.InGameMenu, Display_StartMenu },
-            { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu },
-            // Inventory Menus
-            { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
-            { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
-            { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
-                
-    
-            // Pokedex Menus
-            { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
-            // Save Menus
-            { GameMenuStates.InSaveMenu, Display_Save_Menu },
-            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
-            // Play Menu | No sub type
-            { GameMenuStates.OnMap, Play_Map },
-            { GameMenuStates.OnFight, Play_Fight },
-            
-        };
-        Run();
+        //    // Game Menus
+        //    { GameMenuStates.InGameMenu, Display_StartMenu },
+        //    { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu },
+        //    // Inventory Menus
+        //    { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
+        //    { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
+        //    { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
+
+
+        //    // Pokedex Menus
+        //    { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
+        //    // Save Menus
+        //    { GameMenuStates.InSaveMenu, Display_Save_Menu },
+        //    { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
+        //    // Play Menu | No sub type
+        //    { GameMenuStates.OnMap, Play_Map },
+        //    { GameMenuStates.OnFight, Play_Fight },
+
+        //};
+        //Run();
+
+
+        botCharacter = new Character("Bot");
+        currentCharacter = new Character("William");
+
+        Pokemon bulbasaur = new Pokemon("Bulbasaur", "Grass", 45, 49, 49, 65, 65, 45);
+        Pokemon charmander = new Pokemon("Charmander", "Fire", 39, 52, 43, 60, 50, 65);
+
+
+        Pokemon squirtle = new Pokemon("Squirtle", "Water", 44, 48, 65, 50, 64, 43);
+        Pokemon pikachu = new Pokemon("Pikachu", "Electric", 35, 55, 40, 40, 50, 90);
+
+        currentCharacter.AddPokemon(bulbasaur);
+        currentCharacter.AddPokemon(charmander);
+
+        List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
+
+        List<Pokemon> enemyPokemonList = new List<Pokemon>();
+
+        enemyPokemonList.Add(squirtle);
+        enemyPokemonList.Add(pikachu);
+
+        // Création des attaques
+        Attack vineWhip = new Attack("Vine Whip");
+        Attack razorLeaf = new Attack("Razor Leaf");
+        Attack seedBomb = new Attack("Seed Bomb");
+        Attack solarBeam = new Attack("Solar Beam");
+
+        Attack scratch = new Attack("Scratch");
+        Attack ember = new Attack("Ember");
+        Attack flamethrower = new Attack("Flamethrower");
+        Attack fireBlast = new Attack("Fire Blast");
+
+        // Ajout des attaques à chaque Pokémon
+        bulbasaur.AddAttack(vineWhip);
+        bulbasaur.AddAttack(razorLeaf);
+        bulbasaur.AddAttack(seedBomb);
+        bulbasaur.AddAttack(solarBeam);
+
+        charmander.AddAttack(scratch);
+        charmander.AddAttack(ember);
+        charmander.AddAttack(flamethrower);
+        charmander.AddAttack(fireBlast);
+
+        // Répéter l'ajout des attaques pour chaque Pokémon
+        bulbasaur.AddAttack(vineWhip);
+        bulbasaur.AddAttack(razorLeaf);
+        bulbasaur.AddAttack(seedBomb);
+        bulbasaur.AddAttack(solarBeam);
+
+        charmander.AddAttack(scratch);
+        charmander.AddAttack(ember);
+        charmander.AddAttack(flamethrower);
+        charmander.AddAttack(fireBlast);
+
+
+        Fight fight = new Fight(currentCharacter, enemyPokemonList);
+
+
+        Thread.Sleep(30000000);
+
+
+
+
+
+
     }
     public void Run()
     {
@@ -268,7 +336,7 @@ public class Game
     private void Play_Fight()
     {
 
-        Fight fight = new Fight(currentCharacter, botCharacter);
+        //Fight fight = new Fight(currentCharacter, botCharacter);
 
         currentGameState = GameMenuStates.OnMap;
     }
