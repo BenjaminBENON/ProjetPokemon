@@ -1,21 +1,40 @@
 ﻿using Microsoft.VisualBasic.FileIO;
-using ProjetC_;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ProjetC_;
+using System.ComponentModel;
 
-public enum GameStates
+
+public enum GameMenuStates
 {
     InGameMenu, // Start Menu
-    InInventory, // Manage Object & Pokemon
+    InInventoryMenu, // Manage Object & Pokemon
     InPokedexMenu, // Discover Pokemons of current Character
-    InSaveMenu, // Save Menu
-    OnMap, // In Open world
-    OnFight // In fight world                                                                                                            
+    InSaveMenu, // Save Menu -> ShowBackupList | Button Add | Button Delete
+    OnMap, // In Open world | Can move | Can Interact and Trigger Fight
+    OnFight, // In fight world | To think
+
+    // Subtypes (Type can be only call by a Type only) | Next can be move in more generic approch
+
+    Inventory_ShowPokemons,
+    Inventory_ShowObjects,
+
+    Pokedex_ShowDiscoverPokemon,
+
+    Save_AddMenu, // Menu to add a party
+
+    // Play Button Redirect on Character Creation if no character in save 
+    Game_CharacterCreationMenu,
+
+
+
 }
+
+// HUD Part, Can be draw in same time
 
 public class Game
 {
@@ -49,76 +68,161 @@ public class Game
     }
 
 
+    // Game Data One part will be in the save
+    private GameMenuStates currentGameState;
+    private Character currentCharacter;
+    private Character botCharacter;
 
-    private GameStates currentState;
+    private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
 
     public Game()
     {
-        currentState = GameStates.InGameMenu;
+        currentGameState = GameMenuStates.InGameMenu;
+
+        // Generate multiple opponent / enemy
+        botCharacter = new Character("Bot");
     }
 
     public void Start()
     {
+        bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action>
+        {
+            // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
+            { GameMenuStates.InGameMenu, Display_StartMenu },
+            { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
+            { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
+            { GameMenuStates.InSaveMenu, Display_Save_Menu },
+            { GameMenuStates.OnMap, Play_Map },
+            { GameMenuStates.OnFight, Play_Fight },
+            { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu }
+        };
         Run();
     }
-
     public void Run()
     {
-        switch (currentState)
+        foreach (var item in bindFunctionsToGameMenuStates)
         {
-            case GameStates.InGameMenu:
-                DisplayStartMenu();
-                break;
-            case GameStates.OnMap:
-                PlayMap();
-                break;
-            case GameStates.OnFight:
-                PlayFight();
-                break;
-            default:
-                Console.WriteLine("État du jeu non géré.");
-                break;
+            if (item.Key == currentGameState)
+            {
+                item.Value.Invoke();
+                return;
+            }
         }
     }
 
-    private void DisplayStartMenu()
+    private void Display_StartMenu()
     {
         Console.WriteLine("=== MENU DE DEPART ===");
         Console.WriteLine("1. Jouer");
-        Console.WriteLine("1. Créer une nouvelle partie");
-        Console.WriteLine("2. Quitter");
+        Console.WriteLine("2. Créer une nouvelle partie");
+        Console.WriteLine("3. Quitter");
 
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
-        Dictionary<int, GameStates> stateTransitions = new Dictionary<int, GameStates>
+        // Next State when you click Play
+        GameMenuStates nextPlayState = GameMenuStates.Game_CharacterCreationMenu; // Can be On map || Character Creation
+
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
-            { 1, GameStates.OnMap },
-            { 2, GameStates.InGameMenu }
+            { 1, nextPlayState },
+            { 2, GameMenuStates.InGameMenu } // Leave
         };
 
-        UpdateState(choice, stateTransitions);
+        UpdateCurrentGameState(choice, stateTransitions);
     }
 
-    private void DisplaySaveMenu()
+    private void Display_Game_CharacterCreationMenu()
+    {
+        Console.WriteLine("=== CREATION DE PERSONNAGE ===");
+        Console.Write("Nom de votre personnage : ");
+        // character name
+        string cName = Console.ReadLine();
+        Console.Write("Votre personnage " + cName + " est désormais disponible");
+        currentCharacter = new Character(cName);
+
+        currentGameState = GameMenuStates.OnMap;
+    }
+
+    private void Display_Inventory_Menu()
+    {
+        Console.WriteLine("=== MENU D'INVENTAIRE ===");
+        Console.WriteLine("1. Afficher les Pokémons");
+        Console.WriteLine("2. Afficher les Objets");
+        Console.WriteLine("3. Retourner au menu principal");
+
+        Console.Write("Choix : ");
+        string choice = Console.ReadLine();
+
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+        {
+            { 1, GameMenuStates.Inventory_ShowPokemons },
+            { 2, GameMenuStates.Inventory_ShowObjects },
+            { 3, GameMenuStates.InGameMenu }
+        };
+
+        UpdateCurrentGameState(choice, stateTransitions);
+    }
+
+    private void Display_Pokedex_Menu()
+    {
+        Console.WriteLine("=== MENU DU POKEDEX ===");
+        Console.WriteLine("1. Découvrir les Pokémons");
+        Console.WriteLine("2. Retourner au menu principal");
+
+        Console.Write("Choix : ");
+        string choice = Console.ReadLine();
+
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+        {
+            { 1, GameMenuStates.Pokedex_ShowDiscoverPokemon },
+            { 2, GameMenuStates.InGameMenu }
+        };
+
+        UpdateCurrentGameState(choice, stateTransitions);
+    }
+
+    private void Display_Save_Menu()
     {
         Console.WriteLine("=== MENU DE SAUVEGARDE ===");
-        Console.WriteLine("1. Afficher les sauvegardes de parties");
-        Console.WriteLine("2. Quitter le menu de sauvegarde");
+        Console.WriteLine("Ajouter une nouvelle partie");
+        Console.WriteLine("Supprimer une partie");
+        Console.WriteLine("Voir les parties sauvegardées");
+        Console.WriteLine("Retourner au menu principal");
 
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
-        Dictionary<int, GameStates> stateTransitions = new Dictionary<int, GameStates>
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
-            { 1, GameStates.OnMap },
-            { 2, GameStates.InGameMenu }
+            { 1, GameMenuStates.Save_AddMenu },
+            { 2, GameMenuStates.InGameMenu }
         };
 
-        UpdateState(choice, stateTransitions);
+        UpdateCurrentGameState(choice, stateTransitions);
     }
 
-    private void PlayMap()
+
+    private void Display_Save_AddMenu()
+    {
+        Console.WriteLine("=== AJOUTER UNE SAUVEGARDE ===");
+        Console.WriteLine("Ajouter une nouvelle partie");
+        Console.WriteLine("Retourner au menu principal");
+
+        Console.Write("Choix : ");
+        string choice = Console.ReadLine();
+
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+    {
+        { 1, GameMenuStates.Game_CharacterCreationMenu },
+        { 2, GameMenuStates.InGameMenu }
+    };
+
+        UpdateCurrentGameState(choice, stateTransitions);
+    }
+
+
+    private void Play_Map()
     {
         Console.WriteLine("Vous êtes sur la carte.");
         Console.WriteLine("1. Combattre");
@@ -127,26 +231,24 @@ public class Game
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
-        Dictionary<int, GameStates> stateTransitions = new Dictionary<int, GameStates>
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
-            { 1, GameStates.OnFight },
-            { 2, GameStates.InGameMenu }
+            { 1, GameMenuStates.OnFight },
+            { 2, GameMenuStates.InGameMenu }
         };
 
-        UpdateState(choice, stateTransitions);
+        UpdateCurrentGameState(choice, stateTransitions);
     }
 
-    private void PlayFight()
+    private void Play_Fight()
     {
-        Character character = new Character();
-        Character character2 = new Character();
 
-        Fight fight = new Fight(character, character2);
+        Fight fight = new Fight(currentCharacter, botCharacter);
 
-        currentState = GameStates.OnMap;
+        currentGameState = GameMenuStates.OnMap;
     }
 
-    private void UpdateState(string choice, Dictionary<int, GameStates> transitionArray)
+    private void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)
     {
         int option;
         int.TryParse(choice, out option);
@@ -154,7 +256,7 @@ public class Game
         {
             if (item.Key == option)
             {
-                currentState = item.Value;
+                currentGameState = item.Value;
                 return; 
             }
         }
