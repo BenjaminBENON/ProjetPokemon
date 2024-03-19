@@ -144,7 +144,7 @@ public class Game
         Attack flamethrower = new Attack("Flamethrower");
         Attack fireBlast = new Attack("Fire Blast");
 
-        // Ajout des attaques à chaque Pokémon
+
         bulbasaur.AddAttack(vineWhip);
         bulbasaur.AddAttack(razorLeaf);
         bulbasaur.AddAttack(seedBomb);
@@ -155,7 +155,6 @@ public class Game
         charmander.AddAttack(flamethrower);
         charmander.AddAttack(fireBlast);
 
-        // Répéter l'ajout des attaques pour chaque Pokémon
         bulbasaur.AddAttack(vineWhip);
         bulbasaur.AddAttack(razorLeaf);
         bulbasaur.AddAttack(seedBomb);
@@ -167,7 +166,7 @@ public class Game
         charmander.AddAttack(fireBlast);
 
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList);
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
 
         Thread.Sleep(30000000);

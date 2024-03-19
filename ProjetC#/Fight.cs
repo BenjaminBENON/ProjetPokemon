@@ -9,35 +9,42 @@ using System.Text;
 
 public enum PlayerState
 {
-    Enemy,
     Character,
+    Enemy,
 }
 
 namespace ProjetC_
 {
     public class Fight
     {
+        //
+        PlayerState playerState;
+
         private Character m_c1;
         private List<Pokemon> m_characterPokemonsList;
         // Opponent team or simply savage pokemon
         private List<Pokemon> m_enemyPokemonsList;
 
+        string m_type; // fight Type
+
 
         // Constructor
-        public Fight(Character c1, List<Pokemon> pokemonsEnemy) 
+        public Fight(Character c1, List<Pokemon> pokemonsEnemy, string fightType)
         {
             Console.WriteLine("Fight Start");
-            Start(c1, pokemonsEnemy);
-
+            Start(c1, pokemonsEnemy, fightType);
 
             Battle();
+
+            // #TODO -> if savage we catch the pokemon / if npc, we get xp
 
             Console.WriteLine("Fight End");
         }
 
-        public void Start(Character c1, List<Pokemon> pokemonsEnemy)
+        public void Start(Character c1, List<Pokemon> pokemonsEnemy, string fightType)
         {
-            
+            playerState = PlayerState.Character;
+            m_type = fightType;
             m_c1 = c1;
             m_characterPokemonsList = c1.GetPokemonList();
             m_enemyPokemonsList = pokemonsEnemy;
@@ -70,13 +77,48 @@ namespace ProjetC_
             Pokemon currentEnemyPokemon = m_enemyPokemonsList[m_enemyPokemonsList.Count - 1];
             Pokemon currentCharacterPokemon = m_characterPokemonsList[m_characterPokemonsList.Count - 1];
 
-            while (currentEnemyPokemon.CurrentLifePoints > 0 || currentCharacterPokemon.CurrentLifePoints > 0) {
-                Console.WriteLine("Attack du pokemon 1");
+            while (currentEnemyPokemon.PokemonState != PokemonState.Out || currentCharacterPokemon.PokemonState != PokemonState.Out)
+            {
+                Console.WriteLine("Player State" + playerState);
+                //Console.WriteLine("Attack du pokemon 1");
 
-                Console.WriteLine("Attack du pokemon 2");
+                int i;
+                if (Convert.ToInt32(playerState) == 0)
+                {
+                    Console.WriteLine("Character");
+                    Console.WriteLine("Pokemon Attack");
+                    i = 0;
+                    foreach (Attack item in currentCharacterPokemon.GetAttackList())
+                    {
+
+                        Console.WriteLine(i + ". " + item.Name);
+                        i++;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Enemy");
+                    Console.WriteLine("Pokemon Attack");
+                    i = 0;
+                    foreach (Attack item in currentEnemyPokemon.GetAttackList())
+                    {
+
+                        Console.WriteLine(i + ". " + item.Name);
+                        i++;
+                    }
+                }
+
+                //Console.WriteLine("Attack du pokemon 2");
+
+
+
+                playerState = (playerState == PlayerState.Character) ? PlayerState.Enemy : PlayerState.Character;
                 // Choice Your attack
                 // Fight
             }
+
+            // Switch turn
+
 
             // Round finish / They fought
 
