@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-public enum State
+public enum GameStates
 {
     GameMenu,
     Inventory,
@@ -16,24 +17,29 @@ public enum State
 
 public class Game
 {
-    private State currentState;
+    private GameStates currentState;
 
     public Game()
     {
-        currentState = State.GameMenu;
+        currentState = GameStates.GameMenu;
     }
 
     public void Start()
     {
+        Run();
+    }
+
+    public void Run()
+    {
         switch (currentState)
         {
-            case State.GameMenu:
+            case GameStates.GameMenu:
                 DisplayMenu();
                 break;
-            case State.OnMap:
+            case GameStates.OnMap:
                 StartMap();
                 break;
-            case State.OnFight:
+            case GameStates.OnFight:
                 StartFight();
                 break;
             default:
@@ -51,18 +57,13 @@ public class Game
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
-        switch (choice)
+        Dictionary<int, GameStates> stateTransitions = new Dictionary<int, GameStates>
         {
-            case "1":
-                currentState = State.OnMap;
-                break;
-            case "2":
-                Environment.Exit(0);
-                break;
-            default:
-                Console.WriteLine("Choix invalide.");
-                break;
-        }
+            { 1, GameStates.OnMap },
+            { 2, GameStates.GameMenu }
+        };
+
+        UpdateState(choice, stateTransitions);
     }
 
     private void StartMap()
@@ -74,27 +75,38 @@ public class Game
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
 
-        switch (choice)
+        Dictionary<int, GameStates> stateTransitions = new Dictionary<int, GameStates>
         {
-            case "1":
-                currentState = State.OnFight;
-                break;
-            case "2":
-                currentState = State.GameMenu;
-                break;
-            default:
-                Console.WriteLine("Choix invalide.");
-                break;
-        }
+            { 1, GameStates.OnFight },
+            { 2, GameStates.GameMenu }
+        };
+
+        UpdateState(choice, stateTransitions);
     }
 
     private void StartFight()
     {
         Console.WriteLine("Combat en cours...");
+
         // LE fiiiiiiight;
+
         Console.WriteLine("Combat terminé.");
 
-        currentState = State.OnMap;
+        currentState = GameStates.OnMap;
+    }
+
+    private void UpdateState(string choice, Dictionary<int, GameStates> transitionArray)
+    {
+        int option;
+        int.TryParse(choice, out option);
+        foreach (var item in transitionArray)
+        {
+            if (item.Key == option)
+            {
+                currentState = item.Value;
+                return; 
+            }
+        }
     }
 }
 
