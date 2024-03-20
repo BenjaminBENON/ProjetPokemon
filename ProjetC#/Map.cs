@@ -15,7 +15,7 @@ public class Map
 
         Console.WriteLine("Vous êtes sur la carte.");
         Console.WriteLine("1. Combattre");
-        Console.WriteLine("2. Sauvergarder et retourner au menu");
+        Console.WriteLine("2. Sauvergarder la partie et retourner au menu");
 
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
@@ -23,7 +23,7 @@ public class Map
         Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
             { 1, GameMenuStates.OnFight },
-            { 2, GameMenuStates.InGameMenu }
+            { 2, GameMenuStates.InSaveMenu }
         };
 
         oGame.UpdateCurrentGameState(choice, stateTransitions);

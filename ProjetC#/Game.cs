@@ -17,6 +17,7 @@ public enum GameMenuStates
     InPokedexMenu, // Discover Pokemons of current Character
     InSaveMenu, // Save Menu -> ShowBackupList | Button Add | Button Delete
     OnMap, // In Open world | Can move | Can Interact and Trigger Fight
+    InPokemonCenter,
     OnFight, // In fight world | To think
 
     // Subtypes (Type can be only call by a Type only) | Next can be move in more generic approch
@@ -53,7 +54,7 @@ public class Game
     public Game()
     {
         currentGameState = GameMenuStates.InGameMenu;
-
+        
         // Generate multiple opponent / enemy
         botCharacter = new Character("Bot");
     }
@@ -80,6 +81,7 @@ public class Game
             { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
             // Play Menu | No sub type
             { GameMenuStates.OnMap, StartMap },
+            { GameMenuStates.InPokemonCenter, StartPokemonCenter },
             { GameMenuStates.OnFight, Play_Fight },
             { GameMenuStates.ShutDown, Quit }
             
@@ -124,6 +126,13 @@ public class Game
         Console.Clear();
         Map.Play_Map(this);
     }
+    private void StartPokemonCenter()
+    {
+        
+    }
+
+
+    //------------------------LES INVENTAIRES---------------------
 
     private void Display_Inventory_Menu()
     {
@@ -180,10 +189,10 @@ public class Game
     {
         Console.WriteLine("=== MENU DE SAUVEGARDE ===");
 
-        Console.WriteLine("Ajouter une nouvelle partie");
+        Console.WriteLine("1. Ajouter une nouvelle sauvegarde");
         Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
         Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
-        Console.WriteLine("Retourner au menu principal");
+        Console.WriteLine("2.Retourner au menu principal");
 
         Console.Write("Choix : ");
         string choice = Console.ReadLine();
@@ -205,7 +214,6 @@ public class Game
         string name = Console.ReadLine();
 
         Console.Write("Votre partie : " + name + " est désormais disponible");
-        //currentCharacter = new Character(cName);
 
         currentGameState = GameMenuStates.InGameMenu;
     }
