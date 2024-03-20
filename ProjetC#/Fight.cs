@@ -51,17 +51,26 @@ namespace ProjetC_
 
             Console.WriteLine("------- FIGHT STARTING -------");
 
-            Console.WriteLine("Enemy Pokemons : ");
-            foreach (Pokemon item in m_enemyPokemonsList)
-            {
-                Console.WriteLine(item.Name);
-            }
+            //Console.WriteLine("Enemy Pokemons : ");
+            //foreach (Pokemon item in m_enemyPokemonsList)
+            //{
+            //    Console.WriteLine("POKEMON NAME : " + item.Name);
+            //    foreach (Attack atc in item.GetAttackList())
+            //    {
+            //        Console.WriteLine(atc.Name); 
+            //    }
+                    
+            //}
 
-            Console.WriteLine("My Pokemons : ");
-            foreach (Pokemon item in m_characterPokemonsList)
-            {
-                Console.WriteLine(item.Name);
-            }
+            //Console.WriteLine("My Pokemons : ");
+            //foreach (Pokemon item in m_characterPokemonsList)
+            //{
+            //    Console.WriteLine("POKEMON NAME : " + item.Name);
+            //    foreach (Attack atc in item.GetAttackList())
+            //    {
+            //        Console.WriteLine(atc.Name);
+            //    }
+            //}
         }
 
         // Begin the attack player has more speed attack
@@ -79,26 +88,37 @@ namespace ProjetC_
 
             while (currentEnemyPokemon.PokemonState != PokemonState.Out || currentCharacterPokemon.PokemonState != PokemonState.Out)
             {
-                Console.WriteLine("Player State" + playerState);
+                Console.WriteLine("--- Player State ---" + playerState);
+
+                Console.WriteLine("Les pokemons en combat sont " + currentEnemyPokemon.Name + " et " + currentCharacterPokemon.Name);
+
                 //Console.WriteLine("Attack du pokemon 1");
+
 
                 int i;
                 if (Convert.ToInt32(playerState) == 0)
                 {
-                    Console.WriteLine("Character");
-                    Console.WriteLine("Pokemon Attack");
+                    Console.WriteLine("------------");
+                    Console.WriteLine("Character CHOICE");
+                    Console.WriteLine("------------");
                     i = 0;
                     foreach (Attack item in currentCharacterPokemon.GetAttackList())
                     {
 
-                        Console.WriteLine(i + ". " + item.Name);
+                        Console.WriteLine(i + 1 + ". " + item.Name);
                         i++;
                     }
+                    Console.Write("Choisis l'attaque que tu veux lancer : ");
+                    string IAttack = Console.ReadLine();
+                    currentCharacterPokemon.UseAttack(int.Parse(IAttack));
+
+
                 }
-                else
+                if ((Convert.ToInt32(playerState) == 1))
                 {
-                    Console.WriteLine("Enemy");
-                    Console.WriteLine("Pokemon Attack");
+                    Console.WriteLine("------------");
+                    Console.WriteLine("Enemy CHOICE");
+                    Console.WriteLine("------------");
                     i = 0;
                     foreach (Attack item in currentEnemyPokemon.GetAttackList())
                     {
@@ -106,6 +126,9 @@ namespace ProjetC_
                         Console.WriteLine(i + ". " + item.Name);
                         i++;
                     }
+                    Console.Write("Choisis l'attaque que tu veux lancer : ");
+                    string IAttack = Console.ReadLine();
+                    currentCharacterPokemon.UseAttack(int.Parse(IAttack));
                 }
 
                 //Console.WriteLine("Attack du pokemon 2");

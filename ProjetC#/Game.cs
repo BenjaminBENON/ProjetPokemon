@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ProjetC_;
 using System.ComponentModel;
 
-
+// #TODO -> NPC pour combat | Market pour acheter consommable | IA Pokemon enemy | Quete / Entity Management pour les npc / coffre / pokemons sauvage / Regarder la carte de son pokemon
 public enum GameMenuStates
 {
     InGameMenu, // Start Menu
@@ -118,20 +118,8 @@ public class Game
 
         Pokemon bulbasaur = new Pokemon("Bulbasaur", "Grass", 45, 49, 49, 65, 65, 45);
         Pokemon charmander = new Pokemon("Charmander", "Fire", 39, 52, 43, 60, 50, 65);
-
-
         Pokemon squirtle = new Pokemon("Squirtle", "Water", 44, 48, 65, 50, 64, 43);
         Pokemon pikachu = new Pokemon("Pikachu", "Electric", 35, 55, 40, 40, 50, 90);
-
-        currentCharacter.AddPokemon(bulbasaur);
-        currentCharacter.AddPokemon(charmander);
-
-        List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
-
-        List<Pokemon> enemyPokemonList = new List<Pokemon>();
-
-        enemyPokemonList.Add(squirtle);
-        enemyPokemonList.Add(pikachu);
 
         // Création des attaques
         Attack vineWhip = new Attack("Vine Whip");
@@ -144,7 +132,6 @@ public class Game
         Attack flamethrower = new Attack("Flamethrower");
         Attack fireBlast = new Attack("Fire Blast");
 
-
         bulbasaur.AddAttack(vineWhip);
         bulbasaur.AddAttack(razorLeaf);
         bulbasaur.AddAttack(seedBomb);
@@ -155,15 +142,34 @@ public class Game
         charmander.AddAttack(flamethrower);
         charmander.AddAttack(fireBlast);
 
-        bulbasaur.AddAttack(vineWhip);
-        bulbasaur.AddAttack(razorLeaf);
-        bulbasaur.AddAttack(seedBomb);
-        bulbasaur.AddAttack(solarBeam);
+        squirtle.AddAttack(vineWhip);
+        squirtle.AddAttack(razorLeaf);
+        squirtle.AddAttack(seedBomb);
+        squirtle.AddAttack(solarBeam);
 
-        charmander.AddAttack(scratch);
-        charmander.AddAttack(ember);
-        charmander.AddAttack(flamethrower);
-        charmander.AddAttack(fireBlast);
+        pikachu.AddAttack(scratch);
+        pikachu.AddAttack(ember);
+        pikachu.AddAttack(flamethrower);
+        pikachu.AddAttack(fireBlast);
+
+        List<Pokemon> enemyPokemonList = new List<Pokemon>();
+
+        currentCharacter.AddPokemon(bulbasaur);
+        currentCharacter.AddPokemon(charmander);
+
+        enemyPokemonList.Add(squirtle);
+        enemyPokemonList.Add(pikachu);
+
+        //List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
+
+
+
+
+
+
+
+
+        
 
 
         Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");

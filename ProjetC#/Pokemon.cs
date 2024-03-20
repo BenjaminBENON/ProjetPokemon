@@ -121,6 +121,11 @@ namespace ProjetC_
             m_vAttacks.Add(attack);
         }
 
+        public void UseAttack(int iAttack)
+        {
+            m_vAttacks[iAttack - 1].Use();
+        }
+
         // Constructor
         public Pokemon(string name, string type, int baseLifePoints, int speedAttackPoints, int attackPoints, int defensePoints, int precisionPoints, int esquivePoints)
         {
