@@ -9,6 +9,12 @@ using ProjetC_;
 using System.ComponentModel;
 
 // #TODO -> NPC pour combat | Market pour acheter consommable | IA Pokemon enemy | Quete / Entity Management pour les npc / coffre / pokemons sauvage / Regarder la carte de son pokemon
+
+// #TODO clément -> HUD System avec buffer pour organiser l'écran de jeu inventaire 
+// Random pokemon generator qui start des fight 
+
+// #TODO william -> Gestion des résistance - 
+
 public enum GameMenuStates
 {
     InGameMenu, // Start Menu
@@ -87,98 +93,64 @@ public class Game
 
     public void Start()
     {
-        //bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action>
-        //{
-        //    // Function NameStyle -> Display / Play * _ * SubType * _ * MenuName
-
-        //    // Game Menus
-        //    { GameMenuStates.InGameMenu, Display_StartMenu },
-        //    { GameMenuStates.Game_CharacterCreationMenu, Display_Game_CharacterCreationMenu },
-        //    // Inventory Menus
-        //    { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
-        //    { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
-        //    { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
-
-
-        //    // Pokedex Menus
-        //    { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
-        //    // Save Menus
-        //    { GameMenuStates.InSaveMenu, Display_Save_Menu },
-        //    { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
-        //    // Play Menu | No sub type
-        //    { GameMenuStates.OnMap, Play_Map },
-        //    { GameMenuStates.OnFight, Play_Fight },
-
-        //};
-        //Run();
-
-
         botCharacter = new Character("Bot");
         currentCharacter = new Character("William");
 
-        Pokemon bulbasaur = new Pokemon("Bulbasaur", "Grass", 45, 49, 49, 65, 65, 45);
-        Pokemon charmander = new Pokemon("Charmander", "Fire", 39, 52, 43, 60, 50, 65);
-        Pokemon squirtle = new Pokemon("Squirtle", "Water", 44, 48, 65, 50, 64, 43);
-        Pokemon pikachu = new Pokemon("Pikachu", "Electric", 35, 55, 40, 40, 50, 90);
+        Potion potion30 = new Potion("potion30", 30);
+        Berry berryHelp = new Berry("baieSoin");
+        PokeBall pokeBall = new PokeBall("Poke Ball");
 
-        // Création des attaques
-        Attack vineWhip = new Attack("Vine Whip");
-        Attack razorLeaf = new Attack("Razor Leaf");
-        Attack seedBomb = new Attack("Seed Bomb");
-        Attack solarBeam = new Attack("Solar Beam");
+        currentCharacter.AddObject(potion30);
+        currentCharacter.AddObject(berryHelp);
+        currentCharacter.AddObject(pokeBall);
 
-        Attack scratch = new Attack("Scratch");
-        Attack ember = new Attack("Ember");
-        Attack flamethrower = new Attack("Flamethrower");
-        Attack fireBlast = new Attack("Fire Blast");
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", "Plante", 45, 49, 49, 65, 65, 45);
+        Pokemon salameche = new Pokemon("Salamèche", "Feu", 39, 52, 43, 60, 50, 65);
+        Pokemon carapuce = new Pokemon("Carapuce", "Eau", 44, 48, 65, 50, 64, 43);
+        Pokemon pikachu = new Pokemon("Pikachu", "Électrique", 35, 55, 40, 40, 50, 90);
 
-        bulbasaur.AddAttack(vineWhip);
-        bulbasaur.AddAttack(razorLeaf);
-        bulbasaur.AddAttack(seedBomb);
-        bulbasaur.AddAttack(solarBeam);
+        // Création des Attacks
+        Attack fouetLianes = new VineWhip();
+        Attack tranchHerbe = new RazorLeaf();
+        Attack bombeGraine = new BubbleBeam();
+        Attack lanceSoleil = new FireSpin();
 
-        charmander.AddAttack(scratch);
-        charmander.AddAttack(ember);
-        charmander.AddAttack(flamethrower);
-        charmander.AddAttack(fireBlast);
+        Attack griffe = new Tackle();
+        Attack flammeche = new Ember();
+        Attack lanceFlamme = new ThunderShock();
+        Attack detonation = new QuickAttack();
 
-        squirtle.AddAttack(vineWhip);
-        squirtle.AddAttack(razorLeaf);
-        squirtle.AddAttack(seedBomb);
-        squirtle.AddAttack(solarBeam);
+        bulbizarre.AddAttack(fouetLianes);
+        bulbizarre.AddAttack(tranchHerbe);
+        bulbizarre.AddAttack(bombeGraine);
+        bulbizarre.AddAttack(lanceSoleil);
 
-        pikachu.AddAttack(scratch);
-        pikachu.AddAttack(ember);
-        pikachu.AddAttack(flamethrower);
-        pikachu.AddAttack(fireBlast);
+        salameche.AddAttack(griffe);
+        salameche.AddAttack(flammeche);
+        salameche.AddAttack(lanceFlamme);
+        salameche.AddAttack(detonation);
+
+        carapuce.AddAttack(fouetLianes);
+        carapuce.AddAttack(tranchHerbe);
+        carapuce.AddAttack(bombeGraine);
+        carapuce.AddAttack(lanceSoleil);
+
+        pikachu.AddAttack(griffe);
+        pikachu.AddAttack(flammeche);
+        pikachu.AddAttack(lanceFlamme);
+        pikachu.AddAttack(detonation);
 
         List<Pokemon> enemyPokemonList = new List<Pokemon>();
 
-        currentCharacter.AddPokemon(bulbasaur);
-        currentCharacter.AddPokemon(charmander);
+        currentCharacter.AddPokemon(bulbizarre);
+        currentCharacter.AddPokemon(salameche);
 
-        enemyPokemonList.Add(squirtle);
+        enemyPokemonList.Add(carapuce);
         enemyPokemonList.Add(pikachu);
-
-        //List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
-
-
-
-
-
-
-
-
-        
-
 
         Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
-
         Thread.Sleep(30000000);
-
-
-
 
 
 

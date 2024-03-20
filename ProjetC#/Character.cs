@@ -44,6 +44,11 @@ namespace ProjetC_
             m_vObject.Add(item);
         }
 
+        public void UseObject(int iItem, Pokemon pokemon)
+        {
+            m_vObject[iItem].Use(pokemon);
+        }
+
         public void RemoveObject(Item item)
         {
             m_vObject.Remove(item);
