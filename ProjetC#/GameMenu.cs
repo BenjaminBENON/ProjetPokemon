@@ -108,11 +108,9 @@ public class GameMenu
                 break;
             case ConsoleKey.RightArrow:
                 m_userChoice++;
-                Console.WriteLine("WOW");
                 break;
             case ConsoleKey.LeftArrow:
                 m_userChoice--;
-                Console.WriteLine("YEAH");
                 break;
         }
         if (m_userChoice > 3) m_userChoice = 3;
