@@ -124,10 +124,6 @@ public class Game
         enemyPokemonList.Add(carapuce);
         enemyPokemonList.Add(pikachu);
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
-
-        Thread.Sleep(30000000);
-
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
             { GameMenuStates.InGameMenu, StartMenu },
@@ -150,9 +146,8 @@ public class Game
         };
 
         // };
-        Run();
     }
-    private void Run()
+    public void Run()
     {
         foreach (var item in bindFunctionsToGameMenuStates)
         {
@@ -187,8 +182,9 @@ public class Game
     }
     private void StartMap()
     {
-        Console.Clear();
-        Map.Play_Map(this);
+        Map.Play_Map(this,botCharacter); 
+        Input.Update(botCharacter);
+        Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
