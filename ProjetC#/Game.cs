@@ -34,7 +34,7 @@ public enum GameMenuStates
     Pokedex_ShowDiscoverPokemon,
 
     Save_AddMenu, // Menu to add a party
-
+    
     // Play Button Redirect on Character Creation if no character in save 
     CharacterCreationMenu,
 
@@ -132,6 +132,9 @@ public class Game
             // Game Menus
             { GameMenuStates.InGameMenu, StartMenu },
             { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
+            // Save Menus
+            { GameMenuStates.InSaveMenu, SaveMenu },
+            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
             // Inventory Menus
             { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
             { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
@@ -139,13 +142,11 @@ public class Game
             
             // Pokedex Menus
             { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
-            // Save Menus
-            { GameMenuStates.InSaveMenu, Display_Save_Menu },
-            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
-            // Play Menu | No sub type
+            // Play Menu
             { GameMenuStates.OnMap, StartMap },
             { GameMenuStates.InPokemonCenter, StartPokemonCenter },
             { GameMenuStates.OnFight, Play_Fight },
+
             { GameMenuStates.ShutDown, Quit }
         };
 
@@ -182,17 +183,23 @@ public class Game
     }
     private void CharacterCreationMenu()
     {
-        Console.Clear();
+        //Console.Clear();
         GameMenu.CharacterMenu(this);
     }
     private void StartMap()
     {
-        Console.Clear();
+        //Console.Clear();
         Map.Play_Map(this);
+    }
+    private void SaveMenu()
+    {
+        Console.Clear();
+        GameMenu.Display_SaveMenu();
+        GameMenu.SaveChoice(this);
     }
     private void StartPokemonCenter()
     {
-        
+
     }
 
 
@@ -249,26 +256,7 @@ public class Game
         UpdateCurrentGameState(choice, stateTransitions);
     }
 
-    private void Display_Save_Menu()
-    {
-        Console.WriteLine("=== MENU DE SAUVEGARDE ===");
-
-        Console.WriteLine("1. Ajouter une nouvelle sauvegarde");
-        Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
-        Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
-        Console.WriteLine("2.Retourner au menu principal");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, GameMenuStates.Save_AddMenu },
-            { 2, GameMenuStates.InGameMenu }
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
-    }
+    //---------------------------
 
 
     private void Display_Save_AddMenu()
