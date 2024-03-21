@@ -104,6 +104,7 @@ public class GameMenu
         switch (a)
         {
             case ConsoleKey.Enter:
+                Console.Clear();
                 oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
                 break;
             case ConsoleKey.RightArrow:
@@ -124,12 +125,17 @@ public class GameMenu
         Console.Write("Nom de votre personnage : ");
         // character name
         string cName = Console.ReadLine();
-        Console.Write("Votre personnage " + cName + " est désormais disponible");
+        Console.Write("Votre personnage " + cName + " est désormais disponible . Appuyer sur Entrer pour continuer.");
 
         oGame.SetCharacterName(cName);
 
+
         ConsoleKey a = Console.ReadKey(true).Key;
-        if (a == ConsoleKey.Enter) oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+        if (a == ConsoleKey.Enter)
+        {
+            Console.Clear();
+            oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+        }
     }
 
     public static void Display_SaveMenu()
@@ -188,22 +194,24 @@ public class GameMenu
         else Console.WriteLine("|                        |");
         Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 + 2);
         Console.WriteLine("--------------------------");
+        
+        //Lire un JSON et pouvoir sélectionner une save
+    
     }
 
     public static void SaveChoice(Game oGame)
     {
-
         Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
             { 1, GameMenuStates.Save_AddMenu },
             { 2, GameMenuStates.InGameMenu }
         };
 
-
         ConsoleKey a = Console.ReadKey(true).Key;
         switch (a)
         {
             case ConsoleKey.Enter:
+                Console.Clear();
                 oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
                 break;
             case ConsoleKey.RightArrow:
@@ -215,7 +223,5 @@ public class GameMenu
         }
         if (m_userChoice > 3) m_userChoice = 3;
         if (m_userChoice < 1) m_userChoice = 1;
-
     }
-
 }

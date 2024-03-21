@@ -28,7 +28,7 @@ public enum GameMenuStates
     Pokedex_ShowDiscoverPokemon,
 
     Save_AddMenu, // Menu to add a party
-
+    
     // Play Button Redirect on Character Creation if no character in save 
     CharacterCreationMenu,
 
@@ -119,12 +119,12 @@ public class Game
     }
     private void CharacterCreationMenu()
     {
-        Console.Clear();
+        //Console.Clear();
         GameMenu.CharacterMenu(this);
     }
     private void StartMap()
     {
-        Console.Clear();
+        //Console.Clear();
         Map.Play_Map(this);
     }
     private void SaveMenu()
