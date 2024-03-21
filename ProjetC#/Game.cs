@@ -16,6 +16,8 @@ using System.Xml.Linq;
 
 // #TODO william -> Gestion des résistance - 
 
+// Gerer qui commence le turn en fonction du speed attack
+
 public enum GameMenuStates
 {
     InGameMenu, // Start Menu
@@ -80,10 +82,19 @@ public class Game
         currentCharacter.AddObject(berryHelp);
         currentCharacter.AddObject(pokeBall);
 
-        Pokemon bulbizarre = new Pokemon("Bulbizarre", "Plante", 45, 49, 49, 65, 65, 45);
-        Pokemon salameche = new Pokemon("Salamèche", "Feu", 39, 52, 43, 60, 50, 65);
-        Pokemon carapuce = new Pokemon("Carapuce", "Eau", 44, 48, 65, 50, 64, 43);
-        Pokemon pikachu = new Pokemon("Pikachu", "Électrique", 35, 55, 40, 40, 50, 90);
+        // Normal / 
+        float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };   // Plante
+        float[] resWater = { 1, 1, 0.8f, 1, 0.5f };   // Eau
+        float[] resFire = { 1, 0.5f, 1, 1, 1 };   // Feu
+        float[] resNormal = { 1, 1, 1, 1, 1 };   // Normal
+        float[] resElectric = { 1, 2, 1, 1, 1 };   // Électrique
+
+        // Création de chaque Pokémon avec ses résistances spécifiques
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 85, 15, resPlant);
+        Pokemon salameche = new Pokemon("Salamèche", PokemonType.Fire, 39, 52, 43, 60, 80, 20, resFire);
+        Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 70, 25, resWater);
+        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 90, 25, resElectric);
+
 
         // Création des Attacks
         Attack fouetLianes = new VineWhip();
@@ -124,9 +135,39 @@ public class Game
         enemyPokemonList.Add(carapuce);
         enemyPokemonList.Add(pikachu);
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
-        Thread.Sleep(30000000);
+        //Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
+
+        Pokemon playerPokemon = new Pokemon("Pikachu", PokemonType.Electric, 100, 100, 100, 100, 100, 100, new float[5] { 1, 1, 1, 1, 1 });
+        Pokemon enemyPokemon = new Pokemon("Salameche", PokemonType.Fire, 100, 100, 100, 100, 100, 100, new float[5] { 1, 1, 1, 1, 1 });
+
+        Attack defenseBoost = new DefenseBoost();
+        Attack speedBoost = new SpeedBoost();
+        Attack accuracyBoost = new AccuracyBoost();
+        Attack evasionBoost = new EsquiveBoost();
+        Attack attackLower = new AttackLower();
+        Attack defenseLower = new DefenseLower();
+        Attack speedLower = new SpeedLower();
+        Attack accuracyLower = new AccuracyLower();
+        Attack evasionLower = new EsquiveLower();
+        Attack allStatsBoost = new AllStatsBoost();
+        Attack allStatsLower = new AllStatsLower();
+
+        // Utilisation des attaques sur le Pokemon joueur
+        defenseBoost.Use(playerPokemon, enemyPokemon);
+        speedBoost.Use(playerPokemon, enemyPokemon);
+        accuracyBoost.Use(playerPokemon, enemyPokemon);
+        evasionBoost.Use(playerPokemon, enemyPokemon);
+        attackLower.Use(playerPokemon, enemyPokemon);
+        defenseLower.Use(playerPokemon, enemyPokemon);
+        speedLower.Use(playerPokemon, enemyPokemon);
+        accuracyLower.Use(playerPokemon, enemyPokemon);
+        evasionLower.Use(playerPokemon, enemyPokemon);
+        allStatsBoost.Use(playerPokemon, enemyPokemon);
+        allStatsLower.Use(playerPokemon, enemyPokemon);
+
+
+        Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus

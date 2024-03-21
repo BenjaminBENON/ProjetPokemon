@@ -51,27 +51,6 @@ namespace ProjetC_
             m_enemyPokemonsList = pokemonsEnemy;
 
             Console.WriteLine("------- FIGHT STARTING -------");
-
-            //Console.WriteLine("Enemy Pokemons : ");
-            //foreach (Pokemon item in m_enemyPokemonsList)
-            //{
-            //    Console.WriteLine("POKEMON NAME : " + item.Name);
-            //    foreach (Attack atc in item.GetAttackList())
-            //    {
-            //        Console.WriteLine(atc.Name); 
-            //    }
-                    
-            //}
-
-            //Console.WriteLine("My Pokemons : ");
-            //foreach (Pokemon item in m_characterPokemonsList)
-            //{
-            //    Console.WriteLine("POKEMON NAME : " + item.Name);
-            //    foreach (Attack atc in item.GetAttackList())
-            //    {
-            //        Console.WriteLine(atc.Name);
-            //    }
-            //}
         }
 
         // Begin the attack player has more speed attack
@@ -83,14 +62,20 @@ namespace ProjetC_
 
         public void Round()
         {
+            Console.WriteLine("--- NEW ROUND ! ---");
             // We set the pokemon will fight
             Pokemon currentEnemyPokemon = m_enemyPokemonsList[m_enemyPokemonsList.Count - 1];
             Pokemon currentCharacterPokemon = m_characterPokemonsList[m_characterPokemonsList.Count - 1];
 
+            int turnCount = 0;
+
             // Round start
             while (true)
             {
-                Console.WriteLine("Les pokemons en combat sont " + currentEnemyPokemon.Name + " Avec " + currentEnemyPokemon.CurrentLifePoints + " Point de vie " + "et " + currentCharacterPokemon.Name + " Avec " + currentCharacterPokemon.CurrentLifePoints + " Point de vie ");
+                
+
+                turnCount++;
+                Console.WriteLine("Les pokemons en combat sont " + currentEnemyPokemon.Name.ToUpper() + " Avec " + currentEnemyPokemon.CurrentLifePoints + " Point de vie " + "et " + currentCharacterPokemon.Name.ToUpper() + " Avec " + currentCharacterPokemon.CurrentLifePoints + " Point de vie ");
                 int i;
                 int k;
                 if (Convert.ToInt32(playerState) == 0)
@@ -98,23 +83,24 @@ namespace ProjetC_
                     // Item choice
                     k = 0;
                     Console.Write("Items disponibles\n");
-                    Console.Write("0. Ne pas utiliser d'item\n");
+                    Console.Write("1. Ne pas utiliser d'item\n");
                     foreach (Item item in m_c1.GetObjectList())
                     {
-                        Console.WriteLine(k + 1 + ". " + item.Name);
+                        Console.WriteLine(k + 2 + ". " + item.Name);
                         k++;
                     }
                     string sItem = Console.ReadLine();
-                    int iItem = int.Parse(sItem);
-
-                    if (!Utils.IsValidItemInput(sItem))
+                    if (!Utils.IsValidItemInput(sItem, m_c1.GetObjectList().Count))
                     {
                         continue;
                     }
+                    int iItem = int.Parse(sItem);
+
+                    
                     // If don't want use item
-                    if (iItem != 0)
+                    if (iItem > 1)
                     {
-                        m_c1.UseObject(iItem, currentCharacterPokemon);
+                        m_c1.UseObject(iItem - 2, currentCharacterPokemon);
                     }
 
                     // Attack choice
@@ -145,7 +131,7 @@ namespace ProjetC_
                     foreach (Attack item in attackList)
                     {
 
-                        Console.WriteLine(i + ". " + item.Name);
+                        Console.WriteLine(i + 1 + ". " + item.Name);
                         i++;
                     }
                     Console.Write("Choisis l'attaque que tu veux lancer : \n");
@@ -166,16 +152,25 @@ namespace ProjetC_
                 if (currentEnemyPokemon.PokemonState == PokemonState.Out || currentCharacterPokemon.PokemonState == PokemonState.Out)
                 {
                     Console.WriteLine("---------- Un pokemon est OUT, round terminé ----------");
-                    string aliveText = "est resté vivant, il a gangé le round";
-                    string outText = "est ko !, il a perdu le round";
+                    string aliveText = " est resté vivant, il a gagné le round ";
+                    string outText = " est ko !, il a perdu le round ";
                     Console.WriteLine("---------- Un pokemon est OUT, round terminé ----------");
                     // Determine object pokemon who win and defeat
                     Pokemon winner = currentEnemyPokemon.CurrentLifePoints > currentCharacterPokemon.CurrentLifePoints ? currentEnemyPokemon : currentCharacterPokemon;
                     Pokemon loser = currentEnemyPokemon.CurrentLifePoints > currentCharacterPokemon.CurrentLifePoints ? currentCharacterPokemon : currentEnemyPokemon;
-                    Console.WriteLine(winner.Name + " Avec " + winner.CurrentLifePoints + " Points de vie "+ loser.Name + " Avec " + loser.CurrentLifePoints + " Points de vie ");
+                    Console.WriteLine(winner.Name + aliveText + " Avec " + winner.CurrentLifePoints + " Points de vie \n");
+                    Console.WriteLine(loser.Name + outText +  " Avec " + loser.CurrentLifePoints + " Points de vie ");
                     loser.CurrentLifePoints = 0;
                     break;
                 }
+                // Clear console
+                if (turnCount >= 4)
+                {
+                    Console.Clear();
+                    turnCount = 0;
+                }
+                turnCount++;
+                //
             }
 
             // Round Finish

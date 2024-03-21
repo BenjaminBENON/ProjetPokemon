@@ -10,20 +10,35 @@ public enum PokemonState
     Out,
 }
 
+public enum PokemonType
+{
+    Normal = 0,
+    Water = 1,
+    Fire = 2,
+    Plant = 3,
+    Electric = 4
+}
+
+
 
 public class Pokemon
 {
     private string m_name;
-    private string m_type;
+    private PokemonType m_type;
 
     private PokemonState m_pokemonState;
 
-    private int m_baseLifePoints;
-    private int m_currentLifePoints;
+    private float m_baseLifePoints;
+    private float m_currentLifePoints;
 
-    private int m_speedAttackPoint;
-    private int m_attackPoint;
-    private int m_defensePoint;
+    private float m_speedAttackPoint;
+    private float m_attackPoint;
+    private float m_defensePoint;
+
+    // Max value
+    private const float maxLifePoints = 100;
+
+    private float[] m_res = new float[5];
 
     private int m_precisionPoint;
     private int m_esquivePoint;
@@ -42,7 +57,7 @@ public class Pokemon
         set { m_name = value; }
     }
 
-    public string Type
+    public PokemonType Type
     {
         get { return m_type; }
         set { m_type = value; }
@@ -54,13 +69,19 @@ public class Pokemon
         set { m_pokemonState = value; }
     }
 
-    public int BaseLifePoints
+    public float BaseLifePoints
     {
         get { return m_baseLifePoints; }
         set { m_baseLifePoints = value; }
     }
 
-    public int CurrentLifePoints
+    public float[] Resistances
+    {
+        get { return m_res; }
+        set { m_res = value; }
+    }
+
+    public float CurrentLifePoints
     {
         get { return m_currentLifePoints; }
         set
@@ -69,23 +90,30 @@ public class Pokemon
             if (m_currentLifePoints <= 0)
             {
                 m_pokemonState = PokemonState.Out;
+                return;
             }
+            if (m_currentLifePoints + value >= maxLifePoints)
+            {
+                m_currentLifePoints = maxLifePoints;
+                return;
+            }
+            
         }
     }
 
-    public int SpeedAttackPoint
+    public float SpeedAttackPoint
     {
         get { return m_speedAttackPoint; }
         set { m_speedAttackPoint = value; }
     }
 
-    public int AttackPoint
+    public float AttackPoint
     {
         get { return m_attackPoint; }
         set { m_attackPoint = value; }
     }
 
-    public int DefensePoint
+    public float DefensePoint
     {
         get { return m_defensePoint; }
         set { m_defensePoint = value; }
@@ -126,7 +154,7 @@ public class Pokemon
     }
 
     // Constructor
-    public Pokemon(string name, string type, int baseLifePoints, int speedAttackPoints, int attackPoints, int defensePoints, int precisionPoints, int esquivePoints)
+    public Pokemon(string name, PokemonType type, float baseLifePoints, float speedAttackPoints, float attackPoints, float defensePoints, int precisionPoints, int esquivePoints, float[] res)
     {
         Name = name;
         Type = type;
@@ -142,5 +170,6 @@ public class Pokemon
 
         // Lists
         m_vAttacks = new List<Attack>();
+        Resistances = res;
     }
 }

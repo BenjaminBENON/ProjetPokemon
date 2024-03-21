@@ -12,11 +12,11 @@ public static class Utils
         }
     }
 
-    public static bool IsValidItemInput(string input)
+    public static bool IsValidItemInput(string input, int objCount)
     {
         if (int.TryParse(input, out int attackIndex))
         {
-            return attackIndex >= 0 && attackIndex <= 10;
+            return attackIndex >= 1 && attackIndex <= objCount + 1;
         }
         else
         {
