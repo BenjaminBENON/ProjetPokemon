@@ -204,7 +204,8 @@ public class GameMenu
         Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
             { 1, GameMenuStates.Save_AddMenu },
-            { 2, GameMenuStates.InGameMenu }
+            { 2, GameMenuStates.Save_AddMenu },
+            { 3, GameMenuStates.InGameMenu }
         };
 
         ConsoleKey a = Console.ReadKey(true).Key;
