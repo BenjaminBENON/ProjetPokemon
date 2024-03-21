@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 // #TODO william -> Gestion des résistance - 
 
-// Gerer qui commence le turn en fonction du speed attack / Gerer si combat sauvage ou combat dresseur / Gerer pokeball
+// Gerer si combat sauvage ou combat dresseur / Gerer pokeball
 
 public enum GameMenuStates
 {

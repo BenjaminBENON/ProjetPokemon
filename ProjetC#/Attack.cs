@@ -61,9 +61,11 @@ public class WaterGun : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Water Gun !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -99,9 +101,11 @@ public class Tackle : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Tackle!");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         Console.WriteLine("Random precision\n" + accuracyPrec);
@@ -150,9 +154,11 @@ public class Ember : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Ember !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -188,9 +194,11 @@ public class VineWhip : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Vine Whip !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -226,9 +234,11 @@ public class ThunderShock : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Thunder Shock !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -264,9 +274,11 @@ public class BubbleBeam : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Bubble Beam !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -302,9 +314,11 @@ public class QuickAttack : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Quick Attack !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyEsq <= pokemonEnemy.EsquivePoint)
@@ -340,9 +354,11 @@ public class FireSpin : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Fire Spin !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -378,9 +394,11 @@ public class RazorLeaf : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
@@ -418,9 +436,11 @@ public class Thunderbolt : Attack
     {
         Console.WriteLine($"{pokemon.Name} utilise Thunder bolt !");
 
-        Random randomPrec = new Random();
+        int seed = DateTime.Now.Millisecond;
+        Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
-        Random randomEsq = new Random();
+        seed = DateTime.Now.Millisecond;
+        Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
