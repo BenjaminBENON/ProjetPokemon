@@ -503,6 +503,7 @@ public class AccuracyBoost : Attack
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
         Console.WriteLine($"{pokemon.Name} utilise Accuracy Boost !");
+        Console.WriteLine("Voici les points " + pokemon.PrecisionPoint + " de " + pokemon.Name);
         float oldPrecision = pokemon.PrecisionPoint;
         pokemon.PrecisionPoint = (int)(pokemon.PrecisionPoint * BoostCoefficient);
         Console.WriteLine($"La précision de {pokemon.Name} augmente de {BoostCoefficient} fois !");

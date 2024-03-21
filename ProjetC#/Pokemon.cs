@@ -31,17 +31,28 @@ public class Pokemon
     private float m_baseLifePoints;
     private float m_currentLifePoints;
 
-    private float m_speedAttackPoint;
-    private float m_attackPoint;
-    private float m_defensePoint;
+    private float m_speedAttackPoints;
+    private float m_attackPoints;
+    private float m_defensePoints;
 
     // Max value
-    private const float maxLifePoints = 100;
+    private const float m_maxLifePoints = 100;
+
+    // Not use 
+    private const float m_maxAttackPoints = 200;
+    private const float m_maxDefensePoints = 200;
+    //
+
+    private const float m_maxPrecisionPoints = 100;
+    private const float m_maxEsquivePoints = 100;
+    // Max Value *
+
+
 
     private float[] m_res = new float[5];
 
-    private int m_precisionPoint;
-    private int m_esquivePoint;
+    private float m_precisionPoints;
+    private float m_esquivePoints;
 
     private int m_level;
 
@@ -92,9 +103,9 @@ public class Pokemon
                 m_pokemonState = PokemonState.Out;
                 return;
             }
-            if (m_currentLifePoints + value >= maxLifePoints)
+            if (m_currentLifePoints + value >= m_maxLifePoints)
             {
-                m_currentLifePoints = maxLifePoints;
+                m_currentLifePoints = m_maxLifePoints;
                 return;
             }
             
@@ -103,32 +114,46 @@ public class Pokemon
 
     public float SpeedAttackPoint
     {
-        get { return m_speedAttackPoint; }
-        set { m_speedAttackPoint = value; }
+        get { return m_speedAttackPoints; }
+        set { m_speedAttackPoints = value; }
     }
 
     public float AttackPoint
     {
-        get { return m_attackPoint; }
-        set { m_attackPoint = value; }
+        get { return m_attackPoints; }
+        set { m_attackPoints = value; }
     }
 
     public float DefensePoint
     {
-        get { return m_defensePoint; }
-        set { m_defensePoint = value; }
+        get { return m_defensePoints; }
+        set { m_defensePoints = value; }
     }
 
-    public int PrecisionPoint
+    public float PrecisionPoint
     {
-        get { return m_precisionPoint; }
-        set { m_precisionPoint = value; }
+        get { return m_precisionPoints; }
+        set {
+            if (m_precisionPoints + value >= m_maxPrecisionPoints)
+            {
+                m_precisionPoints = m_maxPrecisionPoints;
+                return;
+            }
+            m_precisionPoints = value;
+        }
     }
 
-    public int EsquivePoint
+    public float EsquivePoint
     {
-        get { return m_esquivePoint; }
-        set { m_esquivePoint = value; }
+        get { return m_esquivePoints; }
+        set {
+            if (m_esquivePoints + value >= m_maxEsquivePoints)
+            {
+                m_esquivePoints = m_maxEsquivePoints;
+                return;
+            }
+            m_esquivePoints = value;
+        }
     }
 
     public int Level
@@ -154,8 +179,9 @@ public class Pokemon
     }
 
     // Constructor
-    public Pokemon(string name, PokemonType type, float baseLifePoints, float speedAttackPoints, float attackPoints, float defensePoints, int precisionPoints, int esquivePoints, float[] res)
+    public Pokemon(string name, PokemonType type, float baseLifePoints, float speedAttackPoints, float attackPoints, float defensePoints, float precisionPoints, float esquivePoints, float[] res)
     {
+
         Name = name;
         Type = type;
         m_pokemonState = PokemonState.Normal;

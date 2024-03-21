@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 // #TODO william -> Gestion des résistance - 
 
-// Gerer qui commence le turn en fonction du speed attack
+// Gerer qui commence le turn en fonction du speed attack / Gerer si combat sauvage ou combat dresseur / Gerer pokeball
 
 public enum GameMenuStates
 {
@@ -82,21 +82,18 @@ public class Game
         currentCharacter.AddObject(berryHelp);
         currentCharacter.AddObject(pokeBall);
 
-        // Normal / 
         float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };   // Plante
         float[] resWater = { 1, 1, 0.8f, 1, 0.5f };   // Eau
-        float[] resFire = { 1, 0.5f, 1, 1, 1 };   // Feu
-        float[] resNormal = { 1, 1, 1, 1, 1 };   // Normal
-        float[] resElectric = { 1, 2, 1, 1, 1 };   // Électrique
+        float[] resFire = { 1, 0.5f, 1, 1, 1 };       // Feu
+        float[] resNormal = { 1, 1, 1, 1, 1 };       // Normal
+        float[] resElectric = { 1, 2, 1, 1, 1 };     // Électrique
 
-        // Création de chaque Pokémon avec ses résistances spécifiques
         Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 85, 15, resPlant);
         Pokemon salameche = new Pokemon("Salamèche", PokemonType.Fire, 39, 52, 43, 60, 80, 20, resFire);
         Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 70, 25, resWater);
         Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 90, 25, resElectric);
 
-
-        // Création des Attacks
+        // Ajout des attaques
         Attack fouetLianes = new VineWhip();
         Attack tranchHerbe = new RazorLeaf();
         Attack bombeGraine = new BubbleBeam();
@@ -107,25 +104,31 @@ public class Game
         Attack lanceFlamme = new ThunderShock();
         Attack detonation = new QuickAttack();
 
-        bulbizarre.AddAttack(fouetLianes);
-        bulbizarre.AddAttack(tranchHerbe);
-        bulbizarre.AddAttack(bombeGraine);
-        bulbizarre.AddAttack(lanceSoleil);
+        Attack defenseBoost = new DefenseBoost();
+        Attack speedBoost = new SpeedBoost();
+        Attack accuracyBoost = new AccuracyBoost();
+        Attack evasionBoost = new EsquiveBoost();
 
-        salameche.AddAttack(griffe);
-        salameche.AddAttack(flammeche);
-        salameche.AddAttack(lanceFlamme);
-        salameche.AddAttack(detonation);
 
-        carapuce.AddAttack(fouetLianes);
-        carapuce.AddAttack(tranchHerbe);
-        carapuce.AddAttack(bombeGraine);
-        carapuce.AddAttack(lanceSoleil);
+        bulbizarre.AddAttack(fouetLianes);    // Physique
+        bulbizarre.AddAttack(tranchHerbe);    // Physique
+        bulbizarre.AddAttack(defenseBoost);   // Stat
+        bulbizarre.AddAttack(speedBoost);     // Stat
 
-        pikachu.AddAttack(griffe);
-        pikachu.AddAttack(flammeche);
-        pikachu.AddAttack(lanceFlamme);
-        pikachu.AddAttack(detonation);
+        salameche.AddAttack(griffe);          // Physique
+        salameche.AddAttack(flammeche);       // Physique
+        salameche.AddAttack(accuracyBoost);   // Stat
+        salameche.AddAttack(evasionBoost);    // Stat
+
+        carapuce.AddAttack(bombeGraine);      // Physique
+        carapuce.AddAttack(lanceSoleil);      // Physique
+        carapuce.AddAttack(defenseBoost);     // Stat
+        carapuce.AddAttack(speedBoost);       // Stat
+
+        pikachu.AddAttack(lanceFlamme);       // Physique
+        pikachu.AddAttack(detonation);        // Physique
+        pikachu.AddAttack(accuracyBoost);     // Stat
+        pikachu.AddAttack(evasionBoost);      // Stat
 
         List<Pokemon> enemyPokemonList = new List<Pokemon>();
 
@@ -136,36 +139,7 @@ public class Game
         enemyPokemonList.Add(pikachu);
 
 
-        //Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
-
-        Pokemon playerPokemon = new Pokemon("Pikachu", PokemonType.Electric, 100, 100, 100, 100, 100, 100, new float[5] { 1, 1, 1, 1, 1 });
-        Pokemon enemyPokemon = new Pokemon("Salameche", PokemonType.Fire, 100, 100, 100, 100, 100, 100, new float[5] { 1, 1, 1, 1, 1 });
-
-        Attack defenseBoost = new DefenseBoost();
-        Attack speedBoost = new SpeedBoost();
-        Attack accuracyBoost = new AccuracyBoost();
-        Attack evasionBoost = new EsquiveBoost();
-        Attack attackLower = new AttackLower();
-        Attack defenseLower = new DefenseLower();
-        Attack speedLower = new SpeedLower();
-        Attack accuracyLower = new AccuracyLower();
-        Attack evasionLower = new EsquiveLower();
-        Attack allStatsBoost = new AllStatsBoost();
-        Attack allStatsLower = new AllStatsLower();
-
-        // Utilisation des attaques sur le Pokemon joueur
-        defenseBoost.Use(playerPokemon, enemyPokemon);
-        speedBoost.Use(playerPokemon, enemyPokemon);
-        accuracyBoost.Use(playerPokemon, enemyPokemon);
-        evasionBoost.Use(playerPokemon, enemyPokemon);
-        attackLower.Use(playerPokemon, enemyPokemon);
-        defenseLower.Use(playerPokemon, enemyPokemon);
-        speedLower.Use(playerPokemon, enemyPokemon);
-        accuracyLower.Use(playerPokemon, enemyPokemon);
-        evasionLower.Use(playerPokemon, enemyPokemon);
-        allStatsBoost.Use(playerPokemon, enemyPokemon);
-        allStatsLower.Use(playerPokemon, enemyPokemon);
-
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
         Thread.Sleep(300000000);
 
