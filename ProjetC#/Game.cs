@@ -128,28 +128,27 @@ public class Game
 
         Thread.Sleep(30000000);
 
-
-
-            // // Game Menus
-            // { GameMenuStates.InGameMenu, StartMenu },
-            // { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
-            // // Inventory Menus
-            // { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
-            // { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
-            // { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
-                
-    
-            // // Pokedex Menus
-            // { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
-            // // Save Menus
-            // { GameMenuStates.InSaveMenu, Display_Save_Menu },
-            // { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
-            // // Play Menu | No sub type
-            // { GameMenuStates.OnMap, StartMap },
-            // { GameMenuStates.InPokemonCenter, StartPokemonCenter },
-            // { GameMenuStates.OnFight, Play_Fight },
-            // { GameMenuStates.ShutDown, Quit }
+        bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
+            // Game Menus
+            { GameMenuStates.InGameMenu, StartMenu },
+            { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
+            // Inventory Menus
+            { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
+            { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
+            { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
             
+            // Pokedex Menus
+            { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
+            // Save Menus
+            { GameMenuStates.InSaveMenu, Display_Save_Menu },
+            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
+            // Play Menu | No sub type
+            { GameMenuStates.OnMap, StartMap },
+            { GameMenuStates.InPokemonCenter, StartPokemonCenter },
+            { GameMenuStates.OnFight, Play_Fight },
+            { GameMenuStates.ShutDown, Quit }
+        };
+
         // };
         Run();
     }

@@ -9,6 +9,7 @@ public class Attack
 {
     private string m_name;
     private string m_type;
+    private int m_power;
 
     public string Name
     {
@@ -56,7 +57,7 @@ public class WaterGun : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Water Gun inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
                 pokemonEnemy.CurrentLifePoints -= damage;
                 Console.WriteLine($"Water Gun inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
@@ -82,7 +83,7 @@ public class Tackle : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Tackle!");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -95,9 +96,7 @@ public class Tackle : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Tackle inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -121,7 +120,7 @@ public class Ember : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Ember !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -134,9 +133,7 @@ public class Ember : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Ember inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -160,7 +157,7 @@ public class VineWhip : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Vine Whip !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -173,9 +170,7 @@ public class VineWhip : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Vine Whip inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -199,7 +194,7 @@ public class ThunderShock : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Thunder Shock !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -212,9 +207,7 @@ public class ThunderShock : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Thunder Shock inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -238,7 +231,7 @@ public class BubbleBeam : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Bubble Beam !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -251,9 +244,7 @@ public class BubbleBeam : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Bubble Beam inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -277,7 +268,7 @@ public class QuickAttack : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Quick Attack !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -290,9 +281,7 @@ public class QuickAttack : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Quick Attack inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -316,7 +305,7 @@ public class FireSpin : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Fire Spin !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -329,9 +318,7 @@ public class FireSpin : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Fire Spin inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
@@ -369,14 +356,12 @@ public class RazorLeaf : Attack
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
                 Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
                 Console.WriteLine("Le pokemon a esquivé");
             }
-            
+
         }
         else
         {
@@ -394,7 +379,7 @@ public class Thunderbolt : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
+        Console.WriteLine($"{pokemon.Name} utilise Thunder bolt !");
 
         Random randomPrec = new Random();
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -407,9 +392,7 @@ public class Thunderbolt : Attack
             {
                 int damage = (int)((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * 3);
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                Console.WriteLine($"Thunder bolt inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
