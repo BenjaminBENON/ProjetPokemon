@@ -163,7 +163,6 @@ public class Game
             { GameMenuStates.ShutDown, Quit }
         };
 
-        // };
     }
     public void Run()
     {

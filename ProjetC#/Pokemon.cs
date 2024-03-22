@@ -7,7 +7,9 @@ public enum PokemonState
 {
     Normal,
     Stun,
+    Poisoned,
     Out,
+
 }
 
 public enum PokemonType
