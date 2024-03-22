@@ -11,6 +11,7 @@ using System.Text;
 public class GameMenu
 {
     private static int m_userChoice = 1;
+    private static int m_ItemSelect = 1;
 
 
     //private struct StartMenuLabels
@@ -21,10 +22,10 @@ public class GameMenu
 
     //    public StartMenuLabels()
     //    {
-    //        // si déja une partie, texte -> "Continuer la partie actuelle / Jouer"
+    //        // si dï¿½ja une partie, texte -> "Continuer la partie actuelle / Jouer"
     //        PlayText = "Commencer le jeu";
-    //        // si déja une partie, texte -> "Gérer les sauvegardes"
-    //        GameManagementText = "Créer une partie";
+    //        // si dï¿½ja une partie, texte -> "Gï¿½rer les sauvegardes"
+    //        GameManagementText = "Crï¿½er une partie";
     //        LeaveText = "Quitter le jeu";
     //    }
     //}
@@ -127,7 +128,7 @@ public class GameMenu
         Console.Write("Nom de votre personnage : ");
         // character name
         string cName = Console.ReadLine();
-        Console.Write("Votre personnage " + cName + " est désormais disponible . Appuyer sur Entrer pour continuer.");
+        Console.Write("Votre personnage " + cName + " est dï¿½sormais disponible . Appuyer sur Entrer pour continuer.");
 
         oGame.SetCharacterName(cName);
 
@@ -146,8 +147,33 @@ public class GameMenu
         //MenuCreator.CreateMenu("test",4,caseName);
         //Console.Read();
     }
+    public static void Display_InventoryMenu()
+    {
+        int windowWidth = Console.WindowWidth;
+        int windowHeight = Console.WindowHeight;
 
-    public static void Display_SaveMenu()
+        string textMenu = "=== INVENTORY ===";
+        int xPosition = (windowWidth) / 2 - 45;
+        int yPosition = (windowHeight / 6) * 4;
+
+        Console.SetCursorPosition(xPosition, yPosition + 1);
+        Console.WriteLine("|" + textMenu + "|");
+        Console.SetCursorPosition(xPosition, yPosition);
+        Console.WriteLine("-------------------");
+        Console.SetCursorPosition(xPosition, yPosition + 2);
+        Console.WriteLine("-------------------");
+
+        for (int y = 0; y < 20; y++)
+        {
+            Console.SetCursorPosition(windowWidth/2 - 50, yPosition + y);
+            Console.Write("|");
+            Console.SetCursorPosition(windowWidth/2 + 50, yPosition + y);
+            Console.WriteLine("|");
+        }
+        
+
+    }
+        public static void Display_SaveMenu()
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
@@ -204,7 +230,7 @@ public class GameMenu
         Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 + 2);
         Console.WriteLine("--------------------------");
         
-        //Lire un JSON et pouvoir sélectionner une save
+        //Lire un JSON et pouvoir sï¿½lectionner une save
     
     }
 
