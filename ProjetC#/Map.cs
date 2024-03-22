@@ -95,8 +95,6 @@ public class Map
     };
     public static void Play_Map(Game oGame, Character p)
     {
-        //Ici tout ce qui se passe sur la map
-        
         for (int y = -9; y <= 9; y++)
         {
             Console.SetCursorPosition(Console.WindowWidth / 2 - 15, Console.WindowHeight / 2 + y);

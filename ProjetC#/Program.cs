@@ -24,9 +24,8 @@ class Program
     static void Main(string[] args)
     {
         Resize();
-
+        
         Game game = new Game();
-        game.Start();
         while (true)
         {
             game.Run();

@@ -3,7 +3,7 @@ using System.Numerics;
 
 public class Input
 {
-    public static void Update(Character p)
+    public static void Update(Game oGame,Character p)
     {
         ConsoleKeyInfo KeyPress;
         while (Console.KeyAvailable)
@@ -39,5 +39,27 @@ public class Input
                 p.PosX += 1;
             }
         }
+        ChangeState(oGame, p, KeyPress);
+    }
+
+    private static void ChangeState(Game oGame, Character p, ConsoleKeyInfo k)
+    {
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+        {
+            { 1, GameMenuStates.InPokemonCenter },
+            { 2, GameMenuStates.InGameMenu }
+        };
+
+        if (k.Key == ConsoleKey.P)
+        {
+            oGame.UpdateCurrentGameState(2, stateTransitions);
+            Console.Clear();
+        }
+        else if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) == 'P')
+        {
+            oGame.UpdateCurrentGameState(1, stateTransitions);
+            Console.Clear();
+        }
+        
     }
 }
