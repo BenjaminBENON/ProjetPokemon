@@ -19,7 +19,6 @@ using System.Xml.Linq;
 public enum GameMenuStates
 {
     InGameMenu, // Start Menu
-    InInventoryMenu, // Manage Object & Pokemon
     InPokedexMenu, // Discover Pokemons of current Character
     InSaveMenu, // Save Menu -> ShowBackupList | Button Add | Button Delete
     OnMap, // In Open world | Can move | Can Interact and Trigger Fight
@@ -53,6 +52,8 @@ public class Game
     private Character botCharacter;
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
+
+    public GameMenuStates CurrentGameState { get => currentGameState; }
 
 
     //---------------------------LES METHODES-----------------------
@@ -129,7 +130,6 @@ public class Game
             { GameMenuStates.InGameMenu, StartMenu },
             { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
             // Inventory Menus
-            { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
             { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
             { GameMenuStates.Inventory_ShowObjects, Display_Inventory_ObjectsMenu },
             
@@ -163,7 +163,7 @@ public class Game
     {
         Environment.Exit(0);
     }
-
+    
     public void SetCharacterName(string cName)
     {
         currentCharacter = new Character(cName);
@@ -183,7 +183,8 @@ public class Game
     private void StartMap()
     {
         Map.Play_Map(this,botCharacter); 
-        Input.Update(botCharacter);
+        Input.Update();
+        Input.PlayerControl(this, botCharacter);
         Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
@@ -193,28 +194,6 @@ public class Game
 
 
     //------------------------LES INVENTAIRES---------------------
-
-    private void Display_Inventory_Menu()
-    {
-        Console.WriteLine("=== MENU D'INVENTAIRE ===");
-
-        Console.WriteLine("1. Afficher les Pokémons"); // Show all caught pokemon
-        Console.WriteLine("2. Afficher les Objets"); // Show all caught objects
-        Console.WriteLine("3. Retourner au menu principal");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, GameMenuStates.Inventory_ShowPokemons },
-            { 2, GameMenuStates.Inventory_ShowObjects },
-            { 3, GameMenuStates.InGameMenu }
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
-    }
-
     private void Display_Inventory_PokemonsMenu()
     {
         Console.WriteLine("Voici tout vos pokemons"); // Show all caught pokemon
@@ -222,7 +201,11 @@ public class Game
 
     private void Display_Inventory_ObjectsMenu()
     {
-        Console.WriteLine("Voici tout vos objets"); // Show all caught objects
+        Map.Play_Map(this, botCharacter);
+        GameMenu.Display_InventoryMenu();
+        Input.Update();
+        Input.ItemInventoryControl(this);
+        Console.CursorVisible = false;
     }
 
     private void Display_Pokedex_Menu()

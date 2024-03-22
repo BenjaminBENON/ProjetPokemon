@@ -10,8 +10,8 @@ using System.Text;
 
 public class Map
 {
-    static int _iSizeX = 155;
-    static int _iSizeY = 59;
+    static int _iSizeX = 239;
+    static int _iSizeY = 71;
 
     public static int SizeX { get => _iSizeX; }
     public static int SizeY { get => _iSizeY; }
@@ -97,10 +97,10 @@ public class Map
     {
         //Ici tout ce qui se passe sur la map
         
-        for (int y = -9; y <= 9; y++)
+        for (int y = -15; y <= 15; y++)
         {
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 15, Console.WindowHeight / 2 + y);
-            for (int x = -15; x <= 15; x++)
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 50, Console.WindowHeight / 2 - 10 + y);
+            for (int x = -50; x <= 50; x++)
             {
                 if (p.PosX + x < 0 || p.PosX + x > SizeX || p.PosY + y < 0 || p.PosY + y > SizeY)
                 {
@@ -132,7 +132,7 @@ public class Map
 
     public static void DrawPlayer(Character p)
     {
-        Console.SetCursorPosition(Console.WindowWidth / 2 , Console.WindowHeight / 2);
+        Console.SetCursorPosition(Console.WindowWidth / 2 , Console.WindowHeight / 2 -10);
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write(p._sCharac);
     }
