@@ -137,9 +137,6 @@ public class GameMenu
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
 
-<<<<<<< Updated upstream
-=======
-
         string textMenu = "=== INVENTORY ===";
         int xPosition = (windowWidth) / 2 - 45;
         int yPosition = (windowHeight / 6) * 4;
@@ -248,5 +245,4 @@ public class GameMenu
         if (m_userChoice > 3) m_userChoice = 3;
         if (m_userChoice < 1) m_userChoice = 1;
     }
->>>>>>> Stashed changes
 }
