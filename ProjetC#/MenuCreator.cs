@@ -10,7 +10,7 @@ namespace ProjetC_
     {
         public static void CreateMenu(int posX,int posY, string name, int nbCase, List<string> caseName) 
         {
-            if (caseName.Count != nbCase || nbCase < 3)
+            if (caseName.Count != nbCase || nbCase < 2)
             {
                 Console.WriteLine("Erreur dans la création de menu.");
                 return;

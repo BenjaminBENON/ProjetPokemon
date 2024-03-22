@@ -132,7 +132,6 @@ public class GameMenu
 
         oGame.SetCharacterName(cName);
 
-
         ConsoleKey a = Console.ReadKey(true).Key;
         if (a == ConsoleKey.Enter)
         {
@@ -146,16 +145,15 @@ public class GameMenu
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
 
-        string textMenu = "=== INVENTORY ===";
         int xPosition = (windowWidth) / 2 - 45;
         int yPosition = (windowHeight / 6) * 4;
 
-        Console.SetCursorPosition(xPosition, yPosition + 1);
-        Console.WriteLine("|" + textMenu + "|");
-        Console.SetCursorPosition(xPosition, yPosition);
-        Console.WriteLine("-------------------");
-        Console.SetCursorPosition(xPosition, yPosition + 2);
-        Console.WriteLine("-------------------");
+        var listInventory = new List<string>();
+        listInventory.Add("Pokeball");
+        listInventory.Add("Masterball");
+        listInventory.Add("LaMereABen");
+
+        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", 3, listInventory);
 
         for (int y = 0; y < 20; y++)
         {
