@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 
@@ -10,6 +11,7 @@ using System.Text;
 public class GameMenu
 {
     private static int m_userChoice = 1;
+
 
     //private struct StartMenuLabels
     //{
@@ -136,6 +138,13 @@ public class GameMenu
             Console.Clear();
             oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
+        //var caseName = new List<string>();
+        //caseName.Add("Coucou");
+        //caseName.Add("MAIS NAN!!!");
+        //caseName.Add("MAIS SI!!!");
+        //caseName.Add("ah bon");
+        //MenuCreator.CreateMenu("test",4,caseName);
+        //Console.Read();
     }
 
     public static void Display_SaveMenu()

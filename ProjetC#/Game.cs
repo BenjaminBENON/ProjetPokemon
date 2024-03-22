@@ -66,6 +66,7 @@ public class Game
         // Generate multiple opponent / enemy
         botCharacter = new Character("Bot");
 
+        Start();
 
     }
 
@@ -139,9 +140,6 @@ public class Game
         enemyPokemonList.Add(pikachu);
 
 
-        //Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
-
-        //Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
@@ -163,9 +161,8 @@ public class Game
             { GameMenuStates.OnFight, Play_Fight },
             { GameMenuStates.ShutDown, Quit }
         };
-
-        // };
     }
+
     public void Run()
     {
         foreach (var item in bindFunctionsToGameMenuStates)
@@ -201,13 +198,13 @@ public class Game
     }
     private void StartMap()
     {
-        Map.Play_Map(this,botCharacter); 
-        Input.Update(botCharacter);
+        Map.Play_Map(this, botCharacter);
+        Input.Update(this, botCharacter);
         Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
-        
+        PokemonCenter.DisplayCenter();
     }
 
 
