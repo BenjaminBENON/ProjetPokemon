@@ -23,6 +23,9 @@ class Program
     }
     static void Main(string[] args)
     {
+
+
+
         Resize();
         
         Game game = new Game();

@@ -17,6 +17,8 @@ public class Map
     public static int SizeY { get => _iSizeY; }
     public static string[] GetWorldMap { get => WorldMap; }
 
+
+
     static string[] WorldMap =
     {
         "|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|",
@@ -46,8 +48,8 @@ public class Map
         "|      CCCCCCCCCCCCCC      CCCC    CCCC                  CCCC                CCCCCCCCCCCCOOOOOOCC                                                            OOOOOOOOOOOOOOOOOOOO        CCCC                                                    |",
         "|                CCCC      CCCC    CCCC                  CCCC                    CCCC  CCCCCCCCCC                                                              OOOOOOOOOOOOOOOOOOOOOO    CCCC                                                    |",
         "|OOO             CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                          OOOOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOO     CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
+        "|OOOOOOOOOOO     CCCC      CCCC    CCCC                  CCCC                    CCCC                  HH                                                        OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
+        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC                  CCCC                    CCCC                  BB                                                        OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBB      CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOO    CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOOOO  CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
@@ -128,6 +130,7 @@ public class Map
             Console.WriteLine();
         }
         DrawPlayer(p);
+        Console.BackgroundColor = ConsoleColor.Black;
     }
 
     public static void DrawPlayer(Character p)

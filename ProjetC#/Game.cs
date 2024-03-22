@@ -73,6 +73,7 @@ public class Game
 
     public void Start()
     {
+
         botCharacter = new Character("Bot");
         currentCharacter = new Character("William");
 

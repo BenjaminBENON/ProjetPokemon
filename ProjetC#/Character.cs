@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 // 2d vector
 using System.Numerics;
 
@@ -16,7 +17,7 @@ namespace ProjetC_
         public int PosX { get => _iPosX; set => _iPosX = value; }
         public int PosY { get => _iPosY; set => _iPosY = value; }
 
-        public string _sCharac = "@";
+        public string _sCharac = "ϊ";
 
         private string m_name;
         List<Pokemon> m_vPokemonsCaught;
