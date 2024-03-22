@@ -23,4 +23,16 @@ public static class Utils
             return false;
         }
     }
+
+    public static bool IsValidSwitchPokemonInput(string input, int objCount)
+    {
+        if (int.TryParse(input, out int pokemonIndex))
+        {
+            return pokemonIndex >= 1 && pokemonIndex <= objCount;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

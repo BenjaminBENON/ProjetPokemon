@@ -54,7 +54,7 @@ public class Pokemon
     private float m_precisionPoints;
     private float m_esquivePoints;
 
-    private int m_level;
+    private Level m_level;
 
 
 
@@ -156,7 +156,7 @@ public class Pokemon
         }
     }
 
-    public int Level
+    public Level Level
     {
         get { return m_level; }
         set { m_level = value; }
@@ -192,7 +192,7 @@ public class Pokemon
         DefensePoint = defensePoints;
         PrecisionPoint = precisionPoints;
         EsquivePoint = esquivePoints;
-        Level = 0;
+        Level = new Level();
 
         // Lists
         m_vAttacks = new List<Attack>();

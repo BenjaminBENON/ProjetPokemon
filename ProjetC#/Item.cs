@@ -4,15 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+public enum ItemType
+{
+    Pokeball,
+    Heal,
+    PokemonState,
+    Stat,
+}
+
 
 
 public class Item
 {
     private string m_name;
+    private ItemType m_type;
+
     public string Name
     {
         get { return m_name; }
         set { m_name = value; }
+    }
+
+    public ItemType Type
+    {
+        get { return m_type; }
+        set { m_type = value; }
     }
 
     public virtual void Use(Pokemon pokemon)
@@ -43,6 +59,7 @@ public class Potion : Item
 
     public Potion(string name, int iRestorePv) : base(name)
     {
+        Type = ItemType.Heal;
         RestorePv = iRestorePv;
     }
 
@@ -61,13 +78,17 @@ public class Berry : Item
     public override void Use(Pokemon pokemon)
     {
         // Remove Bad Pokemon effect
+        Type = ItemType.PokemonState;
         pokemon.PokemonState = PokemonState.Normal;
     }
 }
 
-public class PokeBall : Item
+public class Pokeball : Item
 {
-    public PokeBall(string name) : base(name) { }
+    public Pokeball(string name) : base(name) 
+    {
+        Type = ItemType.Pokeball;
+    }
 
     public override void Use(Pokemon pokemon)
     {

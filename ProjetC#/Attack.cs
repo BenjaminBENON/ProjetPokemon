@@ -13,6 +13,16 @@ public enum AttackType
     Electric = 4
 }
 
+public enum Stat
+{
+    Attack,
+    Defense,
+    SpeedAttack,
+    Precision,
+    Esquive
+}
+
+
 
 public class Attack
 {
@@ -50,17 +60,18 @@ public class Attack
 
 }
 
-public class WaterGun : Attack
+public class PhysicalAttack : Attack
 {
-    public WaterGun() : base("Water Gun",10)
+    public int PhysicalPower { get; set; }
+
+    public PhysicalAttack(string name, int power) : base(name, power)
     {
-        Type = AttackType.Water;
+        PhysicalPower = power;
     }
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise Water Gun !");
-
+        Console.WriteLine($"{pokemon.Name} utilise {Name} !");
         int seed = DateTime.Now.Millisecond;
         Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -73,632 +84,262 @@ public class WaterGun : Attack
             if (accuracyEsq >= pokemonEnemy.EsquivePoint)
             {
                 int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
+                float attackRatio = pokemon.AttackPoint / pokemonEnemy.DefensePoint;
+                float resistanceModifier = pokemonEnemy.Resistances[iType];
+                float totalModifier = attackRatio * PhysicalPower * resistanceModifier;
+                float damage = totalModifier;
                 pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Water Gun inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+
+                Console.WriteLine($"Détails du calcul de dégâts pour {Name}:");
+                Console.WriteLine($"  - Ratio d'attaque: {attackRatio}");
+                Console.WriteLine($"  - Puissance physique: {PhysicalPower}");
+                Console.WriteLine($"  - Modificateur de résistance: {resistanceModifier}");
+                Console.WriteLine($"  - Total des modifications: {totalModifier}");
+                Console.WriteLine($"  - Dégâts infligés: {damage}");
+                Console.WriteLine($"{Name} inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
                 Console.WriteLine("Le pokemon a esquivé");
             }
-
         }
         else
         {
-            Console.WriteLine("L'attaque  a raté !");
+            Console.WriteLine("L'attaque a raté !");
         }
     }
 }
 
-public class Tackle : Attack
+public class StatAttack : Attack
+{
+    public Stat StatToBoost { get; set; }
+    public float BoostCoefficient { get; set; }
+
+    public StatAttack(string name, Stat stat, float boostCoefficient) : base(name, 0)
+    {
+        StatToBoost = stat;
+        BoostCoefficient = boostCoefficient;
+    }
+
+    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
+    {
+        Console.WriteLine($"{pokemon.Name} utilise {Name} !");
+        float oldValue = 0;
+        switch (StatToBoost)
+        {
+            case Stat.Attack:
+                oldValue = pokemon.AttackPoint;
+                pokemon.AttackPoint *= BoostCoefficient;
+                break;
+            case Stat.Defense:
+                oldValue = pokemon.DefensePoint;
+                pokemon.DefensePoint *= BoostCoefficient;
+                break;
+            case Stat.SpeedAttack:
+                oldValue = pokemon.SpeedAttackPoint;
+                pokemon.SpeedAttackPoint *= BoostCoefficient;
+                break;
+            case Stat.Precision:
+                oldValue = pokemon.PrecisionPoint;
+                pokemon.PrecisionPoint = (int)(pokemon.PrecisionPoint * BoostCoefficient);
+                break;
+            case Stat.Esquive:
+                oldValue = pokemon.EsquivePoint;
+                pokemon.EsquivePoint = (int)(pokemon.EsquivePoint * BoostCoefficient);
+                break;
+        }
+        Console.WriteLine($"La statistique {StatToBoost} de {pokemon.Name} augmente de {BoostCoefficient} fois !");
+        Console.WriteLine($"Ancienne valeur : {oldValue}, Nouvelle valeur : {GetStatValue(pokemon, StatToBoost)}");
+    }
+
+    private float GetStatValue(Pokemon pokemon, Stat stat)
+    {
+        switch (stat)
+        {
+            case Stat.Attack:
+                return pokemon.AttackPoint;
+            case Stat.Defense:
+                return pokemon.DefensePoint;
+            case Stat.SpeedAttack:
+                return pokemon.SpeedAttackPoint;
+            case Stat.Precision:
+                return pokemon.PrecisionPoint;
+            case Stat.Esquive:
+                return pokemon.EsquivePoint;
+            default:
+                return 0;
+        }
+    }
+}
+
+public class WaterGun : PhysicalAttack
+{
+    public WaterGun() : base("Water Gun", 10)
+    {
+        Type = AttackType.Water;
+    }
+}
+
+public class Tackle : PhysicalAttack
 {
     public Tackle() : base("Tackle", 10)
     {
         Type = AttackType.Normal;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Tackle!");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        //Console.WriteLine("Random precision\n" + accuracyPrec);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float attackDamage = pokemon.AttackPoint / pokemonEnemy.DefensePoint;
-                float modifiedDamage = attackDamage * Power;
-                float resistanceModifier = modifiedDamage * pokemonEnemy.Resistances[iType];
-                float damage = resistanceModifier;
-
-                //Console.WriteLine("Calcul des dégâts :");
-                //Console.WriteLine($"Point d'attaque du Pokémon : {pokemon.AttackPoint}");
-                //Console.WriteLine($"Point de défense de l'ennemi : {pokemonEnemy.DefensePoint}");
-                //Console.WriteLine($"Puissance de l'attaque : {Power}");
-                //Console.WriteLine($"Résistance de l'ennemi au type de l'attaque : {pokemonEnemy.Resistances[iType]}");
-                //Console.WriteLine($"Dégâts infligés : {damage}");
-
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Tackle inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class Ember : Attack
+public class Ember : PhysicalAttack
 {
-    public Ember() : base("Ember",10)
+    public Ember() : base("Ember", 10)
     {
         Type = AttackType.Fire;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Ember !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Ember inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class VineWhip : Attack
+public class VineWhip : PhysicalAttack
 {
-    public VineWhip() : base("Vine Whip",10)
+    public VineWhip() : base("Vine Whip", 10)
     {
         Type = AttackType.Plant;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Vine Whip !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Vine Whip inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class ThunderShock : Attack
+public class ThunderShock : PhysicalAttack
 {
-    public ThunderShock() : base("Thunder Shock",10)
+    public ThunderShock() : base("Thunder Shock", 10)
     {
         Type = AttackType.Electric;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Thunder Shock !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Thunder Shock inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class BubbleBeam : Attack
+public class BubbleBeam : PhysicalAttack
 {
-    public BubbleBeam() : base("Bubble Beam",10)
+    public BubbleBeam() : base("Bubble Beam", 10)
     {
         Type = AttackType.Water;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Bubble Beam !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Bubble Beam inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class QuickAttack : Attack
+public class QuickAttack : PhysicalAttack
 {
     public QuickAttack() : base("Quick Attack", 10)
     {
         Type = AttackType.Normal;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Quick Attack !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyEsq <= pokemonEnemy.EsquivePoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Quick Attack inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class FireSpin : Attack
+public class FireSpin : PhysicalAttack
 {
-    public FireSpin() : base("Fire Spin",10)
+    public FireSpin() : base("Fire Spin", 10)
     {
         Type = AttackType.Fire;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Fire Spin !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ( (pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Fire Spin inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class RazorLeaf : Attack
+public class RazorLeaf : PhysicalAttack
 {
-    public RazorLeaf() : base("Razor Leaf",10)
+    public RazorLeaf() : base("Razor Leaf", 10)
     {
         Type = AttackType.Plant;
     }
-
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Razor Leaf !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-
-
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Razor Leaf inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-public class Thunderbolt : Attack
+public class Thunderbolt : PhysicalAttack
 {
-    public Thunderbolt() : base("Thunderbolt",10)
+    public Thunderbolt() : base("Thunderbolt", 10)
     {
         Type = AttackType.Electric;
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Thunder bolt !");
-
-        int seed = DateTime.Now.Millisecond;
-        Random randomPrec = new Random(seed);
-        int accuracyPrec = randomPrec.Next(0, 101);
-        seed = DateTime.Now.Millisecond;
-        Random randomEsq = new Random(seed);
-        int accuracyEsq = randomEsq.Next(0, 101);
-
-        if (accuracyPrec <= pokemon.PrecisionPoint)
-        {
-            if (accuracyEsq >= pokemonEnemy.EsquivePoint)
-            {
-                int iType = (int)Type;
-                float damage = ((pokemon.AttackPoint / pokemonEnemy.DefensePoint) * Power) * pokemonEnemy.Resistances[iType];
-                pokemonEnemy.CurrentLifePoints -= damage;
-                Console.WriteLine($"Thunder bolt inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
-            }
-            else
-            {
-                Console.WriteLine("Le pokemon a esquivé");
-            }
-
-        }
-        else
-        {
-            Console.WriteLine("L'attaque  a raté !");
-        }
-    }
 }
 
-
-// Stats Attack 
-
-
-
-
-
-
-
-
-
-public class DefenseBoost : Attack
+public class DefenseBoost : StatAttack
 {
-    private const float BoostCoefficient = 1.5f;
-
-    public DefenseBoost() : base("Defense Boost", 0)
+    public DefenseBoost() : base("Defense Boost", Stat.Defense, 1.5f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Defense Boost !");
-        float oldDefense = pokemon.DefensePoint;
-        pokemon.DefensePoint *= BoostCoefficient;
-        Console.WriteLine($"La défense de {pokemon.Name} augmente de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldDefense}, Nouvelle valeur : {pokemon.DefensePoint}");
-    }
 }
 
-public class SpeedBoost : Attack
+public class SpeedBoost : StatAttack
 {
-    private const float BoostCoefficient = 1.5f;
-
-    public SpeedBoost() : base("Speed Boost", 0)
+    public SpeedBoost() : base("Speed Boost", Stat.SpeedAttack, 1.5f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Speed Boost !");
-        float oldSpeed = pokemon.SpeedAttackPoint;
-        pokemon.SpeedAttackPoint *= BoostCoefficient;
-        Console.WriteLine($"La vitesse d'attaque de {pokemon.Name} augmente de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldSpeed}, Nouvelle valeur : {pokemon.SpeedAttackPoint}");
-    }
 }
 
-public class AccuracyBoost : Attack
+public class AccuracyBoost : StatAttack
 {
-    private const float BoostCoefficient = 1.5f;
-
-    public AccuracyBoost() : base("Accuracy Boost", 0)
+    public AccuracyBoost() : base("Accuracy Boost", Stat.Precision, 1.5f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Accuracy Boost !");
-        Console.WriteLine("Voici les points " + pokemon.PrecisionPoint + " de " + pokemon.Name);
-        float oldPrecision = pokemon.PrecisionPoint;
-        pokemon.PrecisionPoint = (int)(pokemon.PrecisionPoint * BoostCoefficient);
-        Console.WriteLine($"La précision de {pokemon.Name} augmente de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldPrecision}, Nouvelle valeur : {pokemon.PrecisionPoint}");
-    }
 }
 
-public class EsquiveBoost : Attack
+public class EsquiveBoost : StatAttack
 {
-    private const float BoostCoefficient = 1.5f;
-
-    public EsquiveBoost() : base("Evasion Boost", 0)
+    public EsquiveBoost() : base("Esquive Boost", Stat.Esquive, 1.5f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise Evasion Boost !");
-        float oldEsquive = pokemon.EsquivePoint;
-        pokemon.EsquivePoint = (int)(pokemon.EsquivePoint * BoostCoefficient);
-        Console.WriteLine($"L'esquive de {pokemon.Name} augmente de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldEsquive}, Nouvelle valeur : {pokemon.EsquivePoint}");
-    }
 }
 
-public class AttackLower : Attack
+public class AttackLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.75f;
-
-    public AttackLower() : base("Attack Lower", 0)
+    public AttackLower() : base("Attack Lower", Stat.Attack, 0.75f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit Attack Lower !");
-        float oldAttack = pokemonEnemy.AttackPoint;
-        pokemonEnemy.AttackPoint *= ReductionCoefficient;
-        Console.WriteLine($"L'attaque de {pokemonEnemy.Name} diminue de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldAttack}, Nouvelle valeur : {pokemonEnemy.AttackPoint}");
-    }
 }
 
-public class DefenseLower : Attack
+public class DefenseLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.75f;
-
-    public DefenseLower() : base("Defense Lower", 0)
+    public DefenseLower() : base("Defense Lower", Stat.Defense, 0.75f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit Defense Lower !");
-        float oldDefense = pokemonEnemy.DefensePoint;
-        pokemonEnemy.DefensePoint *= ReductionCoefficient;
-        Console.WriteLine($"La défense de {pokemonEnemy.Name} diminue de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldDefense}, Nouvelle valeur : {pokemonEnemy.DefensePoint}");
-    }
 }
 
-public class SpeedLower : Attack
+public class SpeedLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.75f;
-
-    public SpeedLower() : base("Speed Lower", 0)
+    public SpeedLower() : base("Speed Lower", Stat.SpeedAttack, 0.75f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit Speed Lower !");
-        float oldSpeed = pokemonEnemy.SpeedAttackPoint;
-        pokemonEnemy.SpeedAttackPoint *= ReductionCoefficient;
-        Console.WriteLine($"La vitesse d'attaque de {pokemonEnemy.Name} diminue de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldSpeed}, Nouvelle valeur : {pokemonEnemy.SpeedAttackPoint}");
-    }
 }
 
-public class AccuracyLower : Attack
+public class AccuracyLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.75f;
-
-    public AccuracyLower() : base("Accuracy Lower", 0)
+    public AccuracyLower() : base("Accuracy Lower", Stat.Precision, 0.75f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit Accuracy Lower !");
-        float oldPrecision = pokemonEnemy.PrecisionPoint;
-        pokemonEnemy.PrecisionPoint = (int)(pokemonEnemy.PrecisionPoint * ReductionCoefficient);
-        Console.WriteLine($"La précision de {pokemonEnemy.Name} diminue de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldPrecision}, Nouvelle valeur : {pokemonEnemy.PrecisionPoint}");
-    }
 }
 
-public class EsquiveLower : Attack
+public class EsquiveLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.75f;
-
-    public EsquiveLower() : base("Esquive Lower", 0)
+    public EsquiveLower() : base("Esquive Lower", Stat.Esquive, 0.75f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit Esquive Lower !");
-        float oldEsquive = pokemonEnemy.EsquivePoint;
-        pokemonEnemy.EsquivePoint = (int)(pokemonEnemy.EsquivePoint * ReductionCoefficient);
-        Console.WriteLine($"L'esquive de {pokemonEnemy.Name} diminue de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldEsquive}, Nouvelle valeur : {pokemonEnemy.EsquivePoint}");
-    }
 }
 
-public class AllStatsBoost : Attack
+public class AllStatsBoost : StatAttack
 {
-    private const float BoostCoefficient = 1.1f;
-
-    public AllStatsBoost() : base("All Stats Boost", 0)
+    public AllStatsBoost() : base("All Stats Boost", Stat.Attack, 1.1f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemon.Name} utilise All Stats Boost !");
-        float oldAttack = pokemon.AttackPoint;
-        float oldDefense = pokemon.DefensePoint;
-        float oldSpeed = pokemon.SpeedAttackPoint;
-        float oldPrecision = pokemon.PrecisionPoint;
-        float oldEsquive = pokemon.EsquivePoint;
-
-        pokemon.AttackPoint *= BoostCoefficient;
-        pokemon.DefensePoint *= BoostCoefficient;
-        pokemon.SpeedAttackPoint *= BoostCoefficient;
-        pokemon.PrecisionPoint = (int)(pokemon.PrecisionPoint * BoostCoefficient);
-        pokemon.EsquivePoint = (int)(pokemon.EsquivePoint * BoostCoefficient);
-
-        Console.WriteLine($"Toutes les statistiques de {pokemon.Name} augmentent de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur d'attaque : {oldAttack}, Nouvelle valeur : {pokemon.AttackPoint}");
-        Console.WriteLine($"Ancienne valeur de défense : {oldDefense}, Nouvelle valeur : {pokemon.DefensePoint}");
-        Console.WriteLine($"Ancienne valeur de vitesse d'attaque : {oldSpeed}, Nouvelle valeur : {pokemon.SpeedAttackPoint}");
-        Console.WriteLine($"Ancienne valeur de précision : {oldPrecision}, Nouvelle valeur : {pokemon.PrecisionPoint}");
-        Console.WriteLine($"Ancienne valeur d'esquive : {oldEsquive}, Nouvelle valeur : {pokemon.EsquivePoint}");
-    }
 }
 
-public class AllStatsLower : Attack
+public class AllStatsLower : StatAttack
 {
-    private const float ReductionCoefficient = 0.9f;
-
-    public AllStatsLower() : base("All Stats Lower", 0)
+    public AllStatsLower() : base("All Stats Lower", Stat.Attack, 0.9f)
     {
     }
 
-    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
-    {
-        Console.WriteLine($"{pokemonEnemy.Name} subit All Stats Lower !");
-        float oldAttack = pokemonEnemy.AttackPoint;
-        float oldDefense = pokemonEnemy.DefensePoint;
-        float oldSpeed = pokemonEnemy.SpeedAttackPoint;
-        float oldPrecision = pokemon.PrecisionPoint;
-        float oldEsquive = pokemon.EsquivePoint;
-
-        pokemonEnemy.AttackPoint *= ReductionCoefficient;
-        pokemonEnemy.DefensePoint *= ReductionCoefficient;
-        pokemonEnemy.SpeedAttackPoint *= ReductionCoefficient;
-        pokemon.PrecisionPoint = (int)(pokemon.PrecisionPoint * ReductionCoefficient);
-        pokemon.EsquivePoint = (int)(pokemon.EsquivePoint * ReductionCoefficient);
-
-        Console.WriteLine($"Toutes les statistiques de {pokemonEnemy.Name} diminuent de {ReductionCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur d'attaque : {oldAttack}, Nouvelle valeur : {pokemonEnemy.AttackPoint}");
-        Console.WriteLine($"Ancienne valeur de défense : {oldDefense}, Nouvelle valeur : {pokemonEnemy.DefensePoint}");
-        Console.WriteLine($"Ancienne valeur de vitesse d'attaque : {oldSpeed}, Nouvelle valeur : {pokemonEnemy.SpeedAttackPoint}");
-        Console.WriteLine($"Ancienne valeur de précision : {oldPrecision}, Nouvelle valeur : {pokemon.PrecisionPoint}");
-        Console.WriteLine($"Ancienne valeur d'esquive : {oldEsquive}, Nouvelle valeur : {pokemon.EsquivePoint}");
-    }
+    // Override other methods as needed
 }
+
+

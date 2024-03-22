@@ -10,14 +10,13 @@ using System.Xml.Linq;
 
 // #TODO -> NPC pour combat | Market pour acheter consommable | IA Pokemon enemy | Quete / Entity Management pour les npc / coffre / pokemons sauvage / Regarder la carte de son pokemon
 
-// #TODO clément -> HUD System avec buffer pour organiser l'écran de jeu inventaire 
 // Random pokemon generator qui start des fight 
 
-// #TODO william -> Gestion des résistance - 
-
-// Gerer si combat sauvage ou combat dresseur / Gerer pokeball
+// Gerer si combat sauvage ou combat dresseur / Gerer pokeball ? 
 
 // faire un beau design pour le fight -> pokemon 1 a gauche -> pokemon 2 a droite - Log au milieu
+
+// Implement Poison / Stun / Object add stat 
 
 public enum GameMenuStates
 {
@@ -77,7 +76,7 @@ public class Game
 
         Potion potion30 = new Potion("potion30", 30);
         Berry berryHelp = new Berry("baieSoin");
-        PokeBall pokeBall = new PokeBall("Poke Ball");
+        Pokeball pokeBall = new Pokeball("Poke Ball");
 
         currentCharacter.AddObject(potion30);
         currentCharacter.AddObject(berryHelp);
@@ -89,10 +88,10 @@ public class Game
         float[] resNormal = { 1, 1, 1, 1, 1 };       // Normal
         float[] resElectric = { 1, 2, 1, 1, 1 };     // Électrique
 
-        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 85, 15, resPlant);
-        Pokemon salameche = new Pokemon("Salamèche", PokemonType.Fire, 39, 52, 43, 60, 80, 20, resFire);
-        Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 70, 25, resWater);
-        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 90, 25, resElectric);
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 99, 1, resPlant);
+        Pokemon salameche = new Pokemon("Salamèche", PokemonType.Fire, 39, 52, 43, 60, 99, 2, resFire);
+        Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 99, 2, resWater);
+        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 99, 2, resElectric);
 
         // Ajout des attaques
         Attack fouetLianes = new VineWhip();
@@ -139,8 +138,7 @@ public class Game
         enemyPokemonList.Add(carapuce);
         enemyPokemonList.Add(pikachu);
 
-
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.Trainer);
 
         Thread.Sleep(300000000);
 

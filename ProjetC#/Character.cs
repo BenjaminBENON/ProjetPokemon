@@ -23,6 +23,9 @@ public class Character
     List<Pokemon> m_vPokemonsFighter;
     List<Item> m_vObject;
 
+    private int m_money; // Allow buy consommable at market
+    private Level m_level; // Level instance
+
     // + attribute 
     Vector2 m_2dlocation;
 
@@ -32,6 +35,19 @@ public class Character
         m_2dlocation = new Vector2(0.0f, 0.0f);
         m_vPokemonsCaught = new List<Pokemon>(); // Give One start Low level Pokemon
         m_vObject = new List<Item>();
+        Level = new Level();
+    }
+
+    public int Money
+    {
+        get { return m_money; }
+        set { m_money = value; }
+    }
+
+    public Level Level
+    {
+        get { return m_level; }
+        set { m_level = value; }
     }
 
 
