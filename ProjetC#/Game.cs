@@ -16,6 +16,10 @@ using System.Xml.Linq;
 
 // faire un beau design pour le fight -> pokemon 1 a gauche -> pokemon 2 a droite - Log au milieu
 
+
+// Réorganiser Le fight *************
+// Update les effects durant avant l'attaque *************
+
 // Implement Poison / Stun / Object add stat 
 
 public enum GameMenuStates

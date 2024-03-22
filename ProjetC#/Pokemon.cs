@@ -6,10 +6,21 @@ using System.Text;
 public enum PokemonState
 {
     Normal,
+    Out,
+}
+
+public class Effect
+{
+    public string Name { get; set; }
+    public int Duration { get; set; } // Turn duration -> one turn is Character attack + Enemy Attack -> Manage better
+    public int DamagePerTurn { get; set; } // 
+}
+
+
+public enum PokemonEffect
+{
     Stun,
     Poisoned,
-    Out,
-
 }
 
 public enum PokemonType
@@ -62,6 +73,9 @@ public class Pokemon
 
     // Attack list (4)
     List<Attack> m_vAttacks;
+
+    // Effect is something applied during some turn
+    private List<Effect> activeEffects;
 
     // Getter / Setter -> Attribute
     public string Name

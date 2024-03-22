@@ -58,6 +58,7 @@ public class Fight
         Console.WriteLine("Fight End");
     }
 
+    // Initialize
     public void Start(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
     {
         m_fightType = fightType;
@@ -81,6 +82,8 @@ public class Fight
         return (pokemon.SpeedAttackPoint > pokemonEnemy.SpeedAttackPoint) ? PlayerState.Character : PlayerState.Enemy;
     }
 
+
+    // Round -> End when pokemon is KO
     public void Round()
     {
         Console.WriteLine("--- NEW ROUND ! ---");
@@ -96,7 +99,7 @@ public class Fight
             turnCount++;
             Console.Write("\n------------------------------------------------------------------------------------\n");
             Console.Write("\n------------------------------------------------------------------------------------\n");
-            Console.Write("\n------------------------------------ Turn Count ------------------------------------\n");
+            Console.Write("\n------------------------------------ Attack Count ------------------------------------\n");
             Console.Write(turnCount);
             Console.Write("\n------------------------------------------------------------------------------------\n");
             Console.Write("\n------------------------------------------------------------------------------------");
@@ -113,16 +116,16 @@ public class Fight
                     Console.WriteLine("--------------------");
                     Console.WriteLine("\n Le premier Pokemon a attaquer est " + m_currentCharacterPokemon.Name + " Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentEnemyPokemon.Name + "Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    HandleCharacterTurn();
-                    if (CheckEndOfTurn())
+                    HandleCharacter();
+                    if (CheckEndOfRound())
                     {
-                        EndOfTurn();
+                        EndOfRound();
                         return;
                     }
-                    HandleEnemyTurn();
-                    if (CheckEndOfTurn())
+                    HandleEnemy();
+                    if (CheckEndOfRound())
                     {
-                        EndOfTurn();
+                        EndOfRound();
                         return;
                     }
                     break;
@@ -131,16 +134,16 @@ public class Fight
                     Console.WriteLine("--------------------");
                     Console.WriteLine(" Le premier Pokemon a attaquer est " + m_currentEnemyPokemon.Name + " Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentCharacterPokemon.Name + "Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    HandleEnemyTurn();
-                    if (CheckEndOfTurn())
+                    HandleEnemy();
+                    if (CheckEndOfRound())
                     {
-                        EndOfTurn();
+                        EndOfRound();
                         return;
                     }
-                    HandleCharacterTurn();
-                    if (CheckEndOfTurn())
+                    HandleCharacter();
+                    if (CheckEndOfRound())
                     {
-                        EndOfTurn();
+                        EndOfRound();
                         return;
                     }
                     break;
@@ -150,6 +153,8 @@ public class Fight
         }
     }
 
+
+    // Turn Start Info -> as many turns as the round lasts
     private void DisplayInitialInfo()
     {
         if (m_playerState == PlayerState.Character)
@@ -166,7 +171,9 @@ public class Fight
         Console.WriteLine("-------------------");
     }
 
-    private void HandleCharacterTurn()
+
+    // Handle INPUT & ACTION FOR CHARACTER
+    private void HandleCharacter()
     {
         string userInput;
         //do
@@ -289,8 +296,8 @@ public class Fight
         } while (true);
     }
 
-
-    private void HandleEnemyTurn()
+    // Handle IA FOR ENEMY
+    private void HandleEnemy()
     {
         // L'IA de l'ennemi choisit une attaque au hasard
         int seed = DateTime.Now.Millisecond;
@@ -315,17 +322,19 @@ public class Fight
         Console.WriteLine("-------------------");
     }
 
+    // Switch Player State Between 2 attack
     private void SwitchPlayerState()
     {
         m_playerState = (m_playerState == PlayerState.Character) ? PlayerState.Enemy : PlayerState.Character;
     }
 
-    private bool CheckEndOfTurn()
+    // Check
+    private bool CheckEndOfRound()
     {
         return m_currentEnemyPokemon.PokemonState == PokemonState.Out || m_currentCharacterPokemon.PokemonState == PokemonState.Out;
     }
 
-    private void EndOfTurn()
+    private void EndOfRound()
     {
         Console.WriteLine("---------- Un pokemon est OUT, round terminé ----------\n");
         string aliveText = " est resté vivant, il a gagné le round ";
@@ -481,5 +490,10 @@ public class Fight
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;
         m_c1.Level.Update();
+    }
+
+    private void CheckForEffec()
+    {
+
     }
 }
