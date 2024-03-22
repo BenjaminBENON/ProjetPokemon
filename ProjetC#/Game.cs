@@ -146,6 +146,23 @@ public class Game
 
         Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
+        //ConsoleUI consoleUI = new ConsoleUI();
+
+        //// Ajouter des éléments à l'interface utilisateur
+        //consoleUI.AddElement("Pokémon gauche", 5, 5); // Pokémon à gauche
+        //consoleUI.AddElement("Pokémon droit", Console.WindowWidth - 15, 5); // Pokémon à droite
+        //consoleUI.AddElement("Logs de combat", (Console.WindowWidth / 2) - 10, 10); // Logs de combat au milieu
+
+        //// Dessiner l'interface utilisateur
+        //consoleUI.DrawUI();
+
+        //// Exemple de modification dynamique de l'interface utilisateur
+        //System.Threading.Thread.Sleep(2000); // Attendre 2 secondes
+        //consoleUI.AddElement("Combat en cours...", (Console.WindowWidth / 2) - 8, 10); // Modifier les logs de combat
+        //consoleUI.DrawUI(); // Dessiner à nouveau pour voir les modifications
+
+        //Console.ReadKey();
+
         Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {

@@ -8,7 +8,7 @@ using System.Text;
 
 // Initialize a fight when fight present
 
-public enum PlayerState
+public enum FirstPlayerState // who starts the round
 {
     Character,
     Enemy,
@@ -24,7 +24,7 @@ public enum FightType
 public class Fight
 {
     //
-    PlayerState m_playerState;
+    FirstPlayerState m_playerState;
 
     private Character m_c1;
     private List<Pokemon> m_characterPokemonsList;
@@ -44,12 +44,22 @@ public class Fight
     // for pokemon savage
     private Pokemon m_pokemonToCatch;
 
+    // Selection choice 
+    private int m_iCharacterPokemonChoice;
+    private int m_iCharacterItemChoice;
+    private int m_iCharacterAttackChoice;
+
+    private int m_iEnemyPokemonChoice;
+    private int m_iEnemyItemChoice;
+    private int m_iEnemyAttackChoice;
+
+
 
     // Constructor
     public Fight(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
     {
         Console.WriteLine("Fight Start");
-        Start(c1, pokemonsEnemy, fightType);
+        Initialize(c1, pokemonsEnemy, fightType);
 
         Battle();
 
@@ -59,7 +69,7 @@ public class Fight
     }
 
     // Initialize
-    public void Start(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
+    public void Initialize(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
     {
         m_fightType = fightType;
         m_c1 = c1;
@@ -77,9 +87,9 @@ public class Fight
 
     // Begin the attack player has more speed attack
 
-    PlayerState GetFirstPlayerState(Pokemon pokemon, Pokemon pokemonEnemy)
+    FirstPlayerState GetFirstPlayerState(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        return (pokemon.SpeedAttackPoint > pokemonEnemy.SpeedAttackPoint) ? PlayerState.Character : PlayerState.Enemy;
+        return (pokemon.SpeedAttackPoint > pokemonEnemy.SpeedAttackPoint) ? FirstPlayerState.Character : FirstPlayerState.Enemy;
     }
 
 
@@ -93,54 +103,60 @@ public class Fight
         m_currentEnemyPokemon = m_enemyPokemonsList[m_enemyPokemonsList.Count - 1];
         m_itCurrentEnemyPokemon = m_enemyPokemonsList.Count - 1;
 
-        int turnCount = 0;
+        // #TODO add a Attack count by pokemon to follow Effect - Chose place to update effects
+
         while (true)
         {
-            turnCount++;
-            Console.Write("\n------------------------------------------------------------------------------------\n");
-            Console.Write("\n------------------------------------------------------------------------------------\n");
-            Console.Write("\n------------------------------------ Attack Count ------------------------------------\n");
-            Console.Write(turnCount);
-            Console.Write("\n------------------------------------------------------------------------------------\n");
-            Console.Write("\n------------------------------------------------------------------------------------");
             m_playerState = GetFirstPlayerState(m_currentCharacterPokemon, m_currentEnemyPokemon);
 
-            DisplayInitialInfo();
+            if (m_playerState == FirstPlayerState.Character)
+            {
+                Console.WriteLine($"Le premier Pokemon à attaquer est {m_currentCharacterPokemon.Name} avec {m_currentCharacterPokemon.SpeedAttackPoint} points de speed attack par rapport à {m_currentEnemyPokemon.Name} avec {m_currentEnemyPokemon.SpeedAttackPoint} de points de speed Attack");
+            }
+            else
+            {
+                Console.WriteLine($"Le premier Pokemon à attaquer est {m_currentEnemyPokemon.Name} avec {m_currentEnemyPokemon.SpeedAttackPoint} points de speed attack par rapport à {m_currentCharacterPokemon.Name} avec {m_currentCharacterPokemon.SpeedAttackPoint} de points de speed Attack");
+            }
+
+            Console.WriteLine("-------------------");
+            Console.WriteLine($"Les pokemons en combat sont {m_currentEnemyPokemon.Name.ToUpper()} avec {m_currentEnemyPokemon.CurrentLifePoints} points de vie et {m_currentCharacterPokemon.Name.ToUpper()} avec {m_currentCharacterPokemon.CurrentLifePoints} points de vie");
+            Console.WriteLine("-------------------");
 
             // #TODO Separe logic of Input choice / Action system priority speed attack etc... 
 
             switch (m_playerState)
             {
-                case PlayerState.Character:
+                case FirstPlayerState.Character:
                     Console.WriteLine("LE POKEMON DU CHARACTER ATTAQUE EN PREMIER");
                     Console.WriteLine("--------------------");
                     Console.WriteLine("\n Le premier Pokemon a attaquer est " + m_currentCharacterPokemon.Name + " Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentEnemyPokemon.Name + "Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    HandleCharacter();
+                    CharacterSelection();
                     if (CheckEndOfRound())
                     {
                         EndOfRound();
                         return;
                     }
-                    HandleEnemy();
+                    EnemySelection();
                     if (CheckEndOfRound())
                     {
                         EndOfRound();
                         return;
                     }
                     break;
-                case PlayerState.Enemy:
+                case FirstPlayerState.Enemy:
                     Console.WriteLine("L'ENEMY ATTAQUE EN PREMIER");
                     Console.WriteLine("--------------------");
                     Console.WriteLine(" Le premier Pokemon a attaquer est " + m_currentEnemyPokemon.Name + " Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentCharacterPokemon.Name + "Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    HandleEnemy();
+                    EnemySelection();
+                    // #TODO -> Mettre Check end A LA FIN DE LA FONCTION PerformEnemyAction / PerformCharacterActions 
                     if (CheckEndOfRound())
                     {
                         EndOfRound();
                         return;
                     }
-                    HandleCharacter();
+                    CharacterSelection();
                     if (CheckEndOfRound())
                     {
                         EndOfRound();
@@ -148,121 +164,102 @@ public class Fight
                     }
                     break;
             }
-
-            SwitchPlayerState();
         }
-    }
-
-
-    // Turn Start Info -> as many turns as the round lasts
-    private void DisplayInitialInfo()
-    {
-        if (m_playerState == PlayerState.Character)
-        {
-            Console.WriteLine($"Le premier Pokemon à attaquer est {m_currentCharacterPokemon.Name} avec {m_currentCharacterPokemon.SpeedAttackPoint} points de speed attack par rapport à {m_currentEnemyPokemon.Name} avec {m_currentEnemyPokemon.SpeedAttackPoint} de points de speed Attack");
-        }
-        else
-        {
-            Console.WriteLine($"Le premier Pokemon à attaquer est {m_currentEnemyPokemon.Name} avec {m_currentEnemyPokemon.SpeedAttackPoint} points de speed attack par rapport à {m_currentCharacterPokemon.Name} avec {m_currentCharacterPokemon.SpeedAttackPoint} de points de speed Attack");
-        }
-
-        Console.WriteLine("-------------------");
-        Console.WriteLine($"Les pokemons en combat sont {m_currentEnemyPokemon.Name.ToUpper()} avec {m_currentEnemyPokemon.CurrentLifePoints} points de vie et {m_currentCharacterPokemon.Name.ToUpper()} avec {m_currentCharacterPokemon.CurrentLifePoints} points de vie");
-        Console.WriteLine("-------------------");
     }
 
 
     // Handle INPUT & ACTION FOR CHARACTER
-    private void HandleCharacter()
+
+    private void SwitchPokemonSelection(string userInput)
     {
-        string userInput;
-        //do
-        //{
-        //    int m = 0;
-        //    Console.WriteLine("-------------------");
-        //    Console.WriteLine("Pokemon Switch");
-        //    Console.WriteLine("-------------------");
+        do
+        {
+            int m = 0;
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Pokemon Switch");
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Choisis un pokemon remplacant : \n");
+            Console.WriteLine("1. Ne pas switch de pokemon\n");
+            foreach (Pokemon item in m_characterPokemonsList)
+            {
+                if (item.Name == m_currentCharacterPokemon.Name)
+                {
+                    continue;
+                }
+                Console.WriteLine(m + 2 + ". " + item.Name + "\n");
+                m++;
+            }
+
+            userInput = Console.ReadLine();
+            if (!Utils.IsValidSwitchPokemonInput(userInput, m_characterPokemonsList.Count)) // We use attack for Pokemon choice beacause we have same number for pokemon than of attack
+            {
+                Console.WriteLine("Entrée non valide. Veuillez réessayer.");
+                continue;
+            }
+
+            m_iCharacterPokemonChoice = int.Parse(userInput); 
+
+            // Action
+            if (m_iCharacterPokemonChoice > 1)
+            {
+                string sOldPokemonName = m_currentCharacterPokemon.Name;
+
+                m_itCurrentCharacterPokemon = m_iCharacterPokemonChoice - 2; // Handle user experience with 1.0 / 2.0 etc ...
+                m_currentCharacterPokemon = m_characterPokemonsList[m_itCurrentCharacterPokemon];
 
 
+                Console.WriteLine(" Vous avez choisir de changer de pokemon, " + " Passant de " + sOldPokemonName + " à " + m_currentCharacterPokemon.Name);
+            }
+            else
+            {
+                Console.WriteLine(" Vous n'avez pas choisi de switch de pokemon ");
+            }
+            break;
+        } while (true);
 
-        //    Console.WriteLine("Choisis un pokemon remplacant : \n");
+    }
 
-        //    Console.WriteLine("1. Ne pas switch de pokemon\n");
-        //    foreach (Pokemon item in m_characterPokemonsList)
-        //    {
-        //        if (item.Name == m_currentCharacterPokemon.Name)
-        //        {
-        //            continue;
-        //        }
-        //        Console.WriteLine(m + 2 + ". " + item.Name + "\n");
-        //        m++;
-        //    }
+    private void ItemSelection(string userInput)
+    {
+        do
+        {
+            // Item choice
+            int k = 0;
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Items disponibles");
+            Console.WriteLine("-------------------");
+            Console.WriteLine("1. Ne pas utiliser d'item\n");
+            foreach (Item item in m_c1.GetObjectList())
+            {
+                Console.WriteLine(k + 2 + ". " + item.Name + "\n");
+                k++;
+            }
+            userInput = Console.ReadLine();
+            if (!Utils.IsValidItemInput(userInput, m_c1.GetObjectList().Count))
+            {
+                Console.WriteLine("Entrée non valide. Veuillez réessayer.");
+                // Input again
+                continue;
+            }
+            m_iCharacterItemChoice = int.Parse(userInput);
 
-        //    userInput = Console.ReadLine();
-        //    if (!Utils.IsValidSwitchPokemonInput(userInput, m_characterPokemonsList.Count)) // We use attack for Pokemon choice beacause we have same number for pokemon than of attack
-        //    {
-        //        Console.WriteLine("Entrée non valide. Veuillez réessayer.");
-        //        continue;
-        //    }
+            // Action
 
-        //    int iPokemon = int.Parse(userInput);
+            if (m_iCharacterItemChoice > 1)
+            {
+                m_c1.UseObject(m_iCharacterItemChoice - 2, m_currentCharacterPokemon);
+            }
+            else
+            {
+                Console.WriteLine(" Vous n'avez pas choisi d'utiliser d'item ");
+            }
+            break;
 
-        //    // Action
+        } while (true);
+    }
 
-        //    if (iPokemon > 1)
-        //    {
-        //        string sOldPokemonName = m_currentCharacterPokemon.Name;
-
-        //        m_itCurrentCharacterPokemon = iPokemon - 2;
-        //        m_currentCharacterPokemon = m_characterPokemonsList[m_itCurrentCharacterPokemon];
-
-
-        //        Console.WriteLine(" Vous avez choisir de changer de pokemon, " + " Passant de " + sOldPokemonName + " à " + m_currentCharacterPokemon.Name);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(" Vous n'avez pas choisi de switch de pokemon ");
-        //    }
-        //    break;
-        //} while (true);
-
-
-        //do
-        //{
-        //    // Item choice
-        //    int k = 0;
-        //    Console.WriteLine("-------------------");
-        //    Console.WriteLine("Items disponibles");
-        //    Console.WriteLine("-------------------");
-        //    Console.WriteLine("1. Ne pas utiliser d'item\n");
-        //    foreach (Item item in m_c1.GetObjectList())
-        //    {
-        //        Console.WriteLine(k + 2 + ". " + item.Name + "\n");
-        //        k++;
-        //    }
-        //    userInput = Console.ReadLine();
-        //    if (!Utils.IsValidItemInput(userInput, m_c1.GetObjectList().Count))
-        //    {
-        //        Console.WriteLine("Entrée non valide. Veuillez réessayer.");
-        //        // Input again
-        //        continue;
-        //    }
-        //    int iItem = int.Parse(userInput);
-
-        //    // Action
-
-        //    if (iItem > 1)
-        //    {
-        //        m_c1.UseObject(iItem - 2, m_currentCharacterPokemon);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(" Vous n'avez pas choisi d'utiliser d'item ");
-        //    }
-        //    break;
-
-        //} while (true);
-
+    private void AttackSelection(string userInput)
+    {
         do
         {
             // Attack choice
@@ -296,8 +293,16 @@ public class Fight
         } while (true);
     }
 
+    private void CharacterSelection()
+    {
+        string userInput = "";
+        SwitchPokemonSelection(userInput);
+        ItemSelection(userInput);
+        AttackSelection(userInput);
+    }
+
     // Handle IA FOR ENEMY
-    private void HandleEnemy()
+    private void EnemySelection()
     {
         // L'IA de l'ennemi choisit une attaque au hasard
         int seed = DateTime.Now.Millisecond;
@@ -323,10 +328,7 @@ public class Fight
     }
 
     // Switch Player State Between 2 attack
-    private void SwitchPlayerState()
-    {
-        m_playerState = (m_playerState == PlayerState.Character) ? PlayerState.Enemy : PlayerState.Character;
-    }
+
 
     // Check
     private bool CheckEndOfRound()
