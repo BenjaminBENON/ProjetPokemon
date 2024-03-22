@@ -10,6 +10,14 @@ namespace ProjetC_
 {
     public class Character
     {
+        int _iPosX = 40;
+        int _iPosY = 22;
+
+        public int PosX { get => _iPosX; set => _iPosX = value; }
+        public int PosY { get => _iPosY; set => _iPosY = value; }
+
+        public string _sCharac = "@";
+
         private string m_name;
         List<Pokemon> m_vPokemonsCaught;
         List<Pokemon> m_vPokemonsDiscovered; 

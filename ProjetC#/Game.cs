@@ -165,9 +165,8 @@ public class Game
         };
 
         // };
-        Run();
     }
-    private void Run()
+    public void Run()
     {
         foreach (var item in bindFunctionsToGameMenuStates)
         {
@@ -202,8 +201,9 @@ public class Game
     }
     private void StartMap()
     {
-        Console.Clear();
-        Map.Play_Map(this);
+        Map.Play_Map(this,botCharacter); 
+        Input.Update(botCharacter);
+        Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {

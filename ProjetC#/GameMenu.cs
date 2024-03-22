@@ -104,6 +104,7 @@ public class GameMenu
         switch (a)
         {
             case ConsoleKey.Enter:
+                Console.Clear();
                 oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
                 break;
             case ConsoleKey.RightArrow:
