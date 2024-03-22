@@ -26,9 +26,10 @@ class Program
         Resize();
 
         Game game = new Game();
+        game.Start();
         while (true)
         {
-            game.Start();
+            game.Run();
         }
     }
 }

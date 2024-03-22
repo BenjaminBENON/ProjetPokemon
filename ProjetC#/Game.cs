@@ -16,6 +16,8 @@ using System.Xml.Linq;
 
 // #TODO william -> Gestion des résistance - 
 
+// Gerer qui commence le turn en fonction du speed attack / Gerer si combat sauvage ou combat dresseur / Gerer pokeball
+
 public enum GameMenuStates
 {
     InGameMenu, // Start Menu
@@ -34,7 +36,7 @@ public enum GameMenuStates
     Pokedex_ShowDiscoverPokemon,
 
     Save_AddMenu, // Menu to add a party
-    
+
     // Play Button Redirect on Character Creation if no character in save 
     CharacterCreationMenu,
 
@@ -80,12 +82,18 @@ public class Game
         currentCharacter.AddObject(berryHelp);
         currentCharacter.AddObject(pokeBall);
 
-        Pokemon bulbizarre = new Pokemon("Bulbizarre", "Plante", 45, 49, 49, 65, 65, 45);
-        Pokemon salameche = new Pokemon("Salamèche", "Feu", 39, 52, 43, 60, 50, 65);
-        Pokemon carapuce = new Pokemon("Carapuce", "Eau", 44, 48, 65, 50, 64, 43);
-        Pokemon pikachu = new Pokemon("Pikachu", "Électrique", 35, 55, 40, 40, 50, 90);
+        float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };   // Plante
+        float[] resWater = { 1, 1, 0.8f, 1, 0.5f };   // Eau
+        float[] resFire = { 1, 0.5f, 1, 1, 1 };       // Feu
+        float[] resNormal = { 1, 1, 1, 1, 1 };       // Normal
+        float[] resElectric = { 1, 2, 1, 1, 1 };     // Électrique
 
-        // Création des Attacks
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 85, 15, resPlant);
+        Pokemon salameche = new Pokemon("Salamèche", PokemonType.Fire, 39, 52, 43, 60, 80, 20, resFire);
+        Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 70, 25, resWater);
+        Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 90, 25, resElectric);
+
+        // Ajout des attaques
         Attack fouetLianes = new VineWhip();
         Attack tranchHerbe = new RazorLeaf();
         Attack bombeGraine = new BubbleBeam();
@@ -96,25 +104,31 @@ public class Game
         Attack lanceFlamme = new ThunderShock();
         Attack detonation = new QuickAttack();
 
-        bulbizarre.AddAttack(fouetLianes);
-        bulbizarre.AddAttack(tranchHerbe);
-        bulbizarre.AddAttack(bombeGraine);
-        bulbizarre.AddAttack(lanceSoleil);
+        Attack defenseBoost = new DefenseBoost();
+        Attack speedBoost = new SpeedBoost();
+        Attack accuracyBoost = new AccuracyBoost();
+        Attack evasionBoost = new EsquiveBoost();
 
-        salameche.AddAttack(griffe);
-        salameche.AddAttack(flammeche);
-        salameche.AddAttack(lanceFlamme);
-        salameche.AddAttack(detonation);
 
-        carapuce.AddAttack(fouetLianes);
-        carapuce.AddAttack(tranchHerbe);
-        carapuce.AddAttack(bombeGraine);
-        carapuce.AddAttack(lanceSoleil);
+        bulbizarre.AddAttack(fouetLianes);    // Physique
+        bulbizarre.AddAttack(tranchHerbe);    // Physique
+        bulbizarre.AddAttack(defenseBoost);   // Stat
+        bulbizarre.AddAttack(speedBoost);     // Stat
 
-        pikachu.AddAttack(griffe);
-        pikachu.AddAttack(flammeche);
-        pikachu.AddAttack(lanceFlamme);
-        pikachu.AddAttack(detonation);
+        salameche.AddAttack(griffe);          // Physique
+        salameche.AddAttack(flammeche);       // Physique
+        salameche.AddAttack(accuracyBoost);   // Stat
+        salameche.AddAttack(evasionBoost);    // Stat
+
+        carapuce.AddAttack(bombeGraine);      // Physique
+        carapuce.AddAttack(lanceSoleil);      // Physique
+        carapuce.AddAttack(defenseBoost);     // Stat
+        carapuce.AddAttack(speedBoost);       // Stat
+
+        pikachu.AddAttack(lanceFlamme);       // Physique
+        pikachu.AddAttack(detonation);        // Physique
+        pikachu.AddAttack(accuracyBoost);     // Stat
+        pikachu.AddAttack(evasionBoost);      // Stat
 
         List<Pokemon> enemyPokemonList = new List<Pokemon>();
 
@@ -124,17 +138,15 @@ public class Game
         enemyPokemonList.Add(carapuce);
         enemyPokemonList.Add(pikachu);
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
-        Thread.Sleep(30000000);
+        //Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
+
+        //Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
             { GameMenuStates.InGameMenu, StartMenu },
             { GameMenuStates.CharacterCreationMenu, CharacterCreationMenu },
-            // Save Menus
-            { GameMenuStates.InSaveMenu, SaveMenu },
-            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
             // Inventory Menus
             { GameMenuStates.InInventoryMenu, Display_Inventory_Menu },
             { GameMenuStates.Inventory_ShowPokemons, Display_Inventory_PokemonsMenu },
@@ -142,18 +154,19 @@ public class Game
             
             // Pokedex Menus
             { GameMenuStates.InPokedexMenu, Display_Pokedex_Menu },
-            // Play Menu
+            // Save Menus
+            { GameMenuStates.InSaveMenu, Display_Save_Menu },
+            { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
+            // Play Menu | No sub type
             { GameMenuStates.OnMap, StartMap },
             { GameMenuStates.InPokemonCenter, StartPokemonCenter },
             { GameMenuStates.OnFight, Play_Fight },
-
             { GameMenuStates.ShutDown, Quit }
         };
 
         // };
-        Run();
     }
-    private void Run()
+    public void Run()
     {
         foreach (var item in bindFunctionsToGameMenuStates)
         {
@@ -183,23 +196,18 @@ public class Game
     }
     private void CharacterCreationMenu()
     {
-        //Console.Clear();
+        Console.Clear();
         GameMenu.CharacterMenu(this);
     }
     private void StartMap()
     {
-        //Console.Clear();
-        Map.Play_Map(this);
-    }
-    private void SaveMenu()
-    {
-        Console.Clear();
-        GameMenu.Display_SaveMenu();
-        GameMenu.SaveChoice(this);
+        Map.Play_Map(this,botCharacter); 
+        Input.Update(botCharacter);
+        Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
-
+        
     }
 
 
@@ -256,7 +264,26 @@ public class Game
         UpdateCurrentGameState(choice, stateTransitions);
     }
 
-    //---------------------------
+    private void Display_Save_Menu()
+    {
+        Console.WriteLine("=== MENU DE SAUVEGARDE ===");
+
+        Console.WriteLine("1. Ajouter une nouvelle sauvegarde");
+        Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
+        Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
+        Console.WriteLine("2.Retourner au menu principal");
+
+        Console.Write("Choix : ");
+        string choice = Console.ReadLine();
+
+        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+        {
+            { 1, GameMenuStates.Save_AddMenu },
+            { 2, GameMenuStates.InGameMenu }
+        };
+
+        UpdateCurrentGameState(choice, stateTransitions);
+    }
 
 
     private void Display_Save_AddMenu()
