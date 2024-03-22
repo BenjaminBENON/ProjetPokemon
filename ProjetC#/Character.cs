@@ -34,6 +34,7 @@ public class Character
         m_name = name;
         m_2dlocation = new Vector2(0.0f, 0.0f);
         m_vPokemonsCaught = new List<Pokemon>(); // Give One start Low level Pokemon
+        m_vPokemonsDiscovered = new List<Pokemon>();
         m_vObject = new List<Item>();
         Level = new Level();
     }
@@ -55,6 +56,8 @@ public class Character
     public void AddPokemon(Pokemon pokemon)
     {
         m_vPokemonsCaught.Add(pokemon);
+        m_vPokemonsDiscovered.Add(pokemon);
+
     }
 
     public void RemovePokemon(Pokemon pokemon)

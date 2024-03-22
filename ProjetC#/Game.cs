@@ -136,9 +136,11 @@ public class Game
         currentCharacter.AddPokemon(salameche);
 
         enemyPokemonList.Add(carapuce);
-        enemyPokemonList.Add(pikachu);
+        //enemyPokemonList.Add(pikachu);
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.Trainer);
+
+
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
         Thread.Sleep(300000000);
 
@@ -298,9 +300,6 @@ public class Game
 
     private void Play_Fight()
     {
-
-        //Fight fight = new Fight(currentCharacter, botCharacter);
-
         currentGameState = GameMenuStates.OnMap;
     }
 

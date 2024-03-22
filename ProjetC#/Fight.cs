@@ -62,8 +62,8 @@ public class Fight
     {
         m_fightType = fightType;
         m_c1 = c1;
-        m_characterPokemonsList = c1.GetPokemonList();
-        m_enemyPokemonsList = pokemonsEnemy;
+        m_characterPokemonsList = new List<Pokemon>(c1.GetPokemonList());
+        m_enemyPokemonsList = new List<Pokemon>(pokemonsEnemy); // We make a capy because we don't want affect original character array or enemy array
 
         // Store pokemon for catch it after
         if (m_fightType == FightType.SavagePokemon)
@@ -434,6 +434,7 @@ public class Fight
         string sChoice = Console.ReadLine();
 
         bool hasPokeball = false;
+        Item removeItem = null;
         if (sChoice.ToLower() == "oui")
         {
             int i = 0;
@@ -442,16 +443,30 @@ public class Fight
                 if (item.Type == ItemType.Pokeball)
                 {
                     // Remove object don't need iterator
-                    m_c1.RemoveObject(item);
+                    removeItem = item;
                     hasPokeball = true;
                 }
                 i++;
             }
-            
+
             if (hasPokeball)
             {
+                m_c1.RemoveObject(removeItem);
                 m_c1.AddPokemon(m_pokemonToCatch);
                 Console.WriteLine("Le Pokémon sauvage a été capturé !");
+
+                // Vous voici avec ces pokemon / ses objets 
+
+
+                //foreach (Pokemon item in m_c1.GetPokemonList()) { 
+                //    Console.WriteLine(item.Name);
+                //}
+
+
+                foreach (Item item in m_c1.GetObjectList())
+                {
+                    Console.WriteLine(item.Name);
+                }
             }
             else
             {
