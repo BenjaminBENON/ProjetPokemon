@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ProjetC_;
 using System.ComponentModel;
 using System.Xml.Linq;
 
@@ -17,6 +16,8 @@ using System.Xml.Linq;
 // #TODO william -> Gestion des résistance - 
 
 // Gerer si combat sauvage ou combat dresseur / Gerer pokeball
+
+// faire un beau design pour le fight -> pokemon 1 a gauche -> pokemon 2 a droite - Log au milieu
 
 public enum GameMenuStates
 {

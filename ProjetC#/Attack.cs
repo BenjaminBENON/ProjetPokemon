@@ -1,4 +1,4 @@
-﻿using ProjetC_;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,7 +108,7 @@ public class Tackle : Attack
         Random randomEsq = new Random(seed);
         int accuracyEsq = randomEsq.Next(0, 101);
 
-        Console.WriteLine("Random precision\n" + accuracyPrec);
+        //Console.WriteLine("Random precision\n" + accuracyPrec);
 
         if (accuracyPrec <= pokemon.PrecisionPoint)
         {
@@ -120,12 +120,12 @@ public class Tackle : Attack
                 float resistanceModifier = modifiedDamage * pokemonEnemy.Resistances[iType];
                 float damage = resistanceModifier;
 
-                Console.WriteLine("Calcul des dégâts :");
-                Console.WriteLine($"Point d'attaque du Pokémon : {pokemon.AttackPoint}");
-                Console.WriteLine($"Point de défense de l'ennemi : {pokemonEnemy.DefensePoint}");
-                Console.WriteLine($"Puissance de l'attaque : {Power}");
-                Console.WriteLine($"Résistance de l'ennemi au type de l'attaque : {pokemonEnemy.Resistances[iType]}");
-                Console.WriteLine($"Dégâts infligés : {damage}");
+                //Console.WriteLine("Calcul des dégâts :");
+                //Console.WriteLine($"Point d'attaque du Pokémon : {pokemon.AttackPoint}");
+                //Console.WriteLine($"Point de défense de l'ennemi : {pokemonEnemy.DefensePoint}");
+                //Console.WriteLine($"Puissance de l'attaque : {Power}");
+                //Console.WriteLine($"Résistance de l'ennemi au type de l'attaque : {pokemonEnemy.Resistances[iType]}");
+                //Console.WriteLine($"Dégâts infligés : {damage}");
 
                 pokemonEnemy.CurrentLifePoints -= damage;
                 Console.WriteLine($"Tackle inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
