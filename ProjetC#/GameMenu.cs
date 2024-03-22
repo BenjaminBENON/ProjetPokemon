@@ -138,13 +138,7 @@ public class GameMenu
             Console.Clear();
             oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
-        //var caseName = new List<string>();
-        //caseName.Add("Coucou");
-        //caseName.Add("MAIS NAN!!!");
-        //caseName.Add("MAIS SI!!!");
-        //caseName.Add("ah bon");
-        //MenuCreator.CreateMenu("test",4,caseName);
-        //Console.Read();
+
     }
 
     public static void Display_SaveMenu()
