@@ -139,9 +139,9 @@ public class Game
         enemyPokemonList.Add(pikachu);
 
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
+        //Fight fight = new Fight(currentCharacter, enemyPokemonList, "Trainer");
 
-        Thread.Sleep(300000000);
+        //Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
