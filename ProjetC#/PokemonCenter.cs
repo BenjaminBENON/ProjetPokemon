@@ -8,12 +8,12 @@ internal class PokemonCenter
     public static void DisplayCenter()
     {
         //Créer le lieu centre POKEMON
-        Console.SetCursorPosition(Console.WindowWidth / 2 - 10, Console.WindowHeight / 2 - 3);
+        Console.SetCursorPosition(0,0);
         Console.WriteLine("-------------------");
+        Console.WriteLine("|        @@       |");
         Console.WriteLine("|                 |");
-        Console.WriteLine("|                 |");
-        Console.WriteLine("|                 |");
-        Console.WriteLine("|                 |");
+        Console.WriteLine("|              @  |");
+        Console.WriteLine("|              @  |");
         Console.WriteLine("|                 |");
         Console.WriteLine("-------------------");
     }
