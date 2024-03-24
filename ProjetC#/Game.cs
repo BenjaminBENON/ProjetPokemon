@@ -199,7 +199,7 @@ public class Game
     }
     private void StartMap()
     {
-        Map.Play_Map(this,botCharacter); 
+        Map.Play_Map(this,botCharacter);
         Input.Update();
         Input.PlayerControl(this, botCharacter);
         Console.CursorVisible = false;
@@ -218,6 +218,7 @@ public class Game
 
     private void Display_Inventory_ObjectsMenu()
     {
+        
         Map.Play_Map(this, botCharacter);
         GameMenu.Display_InventoryMenu();
         Input.Update();

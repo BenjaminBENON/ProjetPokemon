@@ -150,18 +150,24 @@ public class GameMenu
 
         var listInventory = new List<string>();
         listInventory.Add("Pokeball");
+        listInventory.Add("Pokeball");
+        listInventory.Add("Pokeball");
+        listInventory.Add("Masterball");
+        listInventory.Add("Masterball");
         listInventory.Add("Masterball");
         listInventory.Add("LaMereABen");
+        listInventory.Add("LaMereABen");
 
-        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", 3, listInventory);
+        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", 8, listInventory);
+        MenuCreator.SelectInMenu(8);
 
-        for (int y = 0; y < 20; y++)
-        {
-            Console.SetCursorPosition(windowWidth/2 - 50, yPosition + y);
-            Console.Write("|");
-            Console.SetCursorPosition(windowWidth/2 + 50, yPosition + y);
-            Console.WriteLine("|");
-        }
+        //for (int y = 0; y < 20; y++)
+        //{
+        //    Console.SetCursorPosition(windowWidth/2 - 50, yPosition + y);
+        //    Console.Write("|");
+        //    Console.SetCursorPosition(windowWidth/2 + 50, yPosition + y);
+        //    Console.WriteLine("|");
+        //}
         
 
     }
@@ -241,6 +247,7 @@ public class GameMenu
             case ConsoleKey.Enter:
                 Console.Clear();
                 oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
+                m_userChoice = 1;
                 break;
             case ConsoleKey.RightArrow:
                 m_userChoice++;
