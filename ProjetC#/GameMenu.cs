@@ -140,7 +140,7 @@ public class GameMenu
         }
 
     }
-    public static void Display_InventoryMenu()
+    public static void Display_InventoryMenu(Character p)
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
@@ -148,27 +148,33 @@ public class GameMenu
         int xPosition = (windowWidth) / 2 - 45;
         int yPosition = (windowHeight / 6) * 4;
 
+        var objList = p.GetObjectList();
+
         var listInventory = new List<string>();
-        listInventory.Add("Pokeball");
-        listInventory.Add("Pokeball");
-        listInventory.Add("Pokeball");
-        listInventory.Add("Masterball");
-        listInventory.Add("Masterball");
-        listInventory.Add("Masterball");
-        listInventory.Add("LaMereABen");
-        listInventory.Add("LaMereABen");
+        foreach (var item in objList)
+        {
+            listInventory.Add(item.Name);
+        }
 
-        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", 8, listInventory);
-        MenuCreator.SelectInMenu(8);
+        //var listInventoryTest = new List<string>();
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
 
-        //for (int y = 0; y < 20; y++)
-        //{
-        //    Console.SetCursorPosition(windowWidth/2 - 50, yPosition + y);
-        //    Console.Write("|");
-        //    Console.SetCursorPosition(windowWidth/2 + 50, yPosition + y);
-        //    Console.WriteLine("|");
-        //}
-        
+        int selectedItem = MenuCreator.SelectItemInMenu(listInventory);
+        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", listInventory.Count, listInventory);
+
+        for (int y = 0; y < 20; y++)
+        {
+            Console.SetCursorPosition(windowWidth / 2 - 50, yPosition + y);
+            Console.Write("|");
+            Console.SetCursorPosition(windowWidth / 2 + 50, yPosition + y);
+            Console.WriteLine("|");
+        }
+
+        //if (selectedItem >= 0) UseItem(objList[selectedItem]);
+        //UseItem A IMPLEMENTER
 
     }
         public static void Display_SaveMenu()

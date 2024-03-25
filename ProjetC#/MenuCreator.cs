@@ -13,6 +13,7 @@ namespace ProjetC_
 
         public static void CreateMenu(int posX,int posY, string name, int nbCase, List<string> caseName) 
         {
+
             if (caseName.Count != nbCase || nbCase < 0)
             {
                 Console.WriteLine("Erreur dans la création de menu.");
@@ -51,6 +52,7 @@ namespace ProjetC_
                     Console.SetCursorPosition(posX + (i + 1) * (Size / (nb2 + 1)), posY + 5);
                     Console.Write("|" + caseName[i] + "|");
                     if (m_userChoiceInMenu == i + 1) Console.Write("<");
+                    if (m_userChoiceInMenu != i + 1) Console.Write(" ");
                     Console.SetCursorPosition(posX + (i + 1) * (Size / (nb2 + 1)), posY + 4);
                     for (int j = 0; j < sizeCaseName + 2; j++)
                     {
@@ -68,6 +70,7 @@ namespace ProjetC_
                     Console.SetCursorPosition(posX + (i - nb2 + 1) * (Size / (nb2 + 1)), posY + 10);
                     Console.Write("|" + caseName[i] + "|");
                     if (m_userChoiceInMenu == i + 1) Console.Write("<");
+                    if (m_userChoiceInMenu != i + 1) Console.Write(" ");
                     Console.SetCursorPosition(posX + (i - nb2 + 1) * (Size / (nb2 + 1)), posY + 9);
                     for (int j = 0; j < sizeCaseName + 2; j++)
                     {
@@ -94,6 +97,7 @@ namespace ProjetC_
                     Console.SetCursorPosition(posX + (i + 1) * (Size / (nb3 + 1)), posY + 5);
                     Console.Write("|" + caseName[i] + "|");
                     if (m_userChoiceInMenu == i + 1) Console.Write("<");
+                    if (m_userChoiceInMenu != i + 1) Console.Write(" ");
                     Console.SetCursorPosition(posX + (i + 1) * (Size / (nb3 + 1)), posY + 4);
                     for (int j = 0; j < sizeCaseName + 2; j++)
                     {
@@ -111,6 +115,7 @@ namespace ProjetC_
                     Console.SetCursorPosition(posX + (i - nb3 + 1) * (Size / (nb3 + 1)), posY + 10);
                     Console.Write("|" + caseName[i] + "|");
                     if (m_userChoiceInMenu == i + 1) Console.Write("<");
+                    if (m_userChoiceInMenu != i + 1) Console.Write(" ");
                     Console.SetCursorPosition(posX + (i - nb3 + 1) * (Size / (nb3 + 1)), posY + 9);
                     for (int j = 0; j < sizeCaseName + 2; j++)
                     {
@@ -128,6 +133,7 @@ namespace ProjetC_
                     Console.SetCursorPosition(posX + (i - 2 * nb3 + 1) * (Size / (nb3 + 1)), posY + 15);
                     Console.Write("|" + caseName[i] + "|");
                     if (m_userChoiceInMenu == i + 1) Console.Write("<");
+                    if (m_userChoiceInMenu != i + 1) Console.Write(" ");
                     Console.SetCursorPosition(posX + (i - 2 * nb3 + 1) * (Size / (nb3 + 1)), posY + 14);
                     for (int j = 0; j < sizeCaseName + 2; j++)
                     {
@@ -140,22 +146,18 @@ namespace ProjetC_
                     }
                 }
             }
-
-            //SelectInMenu(nbCase);
         }
 
-        public static void SelectInMenu(int sizeMenu)
+        public static int SelectItemInMenu(List<string> list)
         {
+            int sizeMenu = list.Count;
+
             ConsoleKey a = Input.KeyPress.Key;
 
             switch (a)
             {
                 case ConsoleKey.Enter:
-                    //Console.Clear();
-                    //oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
-                    //m_userChoiceInMenu = 1;
-                    //
-                    break;
+                    return m_userChoiceInMenu - 1; 
                 case ConsoleKey.RightArrow:
                     m_userChoiceInMenu++;
                     break;
@@ -165,6 +167,8 @@ namespace ProjetC_
             }
             if (m_userChoiceInMenu > sizeMenu) m_userChoiceInMenu = sizeMenu;
             if (m_userChoiceInMenu < 1) m_userChoiceInMenu = 1;
+
+            return -1;
         }
 
     }

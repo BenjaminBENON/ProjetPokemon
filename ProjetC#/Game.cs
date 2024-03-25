@@ -220,7 +220,7 @@ public class Game
     {
         
         Map.Play_Map(this, botCharacter);
-        GameMenu.Display_InventoryMenu();
+        GameMenu.Display_InventoryMenu(botCharacter);
         Input.Update();
         Input.ItemInventoryControl(this);
         Console.CursorVisible = false;
