@@ -110,11 +110,7 @@ public class Fight
 
         while (true)
         {
-            if (m_fightState == FightState.LeaveFight)
-            {
-                Console.WriteLine("Le joueur a abandonné le combat");
-                return;
-            }
+            
             isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
             isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
 
@@ -137,6 +133,11 @@ public class Fight
             }
             // Finish round if pokemon is ko
             PerformRound();
+            if (m_fightState == FightState.LeaveFight)
+            {
+                Console.WriteLine("Le joueur a abandonné le combat");
+                return;
+            }
         }
 
         // Fin du combat -> Dresser Fight or Savage Pokemon Fight
@@ -197,6 +198,10 @@ public class Fight
             // #TODO Separe logic of Input choice / Action system priority speed attack etc... 
 
             CharacterSelection();
+            if (m_fightState == FightState.LeaveFight)
+            {
+                return;
+            }
 
             switch (m_playerState)
             {
@@ -302,14 +307,13 @@ public class Fight
                 continue;
 
             }
-            if (userInput.ToLower() == "Oui")
+            if (userInput.ToLower() == "non")
             {
                 break;
             }
             m_fightState = FightState.LeaveFight;
             break;
         } while (true);
-
     }
     private void SwitchPokemonSelection(string userInput)
     {
@@ -435,6 +439,10 @@ public class Fight
         string userInput = "";
 
         LeaveFightSelection(userInput);
+        if (m_fightState == FightState.LeaveFight)
+        {
+            return;
+        }
         SwitchPokemonSelection(userInput);
         ItemSelection(userInput);
         AttackSelection(userInput);
