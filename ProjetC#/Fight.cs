@@ -20,6 +20,12 @@ public enum FightType
     Trainer,
 }
 
+public enum FightState
+{
+    Run,
+    LeaveFight,
+}
+
 
 public class Fight
 {
@@ -41,6 +47,8 @@ public class Fight
 
     private FightType m_fightType; // fight Type
 
+    private FightState m_fightState; // Fight state at case player leave
+
     // for pokemon savage
     private Pokemon m_pokemonToCatch;
 
@@ -53,15 +61,13 @@ public class Fight
     private int m_iEnemyItemChoice;
     private int m_iEnemyAttackChoice;
 
-
-
     // Constructor
     public Fight(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
     {
         Console.WriteLine("Fight Start");
         Initialize(c1, pokemonsEnemy, fightType);
 
-        Battle();
+        PerformFight();
 
         // #TODO -> if savage we catch the pokemon / if npc, we get xp
 
@@ -72,6 +78,7 @@ public class Fight
     public void Initialize(Character c1, List<Pokemon> pokemonsEnemy, FightType fightType)
     {
         m_fightType = fightType;
+        m_fightState = FightState.Run;
         m_c1 = c1;
         m_characterPokemonsList = new List<Pokemon>(c1.GetPokemonList());
         m_enemyPokemonsList = new List<Pokemon>(pokemonsEnemy); // We make a capy because we don't want affect original character array or enemy array
@@ -92,9 +99,74 @@ public class Fight
         return (pokemon.SpeedAttackPoint > pokemonEnemy.SpeedAttackPoint) ? FirstPlayerState.Character : FirstPlayerState.Enemy;
     }
 
+    // Several Round - Each round one pokemon is KO
+    public void PerformFight()
+    {
+        // is rest something in arrays
+        bool isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
+        bool isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
+        //
+
+
+        while (true)
+        {
+            if (m_fightState == FightState.LeaveFight)
+            {
+                Console.WriteLine("Le joueur a abandonné le combat");
+                return;
+            }
+            isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
+            isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
+
+            Console.WriteLine("Les pokemon RESTANT DU CHARACTER");
+            foreach (Pokemon item in m_characterPokemonsList)
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            Console.WriteLine("Les pokemon RESTANT DU ENEMY");
+            foreach (Pokemon item in m_enemyPokemonsList)
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            if (!isRestInArrayCharacterList || !isRestInArrayEnemyList)
+            {
+                Console.WriteLine("Un des 2 opponent n'a plus de pokemon");
+                break;
+            }
+            // Finish round if pokemon is ko
+            PerformRound();
+        }
+
+        // Fin du combat -> Dresser Fight or Savage Pokemon Fight
+
+        if (m_fightType == FightType.Trainer)
+        {
+            handleFinishBattleDresserFight();
+        }
+        if (m_fightType == FightType.SavagePokemon)
+        {
+            handleFinishBattleSavagePokemonFight();
+        }
+
+        Console.WriteLine("Combat Terminé");
+
+        // Enemy loose the battle
+        if (isRestInArrayCharacterList)
+        {
+            Console.WriteLine($" Vous avez gagné le combat\n");
+        }
+        // Character loose the battle
+        if (isRestInArrayEnemyList)
+        {
+            Console.WriteLine($" Le gagnant est l'enemy\n");
+        }
+
+    }
 
     // Round -> End when pokemon is KO
-    public void Round()
+    public void PerformRound()
     {
         Console.WriteLine("--- NEW ROUND ! ---");
         m_currentCharacterPokemon = m_characterPokemonsList[m_characterPokemonsList.Count - 1];
@@ -124,6 +196,8 @@ public class Fight
 
             // #TODO Separe logic of Input choice / Action system priority speed attack etc... 
 
+            CharacterSelection();
+
             switch (m_playerState)
             {
                 case FirstPlayerState.Character:
@@ -131,45 +205,112 @@ public class Fight
                     Console.WriteLine("--------------------");
                     Console.WriteLine("\n Le premier Pokemon a attaquer est " + m_currentCharacterPokemon.Name + " Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentEnemyPokemon.Name + "Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    CharacterSelection();
-                    if (CheckEndOfRound())
-                    {
-                        EndOfRound();
-                        return;
-                    }
-                    EnemySelection();
-                    if (CheckEndOfRound())
-                    {
-                        EndOfRound();
-                        return;
-                    }
+                    PerformCharacterActions();
+                    PerformEnemyActions();
                     break;
                 case FirstPlayerState.Enemy:
                     Console.WriteLine("L'ENEMY ATTAQUE EN PREMIER");
                     Console.WriteLine("--------------------");
                     Console.WriteLine(" Le premier Pokemon a attaquer est " + m_currentEnemyPokemon.Name + " Avec " + m_currentEnemyPokemon.SpeedAttackPoint + " Points de speed attack" + " Par rapport a l'autre : " + m_currentCharacterPokemon.Name + "Avec " + m_currentCharacterPokemon.SpeedAttackPoint + " De points de speed Attack ");
                     Console.WriteLine("--------------------");
-                    EnemySelection();
-                    // #TODO -> Mettre Check end A LA FIN DE LA FONCTION PerformEnemyAction / PerformCharacterActions 
-                    if (CheckEndOfRound())
-                    {
-                        EndOfRound();
-                        return;
-                    }
-                    CharacterSelection();
-                    if (CheckEndOfRound())
-                    {
-                        EndOfRound();
-                        return;
-                    }
+                    PerformEnemyActions();
+                    PerformCharacterActions();
                     break;
             }
         }
     }
+    private void PerformCharacterActions()
+    {
+        Console.WriteLine("PerformCharacterActions");
+        // Switch Pokemon Action
+        if (m_iCharacterPokemonChoice > 1)
+        {
+            Console.WriteLine("Switch de pokemon\n");
+            string sOldPokemonName = m_currentCharacterPokemon.Name;
 
+            m_itCurrentCharacterPokemon = m_iCharacterPokemonChoice - 2; // Handle user experience with 1.0 / 2.0 etc ...
+            m_currentCharacterPokemon = m_characterPokemonsList[m_itCurrentCharacterPokemon];
+            Console.WriteLine(" Vous avez choisir de changer de pokemon, " + " Passant de " + sOldPokemonName + " à " + m_currentCharacterPokemon.Name);
+        }
+        // Use Item Action
+        if (m_iCharacterItemChoice > 1)
+        {
+            Console.WriteLine("Utilisation d'item\n");
+            m_c1.UseObject(m_iCharacterItemChoice - 2, m_currentCharacterPokemon);
+        }
+        // Update effects action
 
-    // Handle INPUT & ACTION FOR CHARACTER
+        // Attack Action
 
+        // Character use attack on Enemy and himself
+        Console.WriteLine("-------------------- -------------------- --------------------");
+        Console.WriteLine("-------------------- CHARACTER USE ATTACK --------------------");
+        m_currentCharacterPokemon.UseAttack(m_iCharacterAttackChoice-1, m_currentEnemyPokemon);
+        Console.WriteLine("-------------------- CHARACTER USE ATTACK --------------------");
+        Console.WriteLine("-------------------- -------------------- --------------------");
+
+        if (CheckEndOfRound())
+        {
+            PerformEndOfRound();
+            return;
+        }
+    }
+    private void PerformEnemyActions()
+    {
+        // L'IA de l'ennemi choisit une attaque au hasard
+        int seed = DateTime.Now.Millisecond;
+        Random random = new Random(seed);
+        int randomIndex = random.Next(1, 4);
+
+        // Affichage des attaques disponibles pour l'ennemi
+        Console.WriteLine("-------------------");
+        Console.WriteLine("ENEMY IA PART");
+        Console.WriteLine("-------------------");
+
+        List<Attack> attackListEnemy = m_currentEnemyPokemon.GetAttackList();
+        for (int j = 0; j < attackListEnemy.Count; j++)
+        {
+            Console.WriteLine($"{j + 1}. {attackListEnemy[j].Name}");
+        }
+
+        // Utilisation de l'attaque sélectionnée par l'ennemi sur le personnage joueur
+        m_currentEnemyPokemon.UseAttack(randomIndex, m_currentCharacterPokemon);
+        Console.WriteLine("-------------------");
+        Console.WriteLine("ENEMY IA PART");
+        Console.WriteLine("-------------------");
+
+        if (CheckEndOfRound())
+        {
+            PerformEndOfRound();
+            return;
+        }
+    }
+
+    // Character Selection
+    private void LeaveFightSelection(string userInput)
+    {
+        Console.WriteLine("-------------------");
+        Console.WriteLine("Abandon du combat");
+        Console.WriteLine("-------------------");
+        do
+        {
+            Console.WriteLine("Souhaitez vous abandonner le combat ? (oui/non)");
+            userInput = Console.ReadLine();
+            if (!Utils.IsValidTrueFalseInput(userInput))
+            {
+                Console.WriteLine("Entrée non valide. Veuillez réessayer.");
+                continue;
+
+            }
+            if (userInput.ToLower() == "Oui")
+            {
+                break;
+            }
+            m_fightState = FightState.LeaveFight;
+            break;
+        } while (true);
+
+    }
     private void SwitchPokemonSelection(string userInput)
     {
         do
@@ -204,11 +345,15 @@ public class Fight
             {
                 string sOldPokemonName = m_currentCharacterPokemon.Name;
 
-                m_itCurrentCharacterPokemon = m_iCharacterPokemonChoice - 2; // Handle user experience with 1.0 / 2.0 etc ...
-                m_currentCharacterPokemon = m_characterPokemonsList[m_itCurrentCharacterPokemon];
+                //m_itCurrentCharacterPokemon = m_iCharacterPokemonChoice - 2; // Handle user experience with 1.0 / 2.0 etc ...
+                //m_currentCharacterPokemon = m_characterPokemonsList[m_itCurrentCharacterPokemon];
+
+                // Temporarily
+                int itCurrentCharacterPokemon = m_iCharacterPokemonChoice - 2; // Handle user experience with 1.0 / 2.0 etc ...
+                Pokemon currentCharacterPokemon = m_characterPokemonsList[itCurrentCharacterPokemon];
 
 
-                Console.WriteLine(" Vous avez choisir de changer de pokemon, " + " Passant de " + sOldPokemonName + " à " + m_currentCharacterPokemon.Name);
+                Console.WriteLine(" Vous avez choisir de changer de pokemon, " + " Passant de " + sOldPokemonName + " à " + currentCharacterPokemon.Name);
             }
             else
             {
@@ -218,7 +363,6 @@ public class Fight
         } while (true);
 
     }
-
     private void ItemSelection(string userInput)
     {
         do
@@ -247,7 +391,7 @@ public class Fight
 
             if (m_iCharacterItemChoice > 1)
             {
-                m_c1.UseObject(m_iCharacterItemChoice - 2, m_currentCharacterPokemon);
+                Console.WriteLine("Vous avez choisi d'utiliser :" + m_c1.GetObjectList()[m_iCharacterItemChoice-2].Name + "\n");
             }
             else
             {
@@ -257,7 +401,6 @@ public class Fight
 
         } while (true);
     }
-
     private void AttackSelection(string userInput)
     {
         do
@@ -281,62 +424,28 @@ public class Fight
                 Console.WriteLine("Entrée non valide. Veuillez réessayer.");
                 continue;
             }
-            int iAttackChar = int.Parse(userInput);
-            // Character use attack on Enemy and himself
-            Console.WriteLine("-------------------- -------------------- --------------------");
-            Console.WriteLine("-------------------- CHARACTER USE ATTACK --------------------");
-            m_currentCharacterPokemon.UseAttack(iAttackChar, m_currentEnemyPokemon);
-            Console.WriteLine("-------------------- CHARACTER USE ATTACK --------------------");
-            Console.WriteLine("-------------------- -------------------- --------------------");
-            break; // Sortir de la boucle une fois que le choix de l'attaque est valide
+            m_iCharacterAttackChoice = int.Parse(userInput);
+
+            break;
 
         } while (true);
     }
-
     private void CharacterSelection()
     {
         string userInput = "";
+
+        LeaveFightSelection(userInput);
         SwitchPokemonSelection(userInput);
         ItemSelection(userInput);
         AttackSelection(userInput);
     }
-
-    // Handle IA FOR ENEMY
-    private void EnemySelection()
-    {
-        // L'IA de l'ennemi choisit une attaque au hasard
-        int seed = DateTime.Now.Millisecond;
-        Random random = new Random(seed);
-        int randomIndex = random.Next(1, 4);
-
-        // Affichage des attaques disponibles pour l'ennemi
-        Console.WriteLine("-------------------");
-        Console.WriteLine("ENEMY IA PART");
-        Console.WriteLine("-------------------");
-
-        List<Attack> attackListEnemy = m_currentEnemyPokemon.GetAttackList();
-        for (int j = 0; j < attackListEnemy.Count; j++)
-        {
-            Console.WriteLine($"{j + 1}. {attackListEnemy[j].Name}");
-        }
-
-        // Utilisation de l'attaque sélectionnée par l'ennemi sur le personnage joueur
-        m_currentEnemyPokemon.UseAttack(randomIndex, m_currentCharacterPokemon);
-        Console.WriteLine("-------------------");
-        Console.WriteLine("ENEMY IA PART");
-        Console.WriteLine("-------------------");
-    }
-
-    // Switch Player State Between 2 attack
-
 
     // Check
     private bool CheckEndOfRound()
     {
         return m_currentEnemyPokemon.PokemonState == PokemonState.Out || m_currentCharacterPokemon.PokemonState == PokemonState.Out;
     }
-
-    private void EndOfRound()
+    private void PerformEndOfRound()
     {
         Console.WriteLine("---------- Un pokemon est OUT, round terminé ----------\n");
         string aliveText = " est resté vivant, il a gagné le round ";
@@ -370,84 +479,39 @@ public class Fight
     }
 
 
-    public void Battle()
-    {
-        // is rest something in arrays
-        bool isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
-        bool isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
-        //
 
-
-        while (true)
-        {
-            isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
-            isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
-
-            Console.WriteLine("Les pokemon RESTANT DU CHARACTER");
-            foreach (Pokemon item in m_characterPokemonsList)
-            {
-                Console.WriteLine(item.Name);
-            }
-
-            Console.WriteLine("Les pokemon RESTANT DU ENEMY");
-            foreach (Pokemon item in m_enemyPokemonsList)
-            {
-                Console.WriteLine(item.Name);
-            }
-
-            if (!isRestInArrayCharacterList || !isRestInArrayEnemyList)
-            {
-                Console.WriteLine("Un des 2 opponent n'a plus de pokemon");
-                break;
-            }
-            // Finish round if pokemon is ko
-            Round();
-        }
-
-        // Fin du combat -> Dresser Fight or Savage Pokemon Fight
-
-        if (m_fightType == FightType.Trainer)
-        {
-            handleFinishBattleDresserFight();
-        }
-        if (m_fightType == FightType.SavagePokemon)
-        {
-            handleFinishBattleSavagePokemonFight();
-        }
-
-        Console.WriteLine("Combat Terminé");
-
-        // Enemy loose the battle
-        if (isRestInArrayCharacterList)
-        {
-            Console.WriteLine($" Vous avez gagné le combat\n");
-        }
-        // Character loose the battle
-        if (isRestInArrayEnemyList)
-        {
-            Console.WriteLine($" Le gagnant est l'enemy\n");
-        }
-
-    }
-
+    // End fight #TO THINK -> Make 2 deriv class
     public void handleFinishBattleDresserFight()
     {
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;
         m_c1.Level.Update();
     }
-
     public void handleFinishBattleSavagePokemonFight()
     {
         Console.WriteLine("Le combat contre le Pokémon sauvage est terminé.");
 
-        Console.WriteLine("Voulez-vous capturer le Pokémon sauvage ? (Oui/Non)");
-        string sChoice = Console.ReadLine();
+
 
         bool hasPokeball = false;
         Item removeItem = null;
-        if (sChoice.ToLower() == "oui")
+        do
         {
+            Console.WriteLine("Voulez-vous capturer le Pokémon sauvage ? (Oui/Non)");
+            string sChoice = Console.ReadLine();
+
+
+            if (!Utils.IsValidTrueFalseInput(sChoice))
+            {
+                continue;
+            }
+
+            if (sChoice.ToLower() == "non")
+            {
+                Console.WriteLine("Vous avez choisi de ne pas capturer le Pokémon sauvage.");
+                break;
+            }
+
             int i = 0;
             foreach (Item item in m_c1.GetObjectList())
             {
@@ -483,18 +547,16 @@ public class Fight
             {
                 Console.WriteLine("Vous n'avez pas de pokeball pour capturer ce pokemon");
             }
+            break;
             
-        }
-        else
-        {
-            Console.WriteLine("Vous avez choisi de ne pas capturer le Pokémon sauvage.");
-        }
+        } while (true);
+
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;
         m_c1.Level.Update();
     }
 
-    private void CheckForEffec()
+    private void CheckForEffects()
     {
 
     }

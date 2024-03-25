@@ -191,7 +191,7 @@ public class Pokemon
 
     public void UseAttack(int iAttack, Pokemon pokemonEnemy)
     {
-        m_vAttacks[iAttack - 1].Use(this, pokemonEnemy);
+        m_vAttacks[iAttack].Use(this, pokemonEnemy);
     }
 
     // Constructor

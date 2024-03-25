@@ -35,4 +35,10 @@ public static class Utils
             return false;
         }
     }
+
+    public static bool IsValidTrueFalseInput(string input)
+    {
+        input = input.Trim().ToLower(); 
+        return input == "oui" || input == "non";
+    }
 }
