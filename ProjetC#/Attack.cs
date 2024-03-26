@@ -90,12 +90,12 @@ public class PhysicalAttack : Attack
                 float damage = totalModifier;
                 pokemonEnemy.CurrentLifePoints -= damage;
 
-                Console.WriteLine($"Détails du calcul de dégâts pour {Name}:");
-                Console.WriteLine($"  - Ratio d'attaque: {attackRatio}");
-                Console.WriteLine($"  - Puissance physique: {PhysicalPower}");
-                Console.WriteLine($"  - Modificateur de résistance: {resistanceModifier}");
-                Console.WriteLine($"  - Total des modifications: {totalModifier}");
-                Console.WriteLine($"  - Dégâts infligés: {damage}");
+                //Console.WriteLine($"Détails du calcul de dégâts pour {Name}:");
+                //Console.WriteLine($"  - Ratio d'attaque: {attackRatio}");
+                //Console.WriteLine($"  - Puissance physique: {PhysicalPower}");
+                //Console.WriteLine($"  - Modificateur de résistance: {resistanceModifier}");
+                //Console.WriteLine($"  - Total des modifications: {totalModifier}");
+                //Console.WriteLine($"  - Dégâts infligés: {damage}");
                 Console.WriteLine($"{Name} inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
@@ -253,6 +253,14 @@ public class Thunderbolt : PhysicalAttack
 
 }
 
+public class AttackBoost : StatAttack
+{
+    public AttackBoost() : base("Attack Boost", Stat.Attack, 1.5f)
+    {
+    }
+
+}
+
 public class DefenseBoost : StatAttack
 {
     public DefenseBoost() : base("Defense Boost", Stat.Defense, 1.5f)
@@ -325,21 +333,5 @@ public class EsquiveLower : StatAttack
 
 }
 
-public class AllStatsBoost : StatAttack
-{
-    public AllStatsBoost() : base("All Stats Boost", Stat.Attack, 1.1f)
-    {
-    }
-
-}
-
-public class AllStatsLower : StatAttack
-{
-    public AllStatsLower() : base("All Stats Lower", Stat.Attack, 0.9f)
-    {
-    }
-
-    // Override other methods as needed
-}
 
 

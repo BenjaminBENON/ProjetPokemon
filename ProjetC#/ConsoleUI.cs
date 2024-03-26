@@ -4,32 +4,34 @@ using System.Text;
 
 public class ConsoleUI
 {
-    private readonly Dictionary<(int x, int y), string> uiElements;
+    private List<string> m_buffer;
+    private int m_lineLimit;
+    private int m_lineToRemove;
+
 
     public ConsoleUI()
     {
-        uiElements = new Dictionary<(int x, int y), string>();
+        m_buffer = new List<string>();
+        m_lineLimit = 40;
+        m_lineToRemove = 20;
     }
 
-    public void AddElement(string text, int x, int y)
+    public void Add(string text)
     {
-        uiElements[(x, y)] = text;
+        m_buffer.Add(text);
+        UpdateUI();
     }
 
-    public void DrawUI()
+
+    public void UpdateUI()
     {
+        if (m_buffer.Count > m_lineLimit) {
+            m_buffer.RemoveRange(0, m_lineToRemove);
+        }
         Console.Clear();
-
-        foreach (var element in uiElements)
+        foreach (string text in m_buffer)
         {
-            int x = element.Key.x;
-            int y = element.Key.y;
-
-            if (x >= 0 && x < Console.WindowWidth && y >= 0 && y < Console.WindowHeight)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.Write(element.Value);
-            }
+            Console.WriteLine(text);
         }
     }
 }
