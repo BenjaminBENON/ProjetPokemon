@@ -231,6 +231,15 @@ public class Fight
     }
     private void PerformCharacterActions()
     {
+        //Update Effects
+        m_currentCharacterPokemon.UpdateEffects();
+
+        if (m_currentCharacterPokemon.PokemonState == PokemonState.CannotAttack)
+        {
+            return;
+        }
+
+
         m_consoleUI.Add("PerformCharacterActions");
         // Switch Pokemon Action
         if (m_iCharacterPokemonChoice > 1)
@@ -267,6 +276,15 @@ public class Fight
     }
     private void PerformEnemyActions()
     {
+
+        //Update Effects
+        m_currentEnemyPokemon.UpdateEffects();
+
+        if (m_currentEnemyPokemon.PokemonState == PokemonState.CannotAttack)
+        {
+            return;
+        }
+
         // L'IA de l'ennemi choisit une attaque au hasard
         int seed = DateTime.Now.Millisecond;
         Random random = new Random(seed);
@@ -464,11 +482,11 @@ public class Fight
     {
         string userInput = "";
 
-        LeaveFightSelection(userInput);
-        if (m_fightState == FightState.LeaveFight)
-        {
-            return;
-        }
+        //LeaveFightSelection(userInput);
+        //if (m_fightState == FightState.LeaveFight)
+        //{
+        //    return;
+        //}
         DisplayPokemonCard();
         SwitchPokemonSelection(userInput);
         ItemSelection(userInput);
@@ -478,6 +496,7 @@ public class Fight
     // Check
     private bool CheckEndOfRound()
     {
+        // The pokemon is set Out in his Current Life method if his life go down 0, this finish the pokemon round
         return m_currentEnemyPokemon.PokemonState == PokemonState.Out || m_currentCharacterPokemon.PokemonState == PokemonState.Out;
     }
     private void PerformEndOfRound()
@@ -589,10 +608,5 @@ public class Fight
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;
         m_c1.Level.Update();
-    }
-
-    private void CheckForEffects()
-    {
-
     }
 }

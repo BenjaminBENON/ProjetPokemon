@@ -41,23 +41,43 @@ public class PhysicEffect : Effect
 
     public override void Inflict()
     {
-        float oldLifePoints = m_pokemon.CurrentLifePoints;
-        m_pokemon.CurrentLifePoints -= m_damage;
-        Console.WriteLine("Inflict a poison : passant de " + oldLifePoints + " points de vie, à " + m_pokemon.CurrentLifePoints + " points de vie ");
+        if (m_duration > 0)
+        {
+            m_duration--;
+            float oldLifePoints = m_pokemon.CurrentLifePoints;
+            m_pokemon.CurrentLifePoints -= m_damage;
+            Console.WriteLine("Inflict a poison : passant de " + oldLifePoints + " points de vie, à " + m_pokemon.CurrentLifePoints + " points de vie ");
+        }
+        // turn Duration finish
+        else
+        {
+            Console.WriteLine("Poison is Finish");
+        }
     }
 }
 
-public class PokemonStateEffect : Effect
+public class StateEffect : Effect
 {
 
 
-    public PokemonStateEffect(string name, int duration, Pokemon pokemon) : base(name, duration, pokemon)
+    public StateEffect(string name, int duration, Pokemon pokemon) : base(name, duration, pokemon)
     {
         m_type = EffectType.Stun;
     }
 
     public override void Inflict()
     {
-        Console.WriteLine("Inflict a stun, you are stun for still " + m_duration + " turn ");
+
+        if (m_duration > 0) {
+            m_duration--;
+            Console.WriteLine("Inflict a stun, you are stun for still " + m_duration + " turn ");
+            m_pokemon.PokemonState = PokemonState.CannotAttack;
+        }
+        // turn Duration finish
+        else
+        {
+            Console.WriteLine("Stun is Finish");
+            m_pokemon.PokemonState = PokemonState.Normal;
+        }
     }
 }

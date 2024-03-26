@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 
 public enum AttackType
@@ -50,6 +51,7 @@ public class Attack
 
     public virtual void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
+        Console.WriteLine($"USE CLASSE ATTACK");
     }
 
     public Attack(string name, int power)
@@ -71,6 +73,7 @@ public class PhysicalAttack : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
+        Console.WriteLine($"USE CLASSE PHYSICAL ATTACK");
         Console.WriteLine($"{pokemon.Name} utilise {Name} !");
         int seed = DateTime.Now.Millisecond;
         Random randomPrec = new Random(seed);
@@ -182,9 +185,19 @@ public class WaterGun : PhysicalAttack
 
 public class Tackle : PhysicalAttack
 {
-    public Tackle() : base("Tackle", 10)
+    public Tackle() : base("Tackle", 5) // Less Damage But Poison
     {
         Type = AttackType.Normal;
+    }
+
+    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
+    {
+        Console.WriteLine($"USE CLASSE TACKLE");
+        base.Use(pokemon, pokemonEnemy);
+
+        Console.WriteLine("We add a poison To the enemy");
+        Effect effect = new PhysicEffect("Poison", 5, pokemonEnemy, pokemonEnemy.BaseLifePoints / 50.0f);
+        pokemonEnemy.AddActiveEffect(effect);
     }
 }
 
@@ -193,6 +206,15 @@ public class Ember : PhysicalAttack
     public Ember() : base("Ember", 10)
     {
         Type = AttackType.Fire;
+    }
+
+    public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
+    {
+        base.Use(pokemon, pokemonEnemy);
+
+        Console.WriteLine("We add a stun To the enemy");
+        Effect effect = new StateEffect("Stun", 5, pokemonEnemy);
+        pokemonEnemy.AddActiveEffect(effect);
     }
 }
 

@@ -144,24 +144,45 @@ public class Game
 
 
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
+        //Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
-        //ConsoleUI consoleUI = new ConsoleUI();
+        ConsoleDraw console = new ConsoleDraw();
 
-        //// Ajouter des éléments à l'interface utilisateur
-        //consoleUI.AddElement("Pokémon gauche", 5, 5); // Pokémon à gauche
-        //consoleUI.AddElement("Pokémon droit", Console.WindowWidth - 15, 5); // Pokémon à droite
-        //consoleUI.AddElement("Logs de combat", (Console.WindowWidth / 2) - 10, 10); // Logs de combat au milieu
+        // Ajout des messages pour simuler le combat
+        console.AddElement("Le combat commence !", Console.WindowWidth / 2, Console.WindowHeight / 2, TextAlignment.Center);
+        console.DrawUI();
+        Thread.Sleep(2000);
 
-        //// Dessiner l'interface utilisateur
-        //consoleUI.DrawUI();
+        // Tour 1
+        console.AddElement("Pikachu utilise Éclair !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 2, TextAlignment.Center);
+        console.AddElement("Bulbasaur perd 20 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 3, TextAlignment.Center);
+        console.DrawUI();
+        Thread.Sleep(2000);
 
-        //// Exemple de modification dynamique de l'interface utilisateur
-        //System.Threading.Thread.Sleep(2000); // Attendre 2 secondes
-        //consoleUI.AddElement("Combat en cours...", (Console.WindowWidth / 2) - 8, 10); // Modifier les logs de combat
-        //consoleUI.DrawUI(); // Dessiner à nouveau pour voir les modifications
+        console.AddElement("Bulbasaur utilise Fouet Lianes !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 4, TextAlignment.Center);
+        console.AddElement("Pikachu perd 15 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 5, TextAlignment.Center);
+        console.DrawUI();
+        Thread.Sleep(2000);
 
-        //Console.ReadKey();
+        // Tour 2
+        console.AddElement("Pikachu utilise Vive-Attaque !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 6, TextAlignment.Center);
+        console.AddElement("Bulbasaur perd 25 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 7, TextAlignment.Center);
+        console.DrawUI();
+        Thread.Sleep(2000);
+
+        console.AddElement("Bulbasaur utilise Tranch'Herbe !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 8, TextAlignment.Center);
+        console.AddElement("Pikachu perd 18 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 9, TextAlignment.Center);
+        console.DrawUI();
+        Thread.Sleep(2000);
+
+        // Fin du combat
+        console.AddElement("Le combat est terminé !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 10, TextAlignment.Center);
+        console.AddElement("Le gagnant est Pikachu !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 11, TextAlignment.Center);
+        // Affichage de l'interface utilisateur
+        console.DrawUI();
+
+        // Attente de l'appui sur une touche pour quitter
+        Console.ReadKey();
 
         Thread.Sleep(300000000);
 

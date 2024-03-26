@@ -7,6 +7,7 @@ public enum PokemonState
 {
     Normal,
     Out,
+    CannotAttack,
 }
 
 public enum PokemonType
@@ -162,17 +163,21 @@ public class Pokemon
     }
 
     // Effect is something applied during some turn
-    private List<Effect> activeEffects;
+    private List<Effect> m_activeEffects;
 
     public void AddActiveEffect(Effect attack)
     {
-        activeEffects.Add(attack);
+        m_activeEffects.Add(attack);
     }
 
-    public void UpdateEffect()
+    public void UpdateEffects()
     {
-
+        foreach (Effect effect in m_activeEffects)
+        {
+            effect.Inflict();
+        }
     }
+
 
 
     public List<Attack> GetAttackList()
@@ -208,6 +213,7 @@ public class Pokemon
 
         // Lists
         m_vAttacks = new List<Attack>();
+        m_activeEffects = new List<Effect>();
         Resistances = res;
     }
 }
