@@ -9,20 +9,6 @@ public enum PokemonState
     Out,
 }
 
-public class Effect
-{
-    public string Name { get; set; }
-    public int Duration { get; set; } // Turn duration -> one turn is Character attack + Enemy Attack -> Manage better
-    public int DamagePerTurn { get; set; } // 
-}
-
-
-public enum PokemonEffect
-{
-    Stun,
-    Poisoned,
-}
-
 public enum PokemonType
 {
     Normal = 0,
@@ -73,9 +59,6 @@ public class Pokemon
 
     // Attack list (4)
     List<Attack> m_vAttacks;
-
-    // Effect is something applied during some turn
-    private List<Effect> activeEffects;
 
     // Getter / Setter -> Attribute
     public string Name
@@ -176,6 +159,19 @@ public class Pokemon
     {
         get { return m_level; }
         set { m_level = value; }
+    }
+
+    // Effect is something applied during some turn
+    private List<Effect> activeEffects;
+
+    public void AddActiveEffect(Effect attack)
+    {
+        activeEffects.Add(attack);
+    }
+
+    public void UpdateEffect()
+    {
+
     }
 
 

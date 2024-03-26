@@ -166,6 +166,8 @@ public class Fight
 
     }
 
+    // #TODO -> Voir la carte du pokemon / voir les stats de l'attaque 
+
     // Round -> End when pokemon is KO
     public void PerformRound()
     {
