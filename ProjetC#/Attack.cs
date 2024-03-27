@@ -56,7 +56,9 @@ public class Attack
 
     public Attack(string name, int power)
     {
+        Console.WriteLine("Setup du name : " + name);
         Name = name;
+
         Power = power;
     }
 

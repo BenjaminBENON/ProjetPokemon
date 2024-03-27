@@ -73,12 +73,14 @@ public class Potion : Item
 
 public class Berry : Item
 {
-    public Berry(string name) : base(name) { }
+    public Berry(string name) : base(name) {
+        Type = ItemType.PokemonState;
+    }
 
     public override void Use(Pokemon pokemon)
     {
         // Remove Bad Pokemon effect
-        Type = ItemType.PokemonState;
+        Console.WriteLine("Remove Stun");
         pokemon.PokemonState = PokemonState.Normal;
     }
 }

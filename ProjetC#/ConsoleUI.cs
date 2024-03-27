@@ -19,7 +19,7 @@ public class ConsoleUI
 
     public void Add(string text)
     {
-        m_buffer.Add(text);
+        //m_buffer.Add(text);
         Console.WriteLine(text);
         //UpdateUI();
     }
