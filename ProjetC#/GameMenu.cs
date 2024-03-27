@@ -162,6 +162,9 @@ public class GameMenu
         //listInventoryTest.Add("test");
         //listInventoryTest.Add("test");
 
+        //int selectedItem = MenuCreator.SelectItemInMenu(listInventoryTest);
+        //MenuCreator.CreateMenu(xPosition, yPosition, "INVENTORY", listInventoryTest.Count, listInventoryTest);
+
         int selectedItem = MenuCreator.SelectItemInMenu(listInventory);
         MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", listInventory.Count, listInventory);
 
