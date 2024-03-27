@@ -35,7 +35,7 @@ public class Map
         "|              CCCC        CCCCCCCCCC                    CCCC            MMMMMMMM                                  CCCC              OOOOOOOOOOOO                                        MMPPMMMM                                                |",
         "|              CCCCCCCCCCCCCCCCCCCCCCCC                  CCCC            MMMMMMMM                                  CCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                                |",
         "|              CCCCCCCCCCCCCCCCCCCCCCCC                  CCCC            MMMMMMMM                                  CCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                                |",
-        "|                          CCCC    CCCC                  CCCC            MMMMMMMM                                                        OOOOOOOOOOOO                                                                                            |",
+        "|                          CCCC    CCCC                  CCCC            MMM11MMM                                                        OOOOOOOOOOOO                                                                                            |",
         "|                          CCCC    CCCC                  CCCC            CCCCCCCC                                                            OOOOOOOOOOOOOO                                                                                      |",
         "|                          CCCC    CCCC                  CCCC            CCCCCCCCCCCC                                                        OOOOOOOOOOOOOOOO                                                                                    |",
         "|                          CCCC    CCCC                  CCCC            CCCCCCCCCCCC                                                          OOOOOOOOOOOOOOOO                                                                                  |",
@@ -123,6 +123,8 @@ public class Map
                 else if (carac == 'B')
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 else if (carac == 'C')
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                else if (carac == '1')
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                 Console.Write('▒');
