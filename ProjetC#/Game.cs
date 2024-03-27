@@ -261,30 +261,14 @@ public class Game
 
     private void Display_Save_Menu()
     {
-        Console.WriteLine("=== MENU DE SAUVEGARDE ===");
-
-        Console.WriteLine("1. Ajouter une nouvelle sauvegarde");
-        Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
-        Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
-        Console.WriteLine("2.Retourner au menu principal");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, GameMenuStates.Save_AddMenu },
-            { 2, GameMenuStates.InGameMenu }
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
+        GameMenu.Display_SaveMenu();
     }
 
 
     private void Display_Save_AddMenu()
     {
         Console.Write("Nom de de votre partie : ");
-        // save name
+        //
         string name = Console.ReadLine();
 
         Console.Write("Votre partie : " + name + " est désormais disponible");

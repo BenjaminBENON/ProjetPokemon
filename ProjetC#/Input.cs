@@ -56,6 +56,11 @@ public class Input
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
         }
+        else if (KeyPress.KeyChar == 'm')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
+        }
     }
 
     static void MapUpdate(Game game, Character p)
@@ -100,6 +105,11 @@ public class Input
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
+        }
+        else if (KeyPress.KeyChar == 'm')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
         }
     }
 
