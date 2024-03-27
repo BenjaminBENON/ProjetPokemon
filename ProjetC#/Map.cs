@@ -24,7 +24,7 @@ public class Map
         "|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|",
         "|                     MMM                                                                                            OOOOOOOOOOOOOOOO                                                                                                            |",
         "|                   MMMMMMM                    MMMMMMMMMM        MMMMMMMM                                            OOOOOOOOOOOOOO                                                                                                              |",
-        "|                   MMPPMMM                    MMMMMMMMMM        MMMMMMMM                                              OOOOOOOOOOOO                                                                                                              |",
+        "|                   MMPPMMM                    MMMMMMMMMM        MMPPMMMM                                              OOOOOOOOOOOO                                                                                                              |",
         "|              CCCCCCCCCCCCCCCC                MMMMMMPPMMCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC  OOOOOOOOOOOO                                                                                                            |",
         "|              CCCCCCCCCCCCCCCC                CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC  OOOOOOOOOOOOOO                                                                                                          |",
         "|              CCCC        CCCC                CCCCCCCCCCCCCC                CCCC                                  CCCC    OOOOOOOOOOOO                                                                                                          |",
@@ -48,8 +48,8 @@ public class Map
         "|      CCCCCCCCCCCCCC      CCCC    CCCC                  CCCC                CCCCCCCCCCCCOOOOOOCC                                                            OOOOOOOOOOOOOOOOOOOO        CCCC                                                    |",
         "|                CCCC      CCCC    CCCC                  CCCC                    CCCC  CCCCCCCCCC                                                              OOOOOOOOOOOOOOOOOOOOOO    CCCC                                                    |",
         "|OOO             CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                          OOOOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOO     CCCC      CCCC    CCCC                  CCCC                    CCCC                  HH                                                        OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC                  CCCC                    CCCC                  BB                                                        OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
+        "|OOOOOOOOOOO     CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
+        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBB      CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOO    CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOOOO  CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
@@ -58,41 +58,41 @@ public class Map
         "|OOOOOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                                OOOOOOOOOOOOOOOOOO  CCCC        MMMMMMMMMM                                  |",
         "|OOOOOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                                OOOOOOOOOOOOOOOOOO  CCCC        MMMMMMMMMM                                  |",
         "|   OOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOO  CCCC        MMMMPPMMMM                                  |",
-        "|       OOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                            BBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
-        "|         OOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                            BBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
-        "|           OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOO    CCCC                                                    |",
-        "|           OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOO      CCCC                                                    |",
-        "|            OOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC            MMMMMMMMCCCC                                                                            OOOOOOOOOOOOOOOO        CCCC                                                    |",
-        "|              OOBBBBOOOOOOBBBBOO  CCCC                  CCCC            MMMMMMMMCCCC                                                                          OOOOOOOOOOOOOOOOOO        CCCC                                                    |",
-        "|              OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            MMMMMMMMCCCC                                                                        OOOOOOOOOOOOOOOOOO          CCCC                       MMMM                         |",
-        "|              OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            CCCCCCCCCCCC                                                                        OOOOOOOOOOOOOOOO            CCCC                     MMMMMMMM                       |",
-        "|              OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            CCCCCCCCCCCC                                                                      OOOOOOOOOOOOOOOO              CCCC                     MMMMPPMM                       |",
+        "|       OOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
+        "|HHHH     OOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
+        "|    HHHH   OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOO    CCCC                                                    |",
+        "|FFFF       OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOO      CCCC                                                    |",
+        "|TTTTFF      OOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC            MMMMMMMMCCCC                                                                            OOOOOOOOOOOOOOOO        CCCC                                                    |",
+        "|    TT        OOBBBBOOOOOOBBBBOO  CCCC                  CCCC            MMMMMMMMCCCC                                                                          OOOOOOOOOOOOOOOOOO        CCCC                                                    |",
+        "|FFFF          OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            MMMPPMMMCCCC                                                                        OOOOOOOOOOOOOOOOOO          CCCC                       MMMM                         |",
+        "|TTTT   FF     OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            CCCCCCCCCCCC                                                                        OOOOOOOOOOOOOOOO            CCCC                     MMMMMMMM                       |",
+        "|       TT     OOBBBBOOOOOOBBBBOOOOBBBB                  CCCC            CCCCCCCCCCCC                                                                      OOOOOOOOOOOOOOOO              CCCC                     MMMMPPMM                       |",
         "|              OOBBBBOOOOOOBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                       |",
         "|              OOBBBBOOOOOOBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                       |",
-        "|              OOBBBBOOOOOOOOOOOO  CCCC          MMMMMMMMCCCC                                                                                          OOOOOOOOOOOOOOOO                  CCCC                                                    |",
-        "|              OOBBBBOOOOOOOOOOOO  CCCC          MMMMMMMMCCCC                                                                                    OOOOOOOOOOOOOOOOOOOO                    CCCC                                                    |",
-        "|            OOOOBBBBOOOOOOOOOOOO  CCCC          MMMMMMMMCCCC                                                                                  OOOOOOOOOOOOOOOOOOOO                      CCCC                                                    |",
-        "|           OOOOOBBBBOOOOOOOOOOOO  CCCC          CCCCCCCCCCCC                                                                                OOOOOOOOOOOOOOOOOOOO                        CCCC                                                    |",
-        "|           OOOOOBBBBOOOOOOOOOOOO  CCCC                  CCCC                                                                              OOOOOOOOOOOOOOOOOOOO                          CCCC                                                    |",
-        "|         OOOOOOOBBBBOOOOOOOOOOOO  CCCC                  CCCC                                                                          OOOOOOOOOOOOOOOOOOOOOO                            CCCC                                                    |",
-        "|        OOOOOOOOBBBBOOOOOOOOOO    CCCC                  CCCC                                                                    OOOOOOOOOOOOOOOOOOOOOOOOOO                              CCCC                                                    |",
-        "|        OOOOOOOOBBBBOOOOOOOO      CCCC                  CCCC                                                              OOOOOOOOOOOOOOOOOOOOOOOOOOOO                                  CCCC                                                    |",
-        "|      OOOOOOOOOOBBBBOOOOOOOO      CCCC                  CCCC                                                      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                    CCCC                                                    |",
-        "|    OOOOOOOOOOOOBBBBOOOOOO        CCCC                  CCCC                                              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                  MMMMMMMMMM                                                    |",
-        "|   OOOOOOOOOOOOOBBBBOOOO          CCCC                  CCCC                                      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                      MMMMMMMMMM        MMMMMMMMMM                                  |",
-        "|   OOOOOOOOOOOOOBBBBOO            CCCC                  CCCC                                OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                MMPPMMMMMM        MMMMMMPPMM                                  |",
+        "|     HH       OOBBBBOOOOOOOOOOOO  CCCCHHHHHH    MMMMMMMMCCCC                                                                                          OOOOOOOOOOOOOOOO                  CCCC                                                    |",
+        "|   HHHH       OOBBBBOOOOOOOOOOOO  CCCCHHHH      MMMMMMMMCCCC     FFHH        FF         FF     FF     FF       HHHHHHHHHHHH          HHHHH      OOOOOOOOOOOOOOOOOOOO                    CCCC                                                    |",
+        "|   HHHHHH   OOOOBBBBOOOOOOOOOOOO  CCCCHHHHHHH   MMMMPPMMCCCC     TT HH    HHHTT         TT     TT     TT    HHHHHHHHHHHHHHHHHH     HHHHHHHH   OOOOOOOOOOOOOOOOOOOO                      CCCC                                                    |",
+        "|       HH  OOOOOBBBBOOOOOOOOOOOO  CCCC          CCCCCCCCCCCC HHH     FF       HH  FF  HHHFF  FF      FF      HHHHHHHHHHHHHHHHHH       HHHH  OOOOOOOOOOOOOOOOOOOO                        CCCC                                                    |",
+        "| FF        OOOOOBBBBOOOOOOOOOOOO  CCCC                  CCCC  HH     TT HH   FF HHTT     TT  TT    FFTT         HHHHHHHHHHHHH             OOOOOOOOOOOOOOOOOOOO                          CCCC                                                    |",
+        "| TT      OOOOOOOBBBBOOOOOOOOOOOO  CCCC     HHHHH        CCCC             HHH TTFF             FF   TT FFFF      HHHHHHH               OOOOOOOOOOOOOOOOOOOOOO                            CCCC                                                    |",
+        "|        OOOOOOOOBBBBOOOOOOOOOO    CCCC     HHHH         CCCC     HHH FF      HHTT HHH  FF     TT      TTTT                      OOOOOOOOOOOOOOOOOOOOOOOOOO                              CCCC                                                    |",
+        "| HHHH   OOOOOOOOBBBBOOOOOOOO      CCCC                HHCCCC   HHH   TT    HHFF        TT   FF      FF FF                 OOOOOOOOOOOOOOOOOOOOOOOOOOOO                                  CCCC                                                    |",
+        "| HH   OOOOOOOOOOBBBBOOOOOOOO      CCCC              HHHHCCCC  HHH          HHTT    HHHFF    TT      TT TT         OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                    CCCC                                                    |",
+        "|    OOOOOOOOOOOOBBBBOOOOOO      HHCCCC               HHHCCCC       HHHFF         HHH  TT                  OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                  MMMMMMMMMM                                                    |",
+        "|   OOOOOOOOOOOOOBBBBOOOO       HHHCCCC   HHHHHHH        CCCC     HHH  TT       FF                 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                      MMMMMMMMMM        MMMMMMMMMM                                  |",
+        "|   OOOOOOOOOOOOOBBBBOO            CCCCHHHHHHHHHHH       CCCC                   TT           OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                MMPPMMMMMM        MMMMMMPPMM                                  |",
         "| OOOOOOOOOOOOOOOBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                  |",
         "|OOOOOOOOOOOOOOOOBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                  |",
-        "|OOOOOOOOOOOOO   CCCC                                    CCCC                          OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                                                          |",
-        "|OOOOOOOOOOOOO   CCCC                                    CCCC                      OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                                                                |",
-        "|OOOOOOOOOOOO    CCCC                                    CCCC                    OOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                    MMMMMMMMMM                                      |",
-        "|OOOOOOOOOO      CCCC                                    CCCC                    OOOOOOOOOOOOOOOOOOOOOOOO                                                                                        MMMMMMMMMM                                      |",
-        "|OOOOOOOO        CCCC                                    CCCC                    OOOOOOOOOOOOOOOOOO                                                                                              MMPPMMMMMM                                      |",
+        "|OOOOOOOOOOOOO   CCCC                             HHHH   CCCC                          OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                                                          |",
+        "|OOOOOOOOOOOOO   CCCC            HHHHHH                  CCCC      HHHHHHHH        OOOOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                                                                |",
+        "|OOOOOOOOOOOO    CCCC              HHHHHH                CCCC    HHHHHHHH        OOOOOOOOOOOOOOOOOOOOOOOOOOOO                                                                                    MMMMMMMMMM                                      |",
+        "|OOOOOOOOOO      CCCC            HHHHHH            HH    CCCC     HHHHHH         OOOOOOOOOOOOOOOOOOOOOOOO                                                                                        MMMMMMMMMM                                      |",
+        "|OOOOOOOO        CCCCHHHHHH                              CCCC                    OOOOOOOOOOOOOOOOOO                                                                                              MMPPMMMMMM                                      |",
         "|OOOOOO          CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                      |",
         "|OOOO            CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                      |",
-        "|OO                                                                            OOOOOOOOOOOOOOOOOO                                                                                                                                                |",
-        "|                                                                              OOOOOOOOOOOOOOOO                                                                                                                                                  |",
-        "|                                                                              OOOOOOOOOOOOOOOO                                                                                                                                                  |",
+        "|OO          HHHHHHHHHHHHHHHH                           HH                     OOOOOOOOOOOOOOOOOO                                                                                                                                                |",
+        "|              HHHHHHHHHHHH                           HHHH                     OOOOOOOOOOOOOOOO                                                                                                                                                  |",
+        "|                  HHHHHHHH                                                    OOOOOOOOOOOOOOOO                                                                                                                                                  |",
         "|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|",
     };
     public static void Play_Map(Game oGame, Character p)
@@ -111,21 +111,25 @@ public class Map
                 }
                 char carac = GetWorldMap[p.PosY + y][p.PosX + x];
                 if (carac == ' ')
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("\x1b[38;2;0;255;0m");
                 else if (carac == 'H')
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write("\x1b[38;2;75;153;0m");
                 else if (carac == 'M')
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("\x1b[38;2;51;25;0m");
                 else if (carac == 'P')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;204;102;0m");
                 else if (carac == 'O')
                     Console.ForegroundColor = ConsoleColor.Blue;
                 else if (carac == 'B')
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("\x1b[38;2;255;153;51m");
                 else if (carac == 'C')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;160;160;160m");
                 else if (carac == '1')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;204;102;0m");
+                else if (carac == 'T')
+                    Console.Write("\x1b[38;2;152;71;0m");
+                else if (carac == 'F')
+                    Console.Write("\x1b[38;2;0;102;0m");
 
                 Console.Write('▒');
             }

@@ -1,5 +1,4 @@
-﻿using ProjetC_;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 public class PokemonCenter
