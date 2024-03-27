@@ -211,12 +211,15 @@ public class Game
     {
         Map.Play_Map(this,botCharacter);
         Input.Update();
-        Input.PlayerControl(this, botCharacter);
+        Input.PlayerMapControl(this, botCharacter);
         Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
-        PokemonCenter.DisplayCenter();
+        PokemonCenter.Play_Map(this, botCharacter);
+        Input.Update();
+        Input.PlayerCenterControl(this, botCharacter);
+        Console.CursorVisible = false;
     }
 
 
