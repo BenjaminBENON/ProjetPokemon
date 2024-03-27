@@ -46,12 +46,12 @@ public class PhysicEffect : Effect
             m_duration--;
             float oldLifePoints = m_pokemon.CurrentLifePoints;
             m_pokemon.CurrentLifePoints -= m_damage;
-            Console.WriteLine("Inflict a poison : passant de " + oldLifePoints + " points de vie, à " + m_pokemon.CurrentLifePoints + " points de vie ");
+            CustomConsole.Instance.WriteText("Inflict a poison : passant de " + oldLifePoints + " points de vie, à " + m_pokemon.CurrentLifePoints + " points de vie ");
         }
         // turn Duration finish
         else
         {
-            Console.WriteLine("Poison is Finish");
+            CustomConsole.Instance.WriteText("Poison is Finish");
         }
     }
 }
@@ -70,13 +70,13 @@ public class StateEffect : Effect
 
         if (m_duration > 0) {
             m_duration--;
-            Console.WriteLine("Inflict a stun, you are stun for still " + m_duration + " turn ");
+            CustomConsole.Instance.WriteText("Inflict a stun, you are stun for still " + m_duration + " turn ");
             m_pokemon.PokemonState = PokemonState.CannotAttack;
         }
         // turn Duration finish
         else
         {
-            Console.WriteLine("Stun is Finish");
+            CustomConsole.Instance.WriteText("Stun is Finish");
             m_pokemon.PokemonState = PokemonState.Normal;
         }
     }

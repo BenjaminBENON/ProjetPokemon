@@ -24,12 +24,19 @@ class Program
     static void Main(string[] args)
     {
         Resize();
-        
+
         Game game = new Game();
         while (true)
         {
             game.Run();
         }
+
+
+
+
+
+        //Affichage des textes globaux au milieu
+
     }
 }
 //EXCEL _ CSV _ JSON

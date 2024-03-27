@@ -77,6 +77,8 @@ public class Game
 
     public void Start()
     {
+        CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
+
         currentCharacter = new Character("Character");
         GameDatabase database = new GameDatabase();
 
