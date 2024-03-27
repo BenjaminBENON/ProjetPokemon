@@ -10,7 +10,7 @@ class Program
     [DllImport("kernel32.dll")]
     private static extern IntPtr GetConsoleWindow();
     const int SW_MAXIMIZE = 3;
-    public static void Resize()
+    private static void Resize()
     {
         IntPtr handle = GetConsoleWindow();
         ShowWindow(handle, SW_MAXIMIZE);
@@ -20,9 +20,32 @@ class Program
         Console.Clear();
     }
 
+    private static void DefaultSave()
+    {
+        var itemList = new List<Item>();
+        var pokemonList = new List<Pokemon>();
+        var eventList = new List<int>();
+
+        float[]  resPlant = { 1, 2, 0.5f, 1, 0.8f };
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 99, 1,resPlant);
+
+        itemList.Add(new Pokeball("Pokeball"));
+        itemList.Add(new Pokeball("Pokeball"));
+        itemList.Add(new Pokeball("Pokeball"));
+        pokemonList.Add(bulbizarre);
+        eventList.Add(1);
+
+        SaveShape newSave = new SaveShape("Default", 20, 20, itemList, pokemonList, eventList);
+        string filePath = "saveDefault.json";
+        Save.CreateJsonSave(newSave, filePath);
+        
+    }
+
     static void Main(string[] args)
     {
         Resize();
+
+        DefaultSave();
 
         Game game = new Game();
         while (true)

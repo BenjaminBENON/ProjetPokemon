@@ -202,6 +202,7 @@ public class Game
         GameMenu.OnEnterGameMenu();
         GameMenu.StartChoice(this);
     }
+
     private void CharacterCreationMenu()
     {
         Console.Clear();
@@ -262,6 +263,8 @@ public class Game
     private void Display_Save_Menu()
     {
         GameMenu.Display_SaveMenu();
+        Input.Update();
+        Console.CursorVisible = false;
     }
 
 

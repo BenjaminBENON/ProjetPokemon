@@ -131,6 +131,7 @@ public class GameMenu
         Console.Write("Votre personnage " + cName + " est d�sormais disponible . Appuyer sur Entrer pour continuer.");
 
         oGame.SetCharacterName(cName);
+        EntrySave(cName);
 
         ConsoleKey a = Console.ReadKey(true).Key;
         if (a == ConsoleKey.Enter)
@@ -138,8 +139,29 @@ public class GameMenu
             Console.Clear();
             oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
-
     }
+
+    private static void EntrySave(string name)
+    {
+        var itemList = new List<Item>();
+        var pokemonList = new List<Pokemon>();
+        var eventList = new List<int>();
+
+        float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", PokemonType.Plant, 45, 49, 49, 65, 99, 1, resPlant);
+
+        itemList.Add(new Pokeball("Pokeball"));
+        itemList.Add(new Pokeball("Pokeball"));
+        itemList.Add(new Pokeball("Pokeball"));
+        pokemonList.Add(bulbizarre);
+        eventList.Add(1);
+
+        SaveShape newSave = new SaveShape(name, 20, 20, itemList, pokemonList, eventList);
+        string filePath = name+".json";
+        Save.CreateJsonSave(newSave, filePath);
+    }
+
+
     public static void Display_InventoryMenu(Character p)
     {
         int windowWidth = Console.WindowWidth;
@@ -182,23 +204,23 @@ public class GameMenu
 
         var list = new List<string>();
 
-        Save.CreateJsonSave("test", 0, 0, null, null, null);
-        if (Save.ListSaves.Count > 0)
+        list.Add("DEFAULT SAVE");
+        if (Save.NbSave > 1)
         {
-            for (int i = 0; i < Save.ListSaves.Count; i++)
+            for (int i = 0; i < Save.NbSave -1; i++)
             {
-                list.Add("SAVE " + i.ToString());
+                list.Add("SAVE " + (i+1).ToString());
             }
         }
 
         MenuCreator.SelectItemInMenu(list);
         MenuCreator.CreateMenu(50, 3, "SAVE MENU", list.Count, list);
 
-        for (int y = 0; y < 20; y++)
+        for (int y = 0; y < 25; y++)
         {
-            Console.SetCursorPosition(windowWidth / 2 - 50, yPosition + y);
+            Console.SetCursorPosition(45, y+3);
             Console.Write("|");
-            Console.SetCursorPosition(windowWidth / 2 + 50, yPosition + y);
+            Console.SetCursorPosition(105, y+3);
             Console.WriteLine("|");
         }
 
