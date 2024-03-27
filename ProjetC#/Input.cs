@@ -1,4 +1,4 @@
-using ProjetC_;
+
 using System.Numerics;
 
 public class Input

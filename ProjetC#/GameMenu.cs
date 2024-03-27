@@ -1,4 +1,4 @@
-using ProjetC_;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,7 +140,7 @@ public class GameMenu
         }
 
     }
-    public static void Display_InventoryMenu()
+    public static void Display_InventoryMenu(Character p)
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
@@ -148,21 +148,36 @@ public class GameMenu
         int xPosition = (windowWidth) / 2 - 45;
         int yPosition = (windowHeight / 6) * 4;
 
-        var listInventory = new List<string>();
-        listInventory.Add("Pokeball");
-        listInventory.Add("Masterball");
-        listInventory.Add("LaMereABen");
+        var objList = p.GetObjectList();
 
-        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", 3, listInventory);
+        var listInventory = new List<string>();
+        foreach (var item in objList)
+        {
+            listInventory.Add(item.Name);
+        }
+
+        //var listInventoryTest = new List<string>();
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
+        //listInventoryTest.Add("test");
+
+        //int selectedItem = MenuCreator.SelectItemInMenu(listInventoryTest);
+        //MenuCreator.CreateMenu(xPosition, yPosition, "INVENTORY", listInventoryTest.Count, listInventoryTest);
+
+        int selectedItem = MenuCreator.SelectItemInMenu(listInventory);
+        MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", listInventory.Count, listInventory);
 
         for (int y = 0; y < 20; y++)
         {
-            Console.SetCursorPosition(windowWidth/2 - 50, yPosition + y);
+            Console.SetCursorPosition(windowWidth / 2 - 50, yPosition + y);
             Console.Write("|");
-            Console.SetCursorPosition(windowWidth/2 + 50, yPosition + y);
+            Console.SetCursorPosition(windowWidth / 2 + 50, yPosition + y);
             Console.WriteLine("|");
         }
-        
+
+        //if (selectedItem >= 0) UseItem(objList[selectedItem]);
+        //UseItem A IMPLEMENTER
 
     }
         public static void Display_SaveMenu()
@@ -241,6 +256,7 @@ public class GameMenu
             case ConsoleKey.Enter:
                 Console.Clear();
                 oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
+                m_userChoice = 1;
                 break;
             case ConsoleKey.RightArrow:
                 m_userChoice++;
