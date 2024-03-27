@@ -6,8 +6,8 @@ using System.Text;
 public enum PokemonState
 {
     Normal,
-    Stun,
     Out,
+    CannotAttack,
 }
 
 public enum PokemonType
@@ -54,7 +54,7 @@ public class Pokemon
     private float m_precisionPoints;
     private float m_esquivePoints;
 
-    private int m_level;
+    private Level m_level;
 
 
 
@@ -156,11 +156,28 @@ public class Pokemon
         }
     }
 
-    public int Level
+    public Level Level
     {
         get { return m_level; }
         set { m_level = value; }
     }
+
+    // Effect is something applied during some turn
+    private List<Effect> m_activeEffects;
+
+    public void AddActiveEffect(Effect attack)
+    {
+        m_activeEffects.Add(attack);
+    }
+
+    public void UpdateEffects()
+    {
+        foreach (Effect effect in m_activeEffects)
+        {
+            effect.Inflict();
+        }
+    }
+
 
 
     public List<Attack> GetAttackList()
@@ -175,7 +192,7 @@ public class Pokemon
 
     public void UseAttack(int iAttack, Pokemon pokemonEnemy)
     {
-        m_vAttacks[iAttack - 1].Use(this, pokemonEnemy);
+        m_vAttacks[iAttack].Use(this, pokemonEnemy);
     }
 
     // Constructor
@@ -192,10 +209,11 @@ public class Pokemon
         DefensePoint = defensePoints;
         PrecisionPoint = precisionPoints;
         EsquivePoint = esquivePoints;
-        Level = 0;
+        Level = new Level();
 
         // Lists
         m_vAttacks = new List<Attack>();
+        m_activeEffects = new List<Effect>();
         Resistances = res;
     }
 }
