@@ -149,45 +149,8 @@ public class Game
 
         //Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
-        ConsoleDraw console = new ConsoleDraw();
 
-        // Ajout des messages pour simuler le combat
-        console.AddElement("Le combat commence !", Console.WindowWidth / 2, Console.WindowHeight / 2, TextAlignment.Center);
-        console.DrawUI();
-        Thread.Sleep(2000);
-
-        // Tour 1
-        console.AddElement("Pikachu utilise Éclair !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 2, TextAlignment.Center);
-        console.AddElement("Bulbasaur perd 20 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 3, TextAlignment.Center);
-        console.DrawUI();
-        Thread.Sleep(2000);
-
-        console.AddElement("Bulbasaur utilise Fouet Lianes !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 4, TextAlignment.Center);
-        console.AddElement("Pikachu perd 15 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 5, TextAlignment.Center);
-        console.DrawUI();
-        Thread.Sleep(2000);
-
-        // Tour 2
-        console.AddElement("Pikachu utilise Vive-Attaque !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 6, TextAlignment.Center);
-        console.AddElement("Bulbasaur perd 25 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 7, TextAlignment.Center);
-        console.DrawUI();
-        Thread.Sleep(2000);
-
-        console.AddElement("Bulbasaur utilise Tranch'Herbe !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 8, TextAlignment.Center);
-        console.AddElement("Pikachu perd 18 points de vie !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 9, TextAlignment.Center);
-        console.DrawUI();
-        Thread.Sleep(2000);
-
-        // Fin du combat
-        console.AddElement("Le combat est terminé !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 10, TextAlignment.Center);
-        console.AddElement("Le gagnant est Pikachu !", Console.WindowWidth / 2, Console.WindowHeight / 2 + 11, TextAlignment.Center);
-        // Affichage de l'interface utilisateur
-        console.DrawUI();
-
-        // Attente de l'appui sur une touche pour quitter
-        Console.ReadKey();
-
-        Thread.Sleep(300000000);
+        //Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
