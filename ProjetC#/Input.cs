@@ -59,6 +59,11 @@ public class Input
         else if (KeyPress.KeyChar == 'm')
         {
             Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Save_AddMenu);
+        }
+        else if (KeyPress.KeyChar == 'l')
+        {
+            Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
         }
     }
@@ -107,6 +112,11 @@ public class Input
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
         }
         else if (KeyPress.KeyChar == 'm')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Save_AddMenu);
+        }
+        else if (KeyPress.KeyChar == 'l')
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);

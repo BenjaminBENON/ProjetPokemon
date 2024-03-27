@@ -270,13 +270,38 @@ public class Game
 
     private void Display_Save_AddMenu()
     {
-        Console.Write("Nom de de votre partie : ");
-        //
+        Console.WriteLine("Pour sauvegarder et retourner au menu, entrer \"1\"");
+        Console.WriteLine("Sinon, entrer \"2\" pour annuler la sauvegarde.");
+
         string name = Console.ReadLine();
 
-        Console.Write("Votre partie : " + name + " est désormais disponible");
+        switch (name)
+        {
+            case "1":
+                SaveCurrentGame();
+                Console.Clear();
+                UpdateCurrentGameState(GameMenuStates.InGameMenu);
+                break;
+            case "2":
+                Console.Clear();
+                UpdateCurrentGameState(GameMenuStates.OnMap);
+                break;
+        }
+    }
 
-        currentGameState = GameMenuStates.InGameMenu;
+    private void SaveCurrentGame()
+    {
+        List<Item> itemList  = botCharacter.GetObjectList();
+        List<Pokemon> pokemonList = botCharacter.GetPokemonList();
+        List<int> eventList = new List<int> { 1 };
+
+        string name = currentCharacter.Name;
+        int posX = botCharacter.PosX;
+        int posY = botCharacter.PosY;
+
+        SaveShape newSave = new SaveShape(name, posX, posY, itemList, pokemonList, eventList);
+        string fileName = name + ".json";
+        Save.CreateJsonSave(newSave, fileName);
     }
 
 

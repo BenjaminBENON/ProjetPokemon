@@ -52,6 +52,8 @@ public class Character
         set { m_level = value; }
     }
 
+    public string Name { get => m_name; set => m_name = value; }
+
 
     // * Inventory 
     public void AddPokemon(Pokemon pokemon)
