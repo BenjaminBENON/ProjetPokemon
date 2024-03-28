@@ -78,16 +78,33 @@ public class Game
     public void Start()
     {
 
-        //botCharacter = new Character("Bot");
-        currentCharacter = new Character("William");
+        CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
 
-        Potion potion30 = new Potion("potion30", 30);
-        Berry berryHelp = new Berry("baieSoin");
-        Pokeball pokeBall = new Pokeball("Poke Ball");
+        //CustomConsole.Instance.m_allowWrite = true;
 
-        currentCharacter.AddObject(potion30);
-        currentCharacter.AddObject(berryHelp);
-        currentCharacter.AddObject(pokeBall);
+        currentCharacter = new Character("Character");
+        GameDatabase database = new GameDatabase();
+
+        // Create Items
+        database.AddItem(new Potion("Potion30", 30));
+        database.AddItem(new Berry("RemoveStun"));
+        database.AddItem(new Pokeball("Pokeball"));
+
+        // Create Attacks
+        database.AddAttack(new VineWhip());
+        database.AddAttack(new RazorLeaf());
+        database.AddAttack(new BubbleBeam());
+        database.AddAttack(new FireSpin());
+        database.AddAttack(new Tackle());
+        database.AddAttack(new Ember());
+        database.AddAttack(new ThunderShock());
+        database.AddAttack(new QuickAttack());
+        database.AddAttack(new DefenseBoost());
+        database.AddAttack(new SpeedBoost());
+        database.AddAttack(new AccuracyBoost());
+        database.AddAttack(new EsquiveBoost());
+
+
 
         float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };   // Plante
         float[] resWater = { 1, 1, 0.8f, 1, 0.5f };   // Eau
@@ -100,57 +117,50 @@ public class Game
         Pokemon carapuce = new Pokemon("Carapuce", PokemonType.Water, 44, 48, 65, 50, 99, 2, resWater);
         Pokemon pikachu = new Pokemon("Pikachu", PokemonType.Electric, 35, 55, 40, 40, 99, 2, resElectric);
 
-        // Ajout des attaques
-        Attack fouetLianes = new VineWhip();
-        Attack tranchHerbe = new RazorLeaf();
-        Attack bombeGraine = new BubbleBeam();
-        Attack lanceSoleil = new FireSpin();
+        bulbizarre.AddAttack(database.GetAttack("Vine Whip"));     
+        bulbizarre.AddAttack(database.GetAttack("Razor Leaf"));   
+        bulbizarre.AddAttack(database.GetAttack("Speed Boost"));
+        bulbizarre.AddAttack(database.GetAttack("Defense Boost"));
 
-        Attack griffe = new Tackle();
-        Attack flammeche = new Ember();
-        Attack lanceFlamme = new ThunderShock();
-        Attack detonation = new QuickAttack();
+        salameche.AddAttack(database.GetAttack("Tackle"));         
+        salameche.AddAttack(database.GetAttack("Ember"));          
+        salameche.AddAttack(database.GetAttack("Accuracy Boost")); 
+        salameche.AddAttack(database.GetAttack("Esquive Boost"));  
 
-        Attack defenseBoost = new DefenseBoost();
-        Attack speedBoost = new SpeedBoost();
-        Attack accuracyBoost = new AccuracyBoost();
-        Attack evasionBoost = new EsquiveBoost();
+        carapuce.AddAttack(database.GetAttack("Bubble Beam"));    
+        carapuce.AddAttack(database.GetAttack("Fire Spin"));       
+        carapuce.AddAttack(database.GetAttack("Defense Boost"));   
+        carapuce.AddAttack(database.GetAttack("Speed Boost"));     
+
+        pikachu.AddAttack(database.GetAttack("Thunder Shock"));    
+        pikachu.AddAttack(database.GetAttack("Quick Attack"));     
+        pikachu.AddAttack(database.GetAttack("Accuracy Boost"));  
+        pikachu.AddAttack(database.GetAttack("Esquive Boost"));   
 
 
-        bulbizarre.AddAttack(fouetLianes);    // Physique
-        bulbizarre.AddAttack(tranchHerbe);    // Physique
-        bulbizarre.AddAttack(defenseBoost);   // Stat
-        bulbizarre.AddAttack(speedBoost);     // Stat
+        database.AddPokemon(bulbizarre);
+        database.AddPokemon(salameche);
+        database.AddPokemon(carapuce);
+        database.AddPokemon(pikachu);
 
-        salameche.AddAttack(griffe);          // Physique
-        salameche.AddAttack(flammeche);       // Physique
-        salameche.AddAttack(accuracyBoost);   // Stat
-        salameche.AddAttack(evasionBoost);    // Stat
 
-        carapuce.AddAttack(bombeGraine);      // Physique
-        carapuce.AddAttack(lanceSoleil);      // Physique
-        carapuce.AddAttack(defenseBoost);     // Stat
-        carapuce.AddAttack(speedBoost);       // Stat
 
-        pikachu.AddAttack(lanceFlamme);       // Physique
-        pikachu.AddAttack(detonation);        // Physique
-        pikachu.AddAttack(accuracyBoost);     // Stat
-        pikachu.AddAttack(evasionBoost);      // Stat
+
+        currentCharacter.AddObject(database.GetItem("Potion30"));
+        currentCharacter.AddObject(database.GetItem("RemoveStun"));
+        currentCharacter.AddObject(database.GetItem("Pokeball"));
+        currentCharacter.AddPokemon(database.GetPokemon("Bulbizarre"));
+        currentCharacter.AddPokemon(database.GetPokemon("Salamèche"));
 
         List<Pokemon> enemyPokemonList = new List<Pokemon>();
-
-        currentCharacter.AddPokemon(bulbizarre);
-        currentCharacter.AddPokemon(salameche);
-
-        enemyPokemonList.Add(carapuce);
-        //enemyPokemonList.Add(pikachu);
+        enemyPokemonList.Add(database.GetPokemon("Carapuce"));
 
 
 
-        //Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
 
-        //Thread.Sleep(300000000);
+        Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus

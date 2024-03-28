@@ -51,12 +51,14 @@ public class Attack
 
     public virtual void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"USE CLASSE ATTACK");
+        CustomConsole.Instance.WriteText($"USE CLASSE ATTACK");
     }
 
     public Attack(string name, int power)
     {
+        //CustomConsole.Instance.WriteText("Setup du name : " + name);
         Name = name;
+
         Power = power;
     }
 
@@ -73,8 +75,8 @@ public class PhysicalAttack : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"USE CLASSE PHYSICAL ATTACK");
-        Console.WriteLine($"{pokemon.Name} utilise {Name} !");
+        CustomConsole.Instance.WriteText($"USE CLASSE PHYSICAL ATTACK");
+        CustomConsole.Instance.WriteText($"{pokemon.Name} utilise {Name} !");
         int seed = DateTime.Now.Millisecond;
         Random randomPrec = new Random(seed);
         int accuracyPrec = randomPrec.Next(0, 101);
@@ -93,22 +95,16 @@ public class PhysicalAttack : Attack
                 float damage = totalModifier;
                 pokemonEnemy.CurrentLifePoints -= damage;
 
-                //Console.WriteLine($"Détails du calcul de dégâts pour {Name}:");
-                //Console.WriteLine($"  - Ratio d'attaque: {attackRatio}");
-                //Console.WriteLine($"  - Puissance physique: {PhysicalPower}");
-                //Console.WriteLine($"  - Modificateur de résistance: {resistanceModifier}");
-                //Console.WriteLine($"  - Total des modifications: {totalModifier}");
-                //Console.WriteLine($"  - Dégâts infligés: {damage}");
-                Console.WriteLine($"{Name} inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
+                CustomConsole.Instance.WriteText($"{Name} inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else
             {
-                Console.WriteLine("Le pokemon a esquivé");
+                CustomConsole.Instance.WriteText("Le pokemon a esquivé");
             }
         }
         else
         {
-            Console.WriteLine("L'attaque a raté !");
+            CustomConsole.Instance.WriteText("L'attaque a raté !");
         }
     }
 }
@@ -126,7 +122,7 @@ public class StatAttack : Attack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"{pokemon.Name} utilise {Name} !");
+        CustomConsole.Instance.WriteText($"{pokemon.Name} utilise {Name} !");
         float oldValue = 0;
         switch (StatToBoost)
         {
@@ -151,8 +147,8 @@ public class StatAttack : Attack
                 pokemon.EsquivePoint = (int)(pokemon.EsquivePoint * BoostCoefficient);
                 break;
         }
-        Console.WriteLine($"La statistique {StatToBoost} de {pokemon.Name} augmente de {BoostCoefficient} fois !");
-        Console.WriteLine($"Ancienne valeur : {oldValue}, Nouvelle valeur : {GetStatValue(pokemon, StatToBoost)}");
+        CustomConsole.Instance.WriteText($"La statistique {StatToBoost} de {pokemon.Name} augmente de {BoostCoefficient} fois !");
+        CustomConsole.Instance.WriteText($"Ancienne valeur : {oldValue}, Nouvelle valeur : {GetStatValue(pokemon, StatToBoost)}");
     }
 
     private float GetStatValue(Pokemon pokemon, Stat stat)
@@ -192,10 +188,10 @@ public class Tackle : PhysicalAttack
 
     public override void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        Console.WriteLine($"USE CLASSE TACKLE");
+        CustomConsole.Instance.WriteText($"USE CLASSE TACKLE");
         base.Use(pokemon, pokemonEnemy);
 
-        Console.WriteLine("We add a poison To the enemy");
+        CustomConsole.Instance.WriteText("We add a poison To the enemy");
         Effect effect = new PhysicEffect("Poison", 5, pokemonEnemy, pokemonEnemy.BaseLifePoints / 50.0f);
         pokemonEnemy.AddActiveEffect(effect);
     }
@@ -212,7 +208,7 @@ public class Ember : PhysicalAttack
     {
         base.Use(pokemon, pokemonEnemy);
 
-        Console.WriteLine("We add a stun To the enemy");
+        CustomConsole.Instance.WriteText("We add a stun To the enemy");
         Effect effect = new StateEffect("Stun", 5, pokemonEnemy);
         pokemonEnemy.AddActiveEffect(effect);
     }
