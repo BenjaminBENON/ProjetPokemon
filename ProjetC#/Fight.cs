@@ -93,9 +93,6 @@ public class Fight
         {
             m_pokemonToCatch = pokemonsEnemy[0];
         }
-
-        CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
-        CustomConsole.Instance.WriteText("------- FIGHT STARTING -------");
     }
 
     // Begin the attack player has more speed attack
@@ -108,10 +105,16 @@ public class Fight
     // Several Round - Each round one pokemon is KO
     public void PerformFight()
     {
+
+        CustomConsole.Instance.DisplayPokemons();
+
+        CustomConsole.Instance.m_allowWrite = true;
+        CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
+        CustomConsole.Instance.WriteText("------- FIGHT STARTING -------");
+
         // is rest something in arrays
         bool isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
         bool isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
-        //
 
 
         while (true)
@@ -488,11 +491,11 @@ public class Fight
         CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Left);
         string userInput = "";
 
-        //LeaveFightSelection(userInput);
-        //if (m_fightState == FightState.LeaveFight)
-        //{
-        //    return;
-        //}
+        LeaveFightSelection(userInput);
+        if (m_fightState == FightState.LeaveFight)
+        {
+            return;
+        }
         DisplayPokemonCard();
         SwitchPokemonSelection(userInput);
         ItemSelection(userInput);

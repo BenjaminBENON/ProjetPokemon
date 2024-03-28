@@ -53,7 +53,6 @@ public class GameDatabase
             }
         }
         Console.WriteLine("Aucune Attack Trouvé");
-        Console.WriteLine(name);
         return null;
     }
 

@@ -67,7 +67,8 @@ public class Potion : Item
     {
         // Restore Pokemon Pv
         pokemon.CurrentLifePoints += RestorePv;
-        Console.WriteLine($"{pokemon.Name} a été soigné avec une {Name}.");
+        CustomConsole.Instance.WriteText($"{pokemon.Name} a été soigné avec une {Name}.");
+
     }
 }
 
@@ -80,8 +81,9 @@ public class Berry : Item
     public override void Use(Pokemon pokemon)
     {
         // Remove Bad Pokemon effect
-        Console.WriteLine("Remove Stun");
+        CustomConsole.Instance.WriteText("Remove Stun");
         pokemon.PokemonState = PokemonState.Normal;
+        CustomConsole.Instance.WriteText(pokemon.Name + " est passé de l'état Stun a normal ");
     }
 }
 
@@ -95,7 +97,8 @@ public class Pokeball : Item
     public override void Use(Pokemon pokemon)
     {
         // Capture a pokemon
-        Console.WriteLine($"Lancer de la {Name}...");
+        CustomConsole.Instance.WriteText($"Lancer de la Pokeball pour capture du pokemon...");
+
     }
 }
 

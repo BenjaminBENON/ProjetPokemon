@@ -79,6 +79,8 @@ public class Game
     {
         CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
 
+        //CustomConsole.Instance.m_allowWrite = true;
+
         currentCharacter = new Character("Character");
         GameDatabase database = new GameDatabase();
 

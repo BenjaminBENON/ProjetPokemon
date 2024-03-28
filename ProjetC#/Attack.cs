@@ -95,12 +95,6 @@ public class PhysicalAttack : Attack
                 float damage = totalModifier;
                 pokemonEnemy.CurrentLifePoints -= damage;
 
-                //CustomConsole.Instance.WriteText($"Détails du calcul de dégâts pour {Name}:");
-                //CustomConsole.Instance.WriteText($"  - Ratio d'attaque: {attackRatio}");
-                //CustomConsole.Instance.WriteText($"  - Puissance physique: {PhysicalPower}");
-                //CustomConsole.Instance.WriteText($"  - Modificateur de résistance: {resistanceModifier}");
-                //CustomConsole.Instance.WriteText($"  - Total des modifications: {totalModifier}");
-                //CustomConsole.Instance.WriteText($"  - Dégâts infligés: {damage}");
                 CustomConsole.Instance.WriteText($"{Name} inflige {damage} points de dégâts à {pokemonEnemy.Name} !");
             }
             else

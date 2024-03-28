@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
 
 class Program
 {
@@ -26,16 +27,11 @@ class Program
         Resize();
 
         Game game = new Game();
+
         while (true)
         {
             game.Run();
         }
-
-
-
-
-
-        //Affichage des textes globaux au milieu
 
     }
 }

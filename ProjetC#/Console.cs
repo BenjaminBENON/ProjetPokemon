@@ -7,7 +7,9 @@ public class CustomConsole
     private List<string> leftTexts = new List<string>();
     private List<string> middleTexts = new List<string>();
     private List<string> rightTexts = new List<string>();
-    private PositionState positionState = PositionState.Left; // État par défaut
+    private PositionState positionState = PositionState.Left; 
+
+    public bool m_allowWrite = false;
 
     public enum PositionState
     {
@@ -53,23 +55,136 @@ public class CustomConsole
 
     public void WriteToLeft(string text)
     {
-        leftTexts.Add(text);
-        if (leftTexts.Count > 55)
+        if (text.Length > 40)
+        {
+            List<string> strings = new List<string>();
+            strings.Add(text.Substring(0, 40));
+            strings.Add(text.Substring(40));
+            foreach (string s in strings)
+            {
+                leftTexts.Add(s);
+            }
+        }
+        else
+        {
+            leftTexts.Add(text);
+        }
+        
+        if (leftTexts.Count > 30)
         {
             Console.WriteLine("On dépasse");
-            leftTexts.RemoveRange(0, 30);
+            leftTexts.RemoveRange(0, 20);
         }
 
         DisplayTexts();
     }
 
+    public void DisplayPokemons()
+    {
+        string[] linesPokemon1 = new string[]
+        {
+            "       ,___          .-;'",
+            "       `\"-.`\\_...._/`.`",
+            "    ,      \\        /",
+            " .-' ',    / ()   ()\\",
+            "`'._   \\  /()    .  (|",
+            "    > .' ;,     -'-  /",
+            "   / <   |;,     __.;",
+            "   '-.'-.|  , \\    , \\",
+            "      `>.|;, \\_)    \\_)",
+            "       `-;     ,    /",
+            "          \\    /   <",
+            "           '. <`'-,_)",
+            "         '._)"
+        };
+
+        string[] linesText = new string[]
+                {
+            "  __ _       _     _   ",
+            " / _(_)     | |   | |  ",
+            "| |_ _  __ _| |__ | |_ ",
+            "|  _| |/ _` | '_ \\| __|",
+            "| | | | (_| | | | | |_ ",
+            "|_| |_|\\__, |_| |_|\\__|",
+            "        __/ |          ",
+            "       |___/           "
+        };
+
+        string[] linesPokemon2 = new string[]
+        {
+            ";-.          ___,",
+            "  `.`\\_...._/`.-\"`",
+            "    \\        /      ,",
+            "    /()   () \\    .' `-._",
+            "   |)  .    ()\\  /   _.'",
+            "   \\  -'-     ,; '. <",
+            "    ;.__     ,;|   > \\",
+            "   / ,    / ,  |.-'.-'",
+            "  (_/    (_/ ,;|.<`",
+            "    \\    ,     ;-`",
+            "     >   \\    /",
+            "    (_,-'`> .'",
+            "      (_,',"
+        };
+
+        int initialRow = Console.CursorTop;
+        int textInitialRow = Console.CursorTop;
+        int secondInitialRow = Console.CursorTop;
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        foreach (string line in linesPokemon1)
+        {
+            Console.SetCursorPosition(30, initialRow++);
+            Console.WriteLine(line);
+        }
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        foreach (string line in linesText)
+        {
+            Console.SetCursorPosition(90, textInitialRow++);
+            Console.WriteLine(line);
+        }
+        Console.ForegroundColor = ConsoleColor.Red;
+        foreach (string line in linesPokemon2)
+        {
+            Console.SetCursorPosition(150, secondInitialRow++);
+            Console.WriteLine(line);
+        }
+
+        DateTime startTime = DateTime.Now;
+        TimeSpan duration = TimeSpan.FromMilliseconds(3000);
+
+        DateTime currentTime;
+
+        do
+        {
+            currentTime = DateTime.Now;
+        } while (currentTime - startTime < duration);
+
+        Console.Clear();
+    }
+
     public void WriteToMiddle(string text)
     {
-        middleTexts.Add(text);
-        if (middleTexts.Count > 55)
+        if (text.Length > 40)
+        {
+            List<string> strings = new List<string>();
+            strings.Add(text.Substring(0, 40));
+            strings.Add(text.Substring(40));
+            foreach (string s in strings)
+            {
+                middleTexts.Add(s);
+            }
+        }
+        else
+        {
+            middleTexts.Add(text);
+        }
+        
+        if (middleTexts.Count > 30)
         {
             Console.WriteLine("On dépasse");
-            middleTexts.RemoveRange(0, 30);
+            middleTexts.RemoveRange(0, 20);
         }
 
         DisplayTexts();
@@ -77,11 +192,27 @@ public class CustomConsole
 
     public void WriteToRight(string text)
     {
-        rightTexts.Add(text);
-        if (rightTexts.Count > 55)
+
+        if (text.Length > 30)
         {
+            List<string> strings = new List<string>();
+            strings.Add(text.Substring(0, 30));
+            strings.Add(text.Substring(30));
+            foreach (string s in strings)
+            {
+                rightTexts.Add(s);
+            }
+        }
+        else
+        {
+            rightTexts.Add(text);
+        }
+
+        if (rightTexts.Count > 30)
+        {
+            //for each 
             Console.WriteLine("On dépasse");
-            rightTexts.RemoveRange(0, 30);
+            rightTexts.RemoveRange(0, 20);
         }
 
         DisplayTexts();
@@ -89,6 +220,10 @@ public class CustomConsole
 
     private void DisplayTexts()
     {
+        if (!m_allowWrite)
+        {
+            return;
+        }
         Console.Clear();
         DisplayLeftTexts();
         DisplayMiddleTexts();
@@ -97,6 +232,7 @@ public class CustomConsole
 
     private void DisplayLeftTexts()
     {
+
         Console.SetCursorPosition(20, 5);
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("Myself :");
