@@ -55,11 +55,14 @@ public class Game
     // Game Data One part will be in the save
     private GameMenuStates currentGameState;
     private Character currentCharacter;
-    // private Character botCharacter;
+
+    private GameDatabase database = new GameDatabase();
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
 
     public GameMenuStates CurrentGameState { get => currentGameState; }
+    public GameDatabase Database { get => database; set => database = value; }
+    public Character CurrentCharacter { get => currentCharacter; set => currentCharacter = value; }
 
 
     //---------------------------LES METHODES-----------------------
@@ -83,7 +86,6 @@ public class Game
         //CustomConsole.Instance.m_allowWrite = true;
 
         currentCharacter = new Character("Character");
-        GameDatabase database = new GameDatabase();
 
         // Create Items
         database.AddItem(new Potion("Potion30", 30));
@@ -144,16 +146,11 @@ public class Game
         database.AddPokemon(pikachu);
 
 
-
-
         currentCharacter.AddObject(database.GetItem("Potion30"));
         currentCharacter.AddObject(database.GetItem("RemoveStun"));
         currentCharacter.AddObject(database.GetItem("Pokeball"));
         currentCharacter.AddPokemon(database.GetPokemon("Bulbizarre"));
         currentCharacter.AddPokemon(database.GetPokemon("Salamèche"));
-
-
-
 
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {

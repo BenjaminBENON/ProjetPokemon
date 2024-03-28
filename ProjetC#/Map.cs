@@ -48,9 +48,9 @@ public class Map
         "|      CCCCCCCCCCCCCC      CCCC    CCCC                  CCCC                CCCCCCCCCCCCOOOOOOCC                                                            OOOOOOOOOOOOOOOOOOOO        CCCC                                                    |",
         "|                CCCC      CCCC    CCCC                  CCCC                    CCCC  CCCCCCCCCC                                                              OOOOOOOOOOOOOOOOOOOOOO    CCCC                                                    |",
         "|OOO             CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                          OOOOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOO     CCCC      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
-        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
-        "|OOOOOOOOOOOOOOOOBBBB      CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
+        "|OOOOOOOOOOO     CCCC      CCCC    CCCC       nn         CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOO  CCCC                                                    |",
+        "|OOOOOOOOOOOOO   BBBB      CCCC    CCCC      nNNn        CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
+        "|OOOOOOOOOOOOOOOOBBBB      CCCC    CCCC       nn         CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOO    CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOOOO  CCCC    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
         "|OOOOOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                                OOOOOOOOOOOOOOOOOOOOBBBB                                                    |",
@@ -58,8 +58,8 @@ public class Map
         "|OOOOOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                                OOOOOOOOOOOOOOOOOO  CCCC        MMMMMMMMMM                                  |",
         "|OOOOOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                                OOOOOOOOOOOOOOOOOO  CCCC        MMMMMMMMMM                                  |",
         "|   OOOOOOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOOOO  CCCC        MMMMPPMMMM                                  |",
-        "|       OOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
-        "|HHHH     OOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
+        "|       OOOOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBnnBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
+        "|HHHH     OOOOOOOBBBBOOOOOOBBBB    CCCC                  CCCC                    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBNNBBBCCCCCCCCCCCCCCCCCCCCCC                                  |",
         "|    HHHH   OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                              OOOOOOOOOOOOOOOOOO    CCCC                                                    |",
         "|FFFF       OOOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC                    CCCC                                                                            OOOOOOOOOOOOOOOOOO      CCCC                                                    |",
         "|TTTTFF      OOOOBBBBOOOOOOBBBBOO  CCCC                  CCCC            MMMMMMMMCCCC                                                                            OOOOOOOOOOOOOOOO        CCCC                                                    |",
@@ -125,6 +125,8 @@ public class Map
                 else if (carac == 'C')
                     Console.ForegroundColor = ConsoleColor.Gray;
                 else if (carac == '1')
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                else if (carac == 'N')
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                 Console.Write('▒');
