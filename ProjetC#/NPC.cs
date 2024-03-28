@@ -17,7 +17,7 @@ public  class NPC
         m_vPokemons.Add(oGame.Database.GetPokemon("Bulbizarre"));
     }
 
-    public void launchDialog()
+    public void launchDialog(Game oGame)
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
@@ -37,7 +37,12 @@ public  class NPC
             Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
             Console.Read();
         }
+        launchFight(oGame);
+    }
 
+    private void launchFight(Game oGame)
+    {
+        Fight fight = new Fight(oGame.CurrentCharacter, m_vPokemons, FightType.Trainer);
     }
 
 

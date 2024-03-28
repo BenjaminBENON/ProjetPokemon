@@ -62,6 +62,7 @@ public class Game
 
     public GameMenuStates CurrentGameState { get => currentGameState; }
     public GameDatabase Database { get => database; set => database = value; }
+    public Character CurrentCharacter { get => currentCharacter; set => currentCharacter = value; }
 
 
     //---------------------------LES METHODES-----------------------

@@ -90,11 +90,10 @@ public class Input
                 game.UpdateCurrentGameState(GameMenuStates.OnFight);
             }
         }
-        if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) == 'n')
+        if (Map.GetCaracOnPos(p.PosX, p.PosY) == 'n')
         {
             NPC rival = new NPC(game);
-
-            rival.launchDialog();
+            rival.launchDialog(game);
         }
     }
 
