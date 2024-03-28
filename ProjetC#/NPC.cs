@@ -19,6 +19,7 @@ public  class NPC
 
     public void launchDialog(Game oGame)
     {
+        int relaunch = 0;
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
 
@@ -27,17 +28,44 @@ public  class NPC
 
         List<string> list = new List<string>();
 
-        list.Add("Hello dresseur, il parait que tu as des pokemons puissants !");
+        list.Add("Hello dresseur, c'est bien toi " + oGame.CurrentCharacter.Name + " ?");
+        list.Add("Il parait que tu as des pokemons puissants !");
         list.Add("Affrontons-nous pour que je teste ta force");
+        list.Add("Tu veux bien ?");
 
-        for (int i = 0; i < list.Count; i++)
+        if (relaunch == 0)
         {
-            Console.SetCursorPosition(xPosition, yPosition + i * 2);
-            Console.WriteLine(list[i]);
-            Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
-            Console.Read();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.SetCursorPosition(xPosition, yPosition + i * 2);
+                Console.WriteLine(list[i]);
+                Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
+                Console.Read();
+            }
+
+            string answer = Console.ReadLine();
+            if (answer.ToLower() == "oui") launchFight(oGame);
+            if (answer.ToLower() == "non") oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+            else
+            {
+                relaunch++;
+                launchDialog(oGame);
+            }
         }
-        launchFight(oGame);
+        
+        if (relaunch>0)
+        {
+            Console.SetCursorPosition(xPosition, yPosition + (list.Count+relaunch-1) * 2 );
+            Console.WriteLine("Je n'ai pas compris ta réponse ... Oui ou Non ?");
+            string answer = Console.ReadLine();
+            if (answer.ToLower() == "oui") launchFight(oGame);
+            if (answer.ToLower() == "non") oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+            else 
+            {
+                relaunch++;
+                launchDialog(oGame);
+            }
+        }
     }
 
     private void launchFight(Game oGame)

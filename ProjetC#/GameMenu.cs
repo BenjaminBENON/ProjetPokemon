@@ -241,6 +241,8 @@ public class GameMenu
                 oGame.SetCharacterPokemons(loadedSave.ListPokemon);
                 oGame.SetCharacterItems(loadedSave.ListItem);
             }
+
+            oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
     }
 
