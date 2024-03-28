@@ -55,7 +55,11 @@ public class Game
     // Game Data One part will be in the save
     private GameMenuStates currentGameState;
     private Character currentCharacter;
-    // private Character botCharacter;
+
+    // Fight
+    public List<Pokemon> enemyPokemonList;
+    public FightType fightType;
+
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
 
@@ -83,7 +87,7 @@ public class Game
         //CustomConsole.Instance.m_allowWrite = true;
 
         currentCharacter = new Character("Character");
-        GameDatabase database = new GameDatabase();
+        GameDatabase database = GameDatabase.Instance;
 
         // Create Items
         database.AddItem(new Potion("Potion30", 30));
@@ -328,7 +332,7 @@ public class Game
 
     private void Play_Fight()
     {
-        //Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
+        Fight fight = new Fight(currentCharacter, enemyPokemonList, fightType);
     }
 
     public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)

@@ -80,13 +80,20 @@ public class Input
             game.UpdateCurrentGameState(GameMenuStates.InPokemonCenter);
         }
         if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
-        { 
-            Random rand = new Random();
+        {
+            int seed = DateTime.Now.Millisecond;
+            Random rand = new Random(seed);
             int randNb = rand.Next(100);
 
-            if (randNb < 5) 
+            if (randNb < 50) 
             {
                 Console.Clear();
+                List<Pokemon> pokemonList = GameDatabase.Instance.GetAllPokemons();
+                seed = DateTime.Now.Millisecond;
+                rand = new Random(seed);
+                randNb = rand.Next(pokemonList.Count);
+                game.enemyPokemonList = new List<Pokemon>{pokemonList[randNb]};
+                game.fightType = FightType.SavagePokemon;
                 game.UpdateCurrentGameState(GameMenuStates.OnFight);
             }
         }

@@ -4,15 +4,23 @@ using System.Collections.Generic;
 
 public class GameDatabase
 {
-    private List<Item> items;
-    private List<Attack> attacks;
-    private List<Pokemon> pokemons;
+    private static GameDatabase instance;
+    private List<Item> items = new List<Item>();
+    private List<Attack> attacks = new List<Attack>();
+    private List<Pokemon> pokemons = new List<Pokemon>();
 
-    public GameDatabase()
+    private GameDatabase() { }
+
+    public static GameDatabase Instance
     {
-        items = new List<Item>();
-        attacks = new List<Attack>();
-        pokemons = new List<Pokemon>();
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameDatabase();
+            }
+            return instance;
+        }
     }
 
     public void AddItem(Item item)
@@ -41,6 +49,11 @@ public class GameDatabase
         }
         Console.WriteLine("Aucun Item Trouvé");
         return null;
+    }
+
+    public List<Pokemon> GetAllPokemons()
+    {
+        return pokemons;
     }
 
     public Attack GetAttack(string name)
