@@ -169,13 +169,43 @@ public class GameMenu
             Console.WriteLine("|");
         }
 
-        if (selectedItem >= 0)
-        {
-            objList[selectedItem].Use(p.GetPokemonList()[0]);
+        //if (selectedItem >= 0)
+        //{
+        //    objList[selectedItem].Use(p.GetPokemonList()[0]);
+        //}
+    }
 
+    public static void Display_PokemonMenu(Character p)
+    {
+        int windowWidth = Console.WindowWidth;
+        int windowHeight = Console.WindowHeight;
+
+        int xPosition = (windowWidth) / 2 - 45;
+        int yPosition = (windowHeight / 6) * 4;
+
+        var pokList = p.GetPokemonList();
+
+        var listInventory = new List<string>();
+        foreach (var pok in pokList)
+        {
+            listInventory.Add(pok.Name + " : " + pok.PokemonState.ToString());
         }
-        //Utilise l'item sur le premier pokemon uniquement
-        //Pas terrible
+
+        int selectedItem = MenuCreator.SelectItemInMenu(listInventory);
+        MenuCreator.CreateMenu(xPosition, yPosition, "MY POKEMONS", listInventory.Count, listInventory);
+
+        for (int y = 0; y < 20; y++)
+        {
+            Console.SetCursorPosition(windowWidth / 2 - 50, yPosition + y);
+            Console.Write("|");
+            Console.SetCursorPosition(windowWidth / 2 + 50, yPosition + y);
+            Console.WriteLine("|");
+        }
+
+        //if (selectedItem >= 0)
+        //{
+        //    objList[selectedItem].Use(p.GetPokemonList()[0]);
+        //}
     }
 
     public static void Display_SaveMenu(Game oGame)
