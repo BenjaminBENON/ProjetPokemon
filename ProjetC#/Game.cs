@@ -323,7 +323,7 @@ public class Game
         int posY = currentCharacter.PosY;
 
         SaveShape newSave = new SaveShape(name, posX, posY, itemList, pokemonList, eventList);
-        string fileName = name + ".json";
+        string fileName = name + "Save.json";
         Save.CreateJsonSave(newSave, fileName);
     }
 
