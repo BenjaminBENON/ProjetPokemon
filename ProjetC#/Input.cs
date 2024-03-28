@@ -81,17 +81,8 @@ public class Input
             game.UpdateCurrentGameState(GameMenuStates.InPokemonCenter);
             p.PosX = 9;
             p.PosY = 5;
-        }
-        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
-        {
-            Random rnd = new Random();
-            int i = rnd.Next(1,20);
-            if (i == 2)
-            {
-
-            }
-        }
-        if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
+        }    
+        else if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
         {
             int seed = DateTime.Now.Millisecond;
             Random rand = new Random(seed);
@@ -109,7 +100,7 @@ public class Input
                 game.UpdateCurrentGameState(GameMenuStates.OnFight);
             }
         }
-        if (Map.GetCaracOnPos(p.PosX, p.PosY) == 'n')
+        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == 'n')
         {
             NPC rival = new NPC(game);
             rival.launchDialog(game);

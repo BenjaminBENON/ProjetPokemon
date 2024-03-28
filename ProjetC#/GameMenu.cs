@@ -233,7 +233,7 @@ public class GameMenu
         if (selectedSave >= 0)
         {
             SaveShape loadedSave = Save.ReadSave(selectedSave);
-            if (loadedSave != null) 
+            if (loadedSave != null)
             {
                 string name = loadedSave.SaveId;
                 oGame.SetCharacterName(name);
@@ -241,8 +241,6 @@ public class GameMenu
                 oGame.SetCharacterPokemons(loadedSave.ListPokemon);
                 oGame.SetCharacterItems(loadedSave.ListItem);
             }
-            
-
         }
     }
 
