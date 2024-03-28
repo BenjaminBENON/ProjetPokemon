@@ -97,7 +97,7 @@ public class Input
             Random rand = new Random(seed);
             int randNb = rand.Next(100);
 
-            if (randNb < 50) 
+            if (randNb < 5) 
             {
                 Console.Clear();
                 List<Pokemon> pokemonList = GameDatabase.Instance.GetAllPokemons();
@@ -169,7 +169,8 @@ public class Input
 
     static void CenterUpdate(Game game, Character p)
     {
-        if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY) == 'O')
+        char charOnPos = PokemonCenter.GetCaracOnPos(p.PosX, p.PosY);
+        if (charOnPos == 'O')
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.OnMap);

@@ -68,6 +68,16 @@ public class Character
         m_vPokemonsCaught.Remove(pokemon);
     }
 
+    public void HealAllPokemons()
+    {
+        foreach (Pokemon pokemon in m_vPokemonsCaught)
+        {
+            float oldCurrentLifePoints = pokemon.CurrentLifePoints;
+            pokemon.CurrentLifePoints = pokemon.BaseLifePoints;
+            Console.WriteLine(pokemon.Name + " a été soigné : passant de " + oldCurrentLifePoints + " à " + pokemon.CurrentLifePoints);
+        }
+    }
+
     public void AddObject(Item item)
     {
         m_vObject.Add(item);

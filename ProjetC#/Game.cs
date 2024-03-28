@@ -173,7 +173,7 @@ public class Game
             // Save Menus
             { GameMenuStates.InSaveMenu, Display_Save_Menu },
             { GameMenuStates.Save_AddMenu, Display_Save_AddMenu },
-            // Play Menu | No sub type
+            // Play Menu
             { GameMenuStates.OnMap, StartMap },
             { GameMenuStates.InPokemonCenter, StartPokemonCenter },
             { GameMenuStates.OnFight, Play_Fight },
@@ -333,6 +333,7 @@ public class Game
     private void Play_Fight()
     {
         Fight fight = new Fight(currentCharacter, enemyPokemonList, fightType);
+        UpdateCurrentGameState(GameMenuStates.OnMap);
     }
 
     public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)
