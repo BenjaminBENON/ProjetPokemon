@@ -157,10 +157,7 @@ public class Game
 
 
 
-        Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
 
-
-        Thread.Sleep(300000000);
 
         bindFunctionsToGameMenuStates = new Dictionary<GameMenuStates, Action> {
             // Game Menus
@@ -330,8 +327,7 @@ public class Game
 
     private void Play_Fight()
     {
-        Console.WriteLine("AAAAAAAAA");
-        //currentGameState = GameMenuStates.OnMap;
+        //Fight fight = new Fight(currentCharacter, enemyPokemonList, FightType.SavagePokemon);
     }
 
     public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)
