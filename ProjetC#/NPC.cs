@@ -40,12 +40,20 @@ public  class NPC
                 Console.SetCursorPosition(xPosition, yPosition + i * 2);
                 Console.WriteLine(list[i]);
                 Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
-                Console.Read();
+                Console.ReadLine();
             }
 
             string answer = Console.ReadLine();
-            if (answer.ToLower() == "oui") launchFight(oGame);
-            if (answer.ToLower() == "non") oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+            if (answer.ToLower() == "oui")
+            {
+                launchFight(oGame);
+                return;
+            }
+            if (answer.ToLower() == "non")
+            {
+                oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+                return;
+            }
             else
             {
                 relaunch++;
@@ -58,8 +66,17 @@ public  class NPC
             Console.SetCursorPosition(xPosition, yPosition + (list.Count+relaunch-1) * 2 );
             Console.WriteLine("Je n'ai pas compris ta réponse ... Oui ou Non ?");
             string answer = Console.ReadLine();
-            if (answer.ToLower() == "oui") launchFight(oGame);
-            if (answer.ToLower() == "non") oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+            if (answer.ToLower() == "oui")
+            {
+                launchFight(oGame);
+                return;
+            }
+            if (answer.ToLower() == "non")
+            {
+                Console.Clear();
+                oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+                return;
+            }
             else 
             {
                 relaunch++;

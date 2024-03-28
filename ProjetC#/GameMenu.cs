@@ -223,7 +223,7 @@ public class GameMenu
         {
             Console.SetCursorPosition(45, y + 3);
             Console.Write("|");
-            Console.SetCursorPosition(165, y + 3);
+            Console.SetCursorPosition(125, y + 3);
             Console.WriteLine("|");
         }
 
@@ -241,7 +241,7 @@ public class GameMenu
                 oGame.SetCharacterPokemons(loadedSave.ListPokemon);
                 oGame.SetCharacterItems(loadedSave.ListItem);
             }
-
+            Console.Clear();
             oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
     }
