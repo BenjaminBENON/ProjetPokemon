@@ -21,7 +21,7 @@ public class Input
     {
         if (KeyPress.KeyChar == 'z')
         {
-            if (Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'M' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != '|' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != '-' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'O')
+            if (Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'T' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'F' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'M' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != '|' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != '-' && Map.GetCaracOnPos(p.PosX, p.PosY - 1) != 'O')
             {
                 p.PosY -= 1;
                 MapUpdate(game, p);
@@ -29,7 +29,7 @@ public class Input
         }
         else if (KeyPress.KeyChar == 's')
         {
-            if (Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'M' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != '|' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != '-' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'O')
+            if (Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'T' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'F' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'M' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != '|' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != '-' && Map.GetCaracOnPos(p.PosX, p.PosY + 1) != 'O')
             {
                 p.PosY += 1;
                 MapUpdate(game, p);
@@ -37,7 +37,7 @@ public class Input
         }
         else if (KeyPress.KeyChar == 'q')
         {
-            if (Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'M' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != '|' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != '-' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'O')
+            if (Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'T' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'F' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'M' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != '|' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != '-' && Map.GetCaracOnPos(p.PosX - 1, p.PosY) != 'O')
             {
                 p.PosX -= 1;
                 MapUpdate(game, p);
@@ -45,7 +45,7 @@ public class Input
         }
         else if (KeyPress.KeyChar == 'd')
         {
-            if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'M' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != '|' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != '-' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'O')
+            if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'T' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'F' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'M' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != '|' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != '-' && Map.GetCaracOnPos(p.PosX + 1, p.PosY) != 'O')
             {
                 p.PosX += 1;
                 MapUpdate(game, p);
@@ -75,9 +75,21 @@ public class Input
 
     static void MapUpdate(Game game, Character p)
     {
-        if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) == '1')
+        if (Map.GetCaracOnPos(p.PosX, p.PosY) == '1')
         {
+            Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.InPokemonCenter);
+            p.PosX = 9;
+            p.PosY = 5;
+        }
+        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
+        {
+            Random rnd = new Random();
+            int i = rnd.Next(1,20);
+            if (i == 2)
+            {
+
+            }
         }
         if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
         {
@@ -103,30 +115,34 @@ public class Input
     {
         if (KeyPress.KeyChar == 'z')
         {
-            if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != '|' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != '-' )
+            if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != 'I' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != '|' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY - 1) != '-' )
             {
                 p.PosY -= 1;
+                CenterUpdate(game, p);
             }
         }
         else if (KeyPress.KeyChar == 's')
         {
-            if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != '|' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != '-')
+            if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != 'I' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != '|' && PokemonCenter.GetCaracOnPos(p.PosX, p.PosY + 1) != '-')
             {
                 p.PosY += 1;
+                CenterUpdate(game, p);
             }
         }
         else if (KeyPress.KeyChar == 'q')
         {
-            if (PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != '|' && PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != '-')
+            if (PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != 'I' && PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != '|' && PokemonCenter.GetCaracOnPos(p.PosX - 1, p.PosY) != '-')
             {
                 p.PosX -= 1;
+                CenterUpdate(game, p);
             }
         }
         else if (KeyPress.KeyChar == 'd')
         {
-            if (PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != '|' && PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != '-')
+            if (PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != 'I' && PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != 'M' && PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != '|' && PokemonCenter.GetCaracOnPos(p.PosX + 1, p.PosY) != '-')
             {
                 p.PosX += 1;
+                CenterUpdate(game, p);
             }
         }
         else if (KeyPress.KeyChar == 'i')
@@ -148,6 +164,17 @@ public class Input
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
+        }
+    }
+
+    static void CenterUpdate(Game game, Character p)
+    {
+        if (PokemonCenter.GetCaracOnPos(p.PosX, p.PosY) == 'O')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.OnMap);
+            p.PosX = 76;
+            p.PosY = 14;
         }
     }
 

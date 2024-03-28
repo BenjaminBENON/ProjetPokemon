@@ -111,21 +111,25 @@ public class Map
                 }
                 char carac = GetWorldMap[p.PosY + y][p.PosX + x];
                 if (carac == ' ')
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("\x1b[38;2;0;255;0m");
                 else if (carac == 'H')
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write("\x1b[38;2;75;153;0m");
                 else if (carac == 'M')
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("\x1b[38;2;51;25;0m");
                 else if (carac == 'P')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;204;102;0m");
                 else if (carac == 'O')
                     Console.ForegroundColor = ConsoleColor.Blue;
                 else if (carac == 'B')
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("\x1b[38;2;255;153;51m");
                 else if (carac == 'C')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;160;160;160m");
                 else if (carac == '1')
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("\x1b[38;2;204;102;0m");
+                else if (carac == 'T')
+                    Console.Write("\x1b[38;2;152;71;0m");
+                else if (carac == 'F')
+                    Console.Write("\x1b[38;2;0;102;0m");
 
                 Console.Write('▒');
             }
