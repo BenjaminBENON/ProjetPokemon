@@ -67,7 +67,7 @@ public class Potion : Item
     {
         // Restore Pokemon Pv
         pokemon.CurrentLifePoints += RestorePv;
-        Console.WriteLine($"{pokemon.Name} a été soigné avec une {Name}.");
+        Console.WriteLine($"{pokemon.Name} a été soigné avec une {Name}.          ");
     }
 }
 
@@ -93,7 +93,7 @@ public class Pokeball : Item
     public override void Use(Pokemon pokemon)
     {
         // Capture a pokemon
-        Console.WriteLine($"Lancer de la {Name}...");
+        Console.WriteLine($"Lancer de la {Name}...                    ");
     }
 }
 

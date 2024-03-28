@@ -87,10 +87,18 @@ public class Character
     {
         return m_vPokemonsCaught;
     }
+    public void SetPokemonList(List<Pokemon> pokemonList)
+    {
+        m_vPokemonsCaught = pokemonList;
+    }
 
     public List<Item> GetObjectList()
     {
         return m_vObject;
+    }
+    public void SetObjectList(List<Item> itemList)
+    {
+        m_vObject = itemList;
     }
 
     // Inventory *

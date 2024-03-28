@@ -169,12 +169,16 @@ public class GameMenu
             Console.WriteLine("|");
         }
 
-        if (selectedItem >= 0) objList[selectedItem].Use(p.GetPokemonList()[0]);
+        if (selectedItem >= 0)
+        {
+            objList[selectedItem].Use(p.GetPokemonList()[0]);
+
+        }
         //Utilise l'item sur le premier pokemon uniquement
         //Pas terrible
     }
 
-    public static void Display_SaveMenu()
+    public static void Display_SaveMenu(Game oGame)
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
@@ -205,9 +209,20 @@ public class GameMenu
         int selectedSave = MenuCreator.SelectItemInMenu(list);
         MenuCreator.CreateMenu(50, 3, "SAVE MENU", list.Count, list);
 
-        SaveShape loadedSave;
-        if (selectedSave >=0) loadedSave = Save.ReadSave(selectedSave);
-        //UTILISER LOADED SAVE
+        if (selectedSave >= 0)
+        {
+            SaveShape loadedSave = Save.ReadSave(selectedSave);
+            if (loadedSave != null) 
+            {
+                string name = loadedSave.SaveId;
+                oGame.SetCharacterName(name);
+                oGame.SetCharacterPos(loadedSave.PosXPlayer, loadedSave.PosYPlayer);
+                oGame.SetCharacterPokemons(loadedSave.ListPokemon);
+                oGame.SetCharacterItems(loadedSave.ListItem);
+            }
+            
+
+        }
     }
 
 }

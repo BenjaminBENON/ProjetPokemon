@@ -55,7 +55,7 @@ public class Game
     // Game Data One part will be in the save
     private GameMenuStates currentGameState;
     private Character currentCharacter;
-    private Character botCharacter;
+    // private Character botCharacter;
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
 
@@ -69,7 +69,7 @@ public class Game
         currentGameState = GameMenuStates.InGameMenu;
         
         // Generate multiple opponent / enemy
-        botCharacter = new Character("Bot");
+        //botCharacter = new Character("Bot");
 
         Start();
 
@@ -78,7 +78,7 @@ public class Game
     public void Start()
     {
 
-        botCharacter = new Character("Bot");
+        //botCharacter = new Character("Bot");
         currentCharacter = new Character("William");
 
         Potion potion30 = new Potion("potion30", 30);
@@ -193,7 +193,20 @@ public class Game
     
     public void SetCharacterName(string cName)
     {
-        currentCharacter = new Character(cName);
+        currentCharacter.Name = cName;
+    }
+    public void SetCharacterPos(int x, int y)
+    {
+        currentCharacter.PosX = x;
+        currentCharacter.PosY = y;
+    }
+    public void SetCharacterPokemons(List<Pokemon> listPokemon)
+    {
+        currentCharacter.SetPokemonList(listPokemon);
+    }
+    public void SetCharacterItems(List<Item> listItems)
+    {
+        currentCharacter.SetObjectList(listItems);
     }
 
     private void StartMenu()
@@ -210,16 +223,16 @@ public class Game
     }
     private void StartMap()
     {
-        Map.Play_Map(this,botCharacter);
+        Map.Play_Map(this,currentCharacter);
         Input.Update();
-        Input.PlayerMapControl(this, botCharacter);
+        Input.PlayerMapControl(this, currentCharacter);
         Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
-        PokemonCenter.Play_Map(this, botCharacter);
+        PokemonCenter.Play_Map(this, currentCharacter);
         Input.Update();
-        Input.PlayerCenterControl(this, botCharacter);
+        Input.PlayerCenterControl(this, currentCharacter);
         Console.CursorVisible = false;
     }
 
@@ -233,8 +246,8 @@ public class Game
     private void Display_Inventory_ObjectsMenu()
     {
         
-        Map.Play_Map(this, botCharacter);
-        GameMenu.Display_InventoryMenu(botCharacter);
+        Map.Play_Map(this, currentCharacter);
+        GameMenu.Display_InventoryMenu(currentCharacter);
         Input.Update();
         Input.ItemInventoryControl(this);
         Console.CursorVisible = false;
@@ -262,7 +275,7 @@ public class Game
 
     private void Display_Save_Menu()
     {
-        GameMenu.Display_SaveMenu();
+        GameMenu.Display_SaveMenu(this);
         Input.Update();
         Console.CursorVisible = false;
     }
@@ -291,13 +304,13 @@ public class Game
 
     private void SaveCurrentGame()
     {
-        List<Item> itemList  = botCharacter.GetObjectList();
-        List<Pokemon> pokemonList = botCharacter.GetPokemonList();
+        List<Item> itemList  = currentCharacter.GetObjectList();
+        List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
         List<int> eventList = new List<int> { 1 };
 
         string name = currentCharacter.Name;
-        int posX = botCharacter.PosX;
-        int posY = botCharacter.PosY;
+        int posX = currentCharacter.PosX;
+        int posY = currentCharacter.PosY;
 
         SaveShape newSave = new SaveShape(name, posX, posY, itemList, pokemonList, eventList);
         string fileName = name + ".json";
