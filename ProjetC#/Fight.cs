@@ -76,9 +76,6 @@ public class Fight
         CustomConsole.Instance.WriteText("Fight End");
         CustomConsole.Instance.Cleanup();
 
-
-
-
     }
 
     // Initialize

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 
-internal class MenuCreator
+public class MenuCreator
 {
     private static int m_userChoiceInMenu = 1;
 
@@ -41,9 +41,6 @@ internal class MenuCreator
         {
             int nb2 = nbCase / 2 + (nbCase % 2);
             int Size = Console.WindowWidth - posX * 2;
-
-            int posCaseX = Console.WindowWidth / (nb2 + 2);
-            int posCaseY = Console.WindowHeight / 3;
 
             for (int i = 0; i < nb2; i++)
             {
@@ -88,8 +85,6 @@ internal class MenuCreator
             int nb3 = nbCase / 3 + (nbCase % 3);
             int Size = Console.WindowWidth - posX * 2;
 
-            int posCaseX = Console.WindowWidth / (nb3 + 2);
-            int posCaseY = Console.WindowHeight / 3;
             for (int i = 0; i < nb3; i++)
             {
                 int sizeCaseName = caseName[i].Length;

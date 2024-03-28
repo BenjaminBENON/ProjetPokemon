@@ -39,16 +39,18 @@ public class GameMenu
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
+        //Console.WriteLine(windowWidth);
+        //Console.WriteLine(windowHeight);
 
         //texte MENU
-        string textMenu = "=== MENU ===";
+        string textMenu = "=== POKEMON AT ===";
         int xPosition = (windowWidth - textMenu.Length) / 2;
         Console.SetCursorPosition(xPosition, windowHeight / 3);
         Console.WriteLine("|" + textMenu + "|");
-        Console.SetCursorPosition(xPosition + 1, windowHeight / 3 - 1);
-        Console.WriteLine("------------");
-        Console.SetCursorPosition(xPosition + 1, windowHeight / 3 + 1);
-        Console.WriteLine("------------");
+        Console.SetCursorPosition(xPosition , windowHeight / 3 - 1);
+        Console.WriteLine("--------------------");
+        Console.SetCursorPosition(xPosition , windowHeight / 3 + 1);
+        Console.WriteLine("--------------------");
 
         //texte JOUER
         string textJeu = "=== NEW GAME ===";
