@@ -56,7 +56,7 @@ public class Game
     private GameMenuStates currentGameState;
     private Character currentCharacter;
 
-    private GameDatabase database = new GameDatabase();
+    private GameDatabase database = GameDatabase.Instance;
     // Fight
     public List<Pokemon> enemyPokemonList;
     public FightType fightType;

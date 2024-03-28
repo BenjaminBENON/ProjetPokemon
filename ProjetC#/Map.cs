@@ -128,7 +128,6 @@ public class Map
                     Console.ForegroundColor = ConsoleColor.Gray;
                 else if (carac == 'N')
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("\x1b[38;2;204;102;0m");
                 else if (carac == 'T')
                     Console.Write("\x1b[38;2;152;71;0m");
                 else if (carac == 'F')

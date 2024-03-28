@@ -81,6 +81,7 @@ public class CustomConsole
 
     public void DisplayPokemons()
     {
+        Console.Clear();
         string[] linesPokemon1 = new string[]
         {
             "       ,___          .-;'",
@@ -190,6 +191,8 @@ public class CustomConsole
         DisplayTexts();
     }
 
+
+
     public void WriteToRight(string text)
     {
 
@@ -265,5 +268,13 @@ public class CustomConsole
             Console.SetCursorPosition(Console.WindowWidth - 60, 10 + (i));
             Console.Write($"Joueur {i}: {rightTexts[i]}\n");
         }
+    }
+
+    public void Cleanup()
+    {
+        Console.Clear();
+        leftTexts.Clear();
+        middleTexts.Clear();
+        rightTexts.Clear();
     }
 }

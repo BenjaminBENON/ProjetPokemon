@@ -74,10 +74,11 @@ public class Fight
         // #TODO -> if savage we catch the pokemon / if npc, we get xp
 
         CustomConsole.Instance.WriteText("Fight End");
-        Console.Clear();
+        CustomConsole.Instance.Cleanup();
 
-        
-        
+
+
+
     }
 
     // Initialize
