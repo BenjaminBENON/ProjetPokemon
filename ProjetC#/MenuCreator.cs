@@ -16,7 +16,7 @@ internal class MenuCreator
         if (caseName.Count != nbCase || nbCase < 0)
         {
             Console.WriteLine("Erreur dans la création de menu.");
-            return;
+            throw new Exception("Erreur dans la création de menu.");
         }
 
         Console.SetCursorPosition(posX, posY);
