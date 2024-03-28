@@ -32,7 +32,7 @@ public  class NPC
 
         for (int i = 0; i < list.Count; i++)
         {
-            Console.SetCursorPosition(xPosition, yPosition + i*2);
+            Console.SetCursorPosition(xPosition, yPosition + i * 2);
             Console.WriteLine(list[i]);
             Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
             Console.Read();
