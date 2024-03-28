@@ -55,7 +55,7 @@ public class Game
     // Game Data One part will be in the save
     private GameMenuStates currentGameState;
     private Character currentCharacter;
-    private Character botCharacter;
+    // private Character botCharacter;
 
     private Dictionary<GameMenuStates, Action> bindFunctionsToGameMenuStates;
 
@@ -69,7 +69,7 @@ public class Game
         currentGameState = GameMenuStates.InGameMenu;
         
         // Generate multiple opponent / enemy
-        botCharacter = new Character("Bot");
+        //botCharacter = new Character("Bot");
 
         Start();
 
@@ -77,6 +77,7 @@ public class Game
 
     public void Start()
     {
+
         CustomConsole.Instance.SetPositionState(CustomConsole.PositionState.Middle);
 
         //CustomConsole.Instance.m_allowWrite = true;
@@ -103,7 +104,7 @@ public class Game
         database.AddAttack(new AccuracyBoost());
         database.AddAttack(new EsquiveBoost());
 
-        // Create Pokemons 
+
 
         float[] resPlant = { 1, 2, 0.5f, 1, 0.8f };   // Plante
         float[] resWater = { 1, 1, 0.8f, 1, 0.5f };   // Eau
@@ -202,7 +203,20 @@ public class Game
     
     public void SetCharacterName(string cName)
     {
-        currentCharacter = new Character(cName);
+        currentCharacter.Name = cName;
+    }
+    public void SetCharacterPos(int x, int y)
+    {
+        currentCharacter.PosX = x;
+        currentCharacter.PosY = y;
+    }
+    public void SetCharacterPokemons(List<Pokemon> listPokemon)
+    {
+        currentCharacter.SetPokemonList(listPokemon);
+    }
+    public void SetCharacterItems(List<Item> listItems)
+    {
+        currentCharacter.SetObjectList(listItems);
     }
 
     private void StartMenu()
@@ -211,6 +225,7 @@ public class Game
         GameMenu.OnEnterGameMenu();
         GameMenu.StartChoice(this);
     }
+
     private void CharacterCreationMenu()
     {
         Console.Clear();
@@ -218,16 +233,16 @@ public class Game
     }
     private void StartMap()
     {
-        Map.Play_Map(this,botCharacter);
+        Map.Play_Map(this,currentCharacter);
         Input.Update();
-        Input.PlayerMapControl(this, botCharacter);
+        Input.PlayerMapControl(this, currentCharacter);
         Console.CursorVisible = false;
     }
     private void StartPokemonCenter()
     {
-        PokemonCenter.Play_Map(this, botCharacter);
+        PokemonCenter.Play_Map(this, currentCharacter);
         Input.Update();
-        Input.PlayerCenterControl(this, botCharacter);
+        Input.PlayerCenterControl(this, currentCharacter);
         Console.CursorVisible = false;
     }
 
@@ -241,8 +256,8 @@ public class Game
     private void Display_Inventory_ObjectsMenu()
     {
         
-        Map.Play_Map(this, botCharacter);
-        GameMenu.Display_InventoryMenu(botCharacter);
+        Map.Play_Map(this, currentCharacter);
+        GameMenu.Display_InventoryMenu(currentCharacter);
         Input.Update();
         Input.ItemInventoryControl(this);
         Console.CursorVisible = false;
@@ -270,41 +285,53 @@ public class Game
 
     private void Display_Save_Menu()
     {
-        Console.WriteLine("=== MENU DE SAUVEGARDE ===");
-
-        Console.WriteLine("1. Ajouter une nouvelle sauvegarde");
-        Console.WriteLine("Supprimer une partie"); // Show all save and allow choice to delete
-        Console.WriteLine("Voir les parties sauvegardées"); // Show all save 
-        Console.WriteLine("2.Retourner au menu principal");
-
-        Console.Write("Choix : ");
-        string choice = Console.ReadLine();
-
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
-        {
-            { 1, GameMenuStates.Save_AddMenu },
-            { 2, GameMenuStates.InGameMenu }
-        };
-
-        UpdateCurrentGameState(choice, stateTransitions);
+        GameMenu.Display_SaveMenu(this);
+        Input.Update();
+        Console.CursorVisible = false;
     }
 
 
     private void Display_Save_AddMenu()
     {
-        Console.Write("Nom de de votre partie : ");
-        // save name
+        Console.WriteLine("Pour sauvegarder et retourner au menu, entrer \"1\"");
+        Console.WriteLine("Sinon, entrer \"2\" pour annuler la sauvegarde.");
+
         string name = Console.ReadLine();
 
-        Console.Write("Votre partie : " + name + " est désormais disponible");
+        switch (name)
+        {
+            case "1":
+                SaveCurrentGame();
+                Console.Clear();
+                UpdateCurrentGameState(GameMenuStates.InGameMenu);
+                break;
+            case "2":
+                Console.Clear();
+                UpdateCurrentGameState(GameMenuStates.OnMap);
+                break;
+        }
+    }
 
-        currentGameState = GameMenuStates.InGameMenu;
+    private void SaveCurrentGame()
+    {
+        List<Item> itemList  = currentCharacter.GetObjectList();
+        List<Pokemon> pokemonList = currentCharacter.GetPokemonList();
+        List<int> eventList = new List<int> { 1 };
+
+        string name = currentCharacter.Name;
+        int posX = currentCharacter.PosX;
+        int posY = currentCharacter.PosY;
+
+        SaveShape newSave = new SaveShape(name, posX, posY, itemList, pokemonList, eventList);
+        string fileName = name + ".json";
+        Save.CreateJsonSave(newSave, fileName);
     }
 
 
     private void Play_Fight()
     {
-        currentGameState = GameMenuStates.OnMap;
+        Console.WriteLine("AAAAAAAAA");
+        //currentGameState = GameMenuStates.OnMap;
     }
 
     public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)

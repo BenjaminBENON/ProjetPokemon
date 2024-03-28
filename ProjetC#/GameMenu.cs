@@ -99,7 +99,7 @@ public class GameMenu
         Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
         {
             { 1, GameMenuStates.CharacterCreationMenu },
-            { 2, GameMenuStates.OnMap },
+            { 2, GameMenuStates.InSaveMenu },
             { 3, GameMenuStates.ShutDown }
         };
 
@@ -131,6 +131,7 @@ public class GameMenu
         Console.Write("Votre personnage " + cName + " est d�sormais disponible . Appuyer sur Entrer pour continuer.");
 
         oGame.SetCharacterName(cName);
+        //EntrySave(cName);
 
         ConsoleKey a = Console.ReadKey(true).Key;
         if (a == ConsoleKey.Enter)
@@ -138,8 +139,9 @@ public class GameMenu
             Console.Clear();
             oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
-
     }
+
+
     public static void Display_InventoryMenu(Character p)
     {
         int windowWidth = Console.WindowWidth;
@@ -156,15 +158,6 @@ public class GameMenu
             listInventory.Add(item.Name);
         }
 
-        //var listInventoryTest = new List<string>();
-        //listInventoryTest.Add("test");
-        //listInventoryTest.Add("test");
-        //listInventoryTest.Add("test");
-        //listInventoryTest.Add("test");
-
-        //int selectedItem = MenuCreator.SelectItemInMenu(listInventoryTest);
-        //MenuCreator.CreateMenu(xPosition, yPosition, "INVENTORY", listInventoryTest.Count, listInventoryTest);
-
         int selectedItem = MenuCreator.SelectItemInMenu(listInventory);
         MenuCreator.CreateMenu(xPosition,yPosition,"INVENTORY", listInventory.Count, listInventory);
 
@@ -176,96 +169,60 @@ public class GameMenu
             Console.WriteLine("|");
         }
 
-        //if (selectedItem >= 0) UseItem(objList[selectedItem]);
-        //UseItem A IMPLEMENTER
+        if (selectedItem >= 0)
+        {
+            objList[selectedItem].Use(p.GetPokemonList()[0]);
 
+        }
+        //Utilise l'item sur le premier pokemon uniquement
+        //Pas terrible
     }
-        public static void Display_SaveMenu()
+
+    public static void Display_SaveMenu(Game oGame)
     {
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
 
-        //texte MENU SAVE
-        string textMenu = "=== SAVE YOUR GAME ===";
-        int xPosition = (windowWidth - textMenu.Length) / 2;
-        Console.SetCursorPosition(xPosition, windowHeight / 6);
-        Console.WriteLine("|" + textMenu + "|");
-        Console.SetCursorPosition(xPosition, windowHeight / 6 - 1);
-        Console.WriteLine("------------------------");
-        Console.SetCursorPosition(xPosition, windowHeight / 6 + 1);
-        Console.WriteLine("------------------------");
+        int xPosition = (windowWidth) / 2 - 45;
+        int yPosition = (windowHeight / 6) * 4;
 
-        //texte nouvelle save
-        string textJeu = "=== NEW SAVE ===";
-        Console.SetCursorPosition(windowWidth / 4 - 20, windowHeight / 3);
-        Console.WriteLine("|  " + textJeu + "  |");
-        Console.SetCursorPosition(windowWidth / 4 - 20, windowHeight / 3 - 1);
-        Console.WriteLine("|                    |");
-        Console.SetCursorPosition(windowWidth / 4 - 20, windowHeight / 3 - 2);
-        Console.WriteLine("----------------------");
-        Console.SetCursorPosition(windowWidth / 4 - 20, windowHeight / 3 + 1);
-        if (m_userChoice == 1) Console.WriteLine("|          1         |");
-        else Console.WriteLine("|                    |");
-        Console.SetCursorPosition(windowWidth / 4 - 20, windowHeight / 3 + 2);
-        Console.WriteLine("----------------------");
-
-        //texte supprimer une save
-        string textSave = "=== DELETE SAVE  ===";
-        Console.SetCursorPosition(windowWidth / 2 - 10, windowHeight / 3);
-        Console.WriteLine("|  " + textSave + "  |");
-        Console.SetCursorPosition(windowWidth / 2 - 10, windowHeight / 3 - 1);
-        Console.WriteLine("|                        |");
-        Console.SetCursorPosition(windowWidth / 2 - 10, windowHeight / 3 - 2);
-        Console.WriteLine("--------------------------");
-        Console.SetCursorPosition(windowWidth / 2 - 10, windowHeight / 3 + 1);
-        if (m_userChoice == 2) Console.WriteLine("|            2           |");
-        else Console.WriteLine("|                        |");
-        Console.SetCursorPosition(windowWidth / 2 - 10, windowHeight / 3 + 2);
-        Console.WriteLine("--------------------------");
-
-        //texte retour menu
-        string textOut = "=== BACK TO MENU ===";
-        Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3);
-        Console.WriteLine("|  " + textOut + "  |");
-        Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 - 1);
-        Console.WriteLine("|                        |");
-        Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 - 2);
-        Console.WriteLine("--------------------------");
-        Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 + 1);
-        if (m_userChoice == 3) Console.WriteLine("|            3           |");
-        else Console.WriteLine("|                        |");
-        Console.SetCursorPosition(3 * windowWidth / 4, windowHeight / 3 + 2);
-        Console.WriteLine("--------------------------");
+        var list = new List<string>();
         
-        //Lire un JSON et pouvoir s�lectionner une save
-    
-    }
-
-    public static void SaveChoice(Game oGame)
-    {
-        Dictionary<int, GameMenuStates> stateTransitions = new Dictionary<int, GameMenuStates>
+        int nbSave = Save.getNbSave();
+        list.Add("DEFAULT SAVE");
+        if (nbSave > 1)
         {
-            { 1, GameMenuStates.Save_AddMenu },
-            { 2, GameMenuStates.Save_AddMenu },
-            { 3, GameMenuStates.InGameMenu }
-        };
-
-        ConsoleKey a = Console.ReadKey(true).Key;
-        switch (a)
-        {
-            case ConsoleKey.Enter:
-                Console.Clear();
-                oGame.UpdateCurrentGameState(m_userChoice, stateTransitions);
-                m_userChoice = 1;
-                break;
-            case ConsoleKey.RightArrow:
-                m_userChoice++;
-                break;
-            case ConsoleKey.LeftArrow:
-                m_userChoice--;
-                break;
+            for (int i = 0; i < nbSave -1; i++)
+            {
+                list.Add("SAVE " + (i+1).ToString());
+            }
         }
-        if (m_userChoice > 3) m_userChoice = 3;
-        if (m_userChoice < 1) m_userChoice = 1;
+
+        for (int y = 0; y < 25; y++)
+        {
+            Console.SetCursorPosition(45, y + 3);
+            Console.Write("|");
+            Console.SetCursorPosition(165, y + 3);
+            Console.WriteLine("|");
+        }
+
+        int selectedSave = MenuCreator.SelectItemInMenu(list);
+        MenuCreator.CreateMenu(50, 3, "SAVE MENU", list.Count, list);
+
+        if (selectedSave >= 0)
+        {
+            SaveShape loadedSave = Save.ReadSave(selectedSave);
+            if (loadedSave != null) 
+            {
+                string name = loadedSave.SaveId;
+                oGame.SetCharacterName(name);
+                oGame.SetCharacterPos(loadedSave.PosXPlayer, loadedSave.PosYPlayer);
+                oGame.SetCharacterPokemons(loadedSave.ListPokemon);
+                oGame.SetCharacterItems(loadedSave.ListItem);
+            }
+            
+
+        }
     }
+
 }

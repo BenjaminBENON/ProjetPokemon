@@ -56,6 +56,16 @@ public class Input
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
         }
+        else if (KeyPress.KeyChar == 'm')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Save_AddMenu);
+        }
+        else if (KeyPress.KeyChar == 'l')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
+        }
     }
 
     static void MapUpdate(Game game, Character p)
@@ -63,6 +73,17 @@ public class Input
         if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) == '1')
         {
             game.UpdateCurrentGameState(GameMenuStates.InPokemonCenter);
+        }
+        if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
+        { 
+            Random rand = new Random();
+            int randNb = rand.Next(100);
+
+            if (randNb < 5) 
+            {
+                Console.Clear();
+                game.UpdateCurrentGameState(GameMenuStates.OnFight);
+            }
         }
     }
 
@@ -100,6 +121,16 @@ public class Input
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
+        }
+        else if (KeyPress.KeyChar == 'm')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Save_AddMenu);
+        }
+        else if (KeyPress.KeyChar == 'l')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
         }
     }
 

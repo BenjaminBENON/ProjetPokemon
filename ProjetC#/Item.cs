@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,8 +67,7 @@ public class Potion : Item
     {
         // Restore Pokemon Pv
         pokemon.CurrentLifePoints += RestorePv;
-        CustomConsole.Instance.WriteText($"{pokemon.Name} a été soigné avec une {Name}.");
-
+        CustomConsole.Instance.WriteText($"{pokemon.Name} a été soigné avec une {Name}.                ");
     }
 }
 
@@ -97,7 +96,7 @@ public class Pokeball : Item
     public override void Use(Pokemon pokemon)
     {
         // Capture a pokemon
-        CustomConsole.Instance.WriteText($"Lancer de la Pokeball pour capture du pokemon...");
+        CustomConsole.Instance.WriteText($"Lancer de la Pokeball pour capture du pokemon...     ");
 
     }
 }
