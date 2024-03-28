@@ -156,26 +156,6 @@ public class Input
                 CenterUpdate(game, p);
             }
         }
-        else if (KeyPress.KeyChar == 'i')
-        {
-            Console.Clear();
-            game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
-        }
-        else if (KeyPress.KeyChar == 'p')
-        {
-            Console.Clear();
-            game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowPokemons);
-        }
-        else if (KeyPress.KeyChar == 'm')
-        {
-            Console.Clear();
-            game.UpdateCurrentGameState(GameMenuStates.Save_AddMenu);
-        }
-        else if (KeyPress.KeyChar == 'l')
-        {
-            Console.Clear();
-            game.UpdateCurrentGameState(GameMenuStates.InSaveMenu);
-        }
     }
 
     static void CenterUpdate(Game game, Character p)
