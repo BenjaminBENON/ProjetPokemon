@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 public class Save
 {
-    private static string myPath = @"C:\Users\33652\source\repos\ProjetPokemon\ProjetC#\saveDirectory\";
+    private static string myPath = @"..\..\..\saveDirectory\";
 
     private static List<string> nameList = new List<string>();
 

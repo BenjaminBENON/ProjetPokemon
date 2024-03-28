@@ -196,14 +196,14 @@ public class GameMenu
 
         for (int y = 0; y < 25; y++)
         {
-            Console.SetCursorPosition(35, y + 3);
+            Console.SetCursorPosition(45, y + 3);
             Console.Write("|");
-            Console.SetCursorPosition(125, y + 3);
+            Console.SetCursorPosition(165, y + 3);
             Console.WriteLine("|");
         }
 
         int selectedSave = MenuCreator.SelectItemInMenu(list);
-        MenuCreator.CreateMenu(40, 3, "SAVE MENU", list.Count, list);
+        MenuCreator.CreateMenu(50, 3, "SAVE MENU", list.Count, list);
 
         SaveShape loadedSave;
         if (selectedSave >=0) loadedSave = Save.ReadSave(selectedSave);
