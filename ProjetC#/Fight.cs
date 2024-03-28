@@ -75,6 +75,8 @@ public class Fight
 
         CustomConsole.Instance.WriteText("Fight End");
         Console.Clear();
+
+        
         
     }
 
@@ -121,7 +123,7 @@ public class Fight
 
         while (true)
         {
-            
+
             isRestInArrayEnemyList = m_enemyPokemonsList.Count > 0;
             isRestInArrayCharacterList = m_characterPokemonsList.Count > 0;
 
@@ -274,9 +276,14 @@ public class Fight
         // Character use attack on Enemy and himself
         CustomConsole.Instance.WriteText("-------------------- -------------------- --------------------");
         CustomConsole.Instance.WriteText("-------------------- CHARACTER USE ATTACK --------------------");
-        m_currentCharacterPokemon.UseAttack(m_iCharacterAttackChoice-1, m_currentEnemyPokemon);
+        m_currentCharacterPokemon.UseAttack(m_iCharacterAttackChoice - 1, m_currentEnemyPokemon);
         CustomConsole.Instance.WriteText("-------------------- CHARACTER USE ATTACK --------------------");
         CustomConsole.Instance.WriteText("-------------------- -------------------- --------------------");
+
+
+        CustomConsole.Instance.WriteText(m_currentCharacterPokemon.Name + "Gagne 100 XP pour avoir attaqué");
+        m_currentCharacterPokemon.Level.CurrentXp += 100;
+        m_currentCharacterPokemon.Level.Update();
 
         if (CheckEndOfRound())
         {
@@ -396,7 +403,7 @@ public class Fight
                 continue;
             }
 
-            m_iCharacterPokemonChoice = int.Parse(userInput); 
+            m_iCharacterPokemonChoice = int.Parse(userInput);
 
             // Action
             if (m_iCharacterPokemonChoice > 1)
@@ -449,7 +456,7 @@ public class Fight
 
             if (m_iCharacterItemChoice > 1)
             {
-                CustomConsole.Instance.WriteText("Vous avez choisi d'utiliser :" + m_c1.GetObjectList()[m_iCharacterItemChoice-2].Name + "");
+                CustomConsole.Instance.WriteText("Vous avez choisi d'utiliser :" + m_c1.GetObjectList()[m_iCharacterItemChoice - 2].Name + "");
             }
             else
             {
@@ -536,7 +543,7 @@ public class Fight
             CustomConsole.Instance.WriteText("Remove Pokemon du Character");
             m_characterPokemonsList.RemoveAt(m_itCurrentCharacterPokemon);
         }
-        
+
 
 
         // Set 0 health loser in case his health is negative
@@ -548,6 +555,7 @@ public class Fight
     // End fight #TO THINK -> Make 2 deriv class
     public void handleFinishBattleDresserFight()
     {
+        CustomConsole.Instance.WriteText("+ 10 Money | + 100 XP Character");
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;
         m_c1.Level.Update();
@@ -593,15 +601,8 @@ public class Fight
             {
                 m_c1.RemoveObject(removeItem);
                 m_c1.AddPokemon(m_pokemonToCatch);
-                CustomConsole.Instance.WriteText("Le Pokémon sauvage a été capturé !");
 
-                // Vous voici avec ces pokemon / ses objets 
-
-
-                //foreach (Pokemon item in m_c1.GetPokemonList()) { 
-                //    CustomConsole.Instance.WriteText(item.Name);
-                //}
-
+                CustomConsole.Instance.WriteText("Le Pokémon sauvage " + m_pokemonToCatch + " a été capturé !");
 
                 foreach (Item item in m_c1.GetObjectList())
                 {
@@ -613,8 +614,10 @@ public class Fight
                 CustomConsole.Instance.WriteText("Vous n'avez pas de pokeball pour capturer ce pokemon");
             }
             break;
-            
+
         } while (true);
+
+        CustomConsole.Instance.WriteText("+ 10 Money | + 100 XP Character");
 
         m_c1.Money += 10;
         m_c1.Level.CurrentXp += 100;

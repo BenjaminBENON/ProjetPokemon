@@ -16,17 +16,58 @@ public class PokemonCenter
     {
         "--------------------",
         "|    MM  @@  MM    |",
-        "|    MMMMIIMMMM    |",
-        "|                  |",
+        "|    MMMMMMMMMM    |",
+        "|        Z         |",
+        "|                  |" +
         "|                  |",
         "|        OO        |",
         "--------------------"
     };
 
+    public static bool Display_Counter_Menu(Character p) {
+        Console.Clear();
+        Console.WriteLine("Bienvenue au comptoir Pokémon !");
+        Console.WriteLine("Que souhaitez-vous faire ?");
+        Console.WriteLine("1. Soigner tous vos Pokémon");
+        Console.WriteLine("2. Acheter des objets");
+        Console.WriteLine("3. Quitter");
+
+        string choice;
+        do
+        {
+            Console.Write("Entrez votre choix : ");
+            choice = Console.ReadLine();
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.WriteLine("Tous vos Pokémon ont été soignés !");
+                    p.HealAllPokemons();
+                    break;
+                case "2":
+                    Console.WriteLine("Désolé, la fonctionnalité d'achat n'est pas encore disponible.");
+                    break;
+                case "3":
+                    Console.WriteLine("Merci d'avoir visité le comptoir Pokémon !");
+                    return false;
+                default:
+                    Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                    break;
+            }
+        } while (choice != "3");
+        return true;
+    }
+
 
     public static void Play_Map(Game oGame, Character p)
     {
-        //Ici tout ce qui se passe sur la map
+
+        // Display Counter Menu
+        if (GetCaracOnPos(p.PosX, p.PosY) == 'Z')
+        {
+            Display_Counter_Menu(p);
+        }
 
         for (int y = -15; y <= 15; y++)
         {
@@ -49,6 +90,8 @@ public class PokemonCenter
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 else if (carac == 'I')
                     Console.ForegroundColor = ConsoleColor.White;
+                else if (carac == 'Z')
+                    Console.ForegroundColor = ConsoleColor.Green;
 
                 Console.Write('▒');
             }
@@ -56,6 +99,8 @@ public class PokemonCenter
         }
         DrawPlayer(p);
         Console.BackgroundColor = ConsoleColor.Black;
+
+        
     }
 
     public static void DrawPlayer(Character p)

@@ -51,14 +51,11 @@ public class Attack
 
     public virtual void Use(Pokemon pokemon, Pokemon pokemonEnemy)
     {
-        CustomConsole.Instance.WriteText($"USE CLASSE ATTACK");
     }
 
     public Attack(string name, int power)
     {
-        //CustomConsole.Instance.WriteText("Setup du name : " + name);
         Name = name;
-
         Power = power;
     }
 
