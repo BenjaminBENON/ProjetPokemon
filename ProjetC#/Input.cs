@@ -105,6 +105,21 @@ public class Input
             NPC rival = new NPC(game);
             rival.launchDialog(game);
         }
+        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == '7' && Map._Item1)
+        {
+            p.AddObject(game.Database.GetItem("Potion30"));
+            Map._Item1 = false;
+        }
+        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == '8' && Map._Item2)
+        {
+            p.AddObject(game.Database.GetItem("Pokeball"));
+            Map._Item2 = false;
+        }
+        else if (Map.GetCaracOnPos(p.PosX, p.PosY) == '9' && Map._Item3)
+        {
+            p.AddObject(game.Database.GetItem("RemoveStun"));
+            Map._Item3 = false;
+        }
     }
 
     public static void PlayerCenterControl(Game game, Character p)
