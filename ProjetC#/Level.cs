@@ -64,6 +64,11 @@ public class Level
 
     public void IncrementLevel()
     {
+        if (m_currentLevel<0)
+        {
+            throw new Exception("Niveau inférieur à 0.");
+        }
+
         m_currentLevel += 1;
         Console.WriteLine($"Congratulations! You reached level {CurrentLevel}!");
         CalculateNextLevel();
