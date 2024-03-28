@@ -152,9 +152,6 @@ public class Game
         currentCharacter.AddPokemon(database.GetPokemon("Bulbizarre"));
         currentCharacter.AddPokemon(database.GetPokemon("Salamèche"));
 
-        List<Pokemon> enemyPokemonList = new List<Pokemon>();
-        enemyPokemonList.Add(database.GetPokemon("Carapuce"));
-
 
 
 
@@ -247,7 +244,11 @@ public class Game
     //------------------------LES INVENTAIRES---------------------
     private void Display_Inventory_PokemonsMenu()
     {
-        Console.WriteLine("Voici tout vos pokemons"); // Show all caught pokemon
+        Map.Play_Map(this, currentCharacter);
+        GameMenu.Display_PokemonMenu(currentCharacter);
+        Input.Update();
+        Input.PokemonInventoryControl(this);
+        Console.CursorVisible = false;
     }
 
     private void Display_Inventory_ObjectsMenu()

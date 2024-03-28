@@ -56,6 +56,11 @@ public class Input
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
         }
+        else if (KeyPress.KeyChar == 'p')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowPokemons);
+        }
         else if (KeyPress.KeyChar == 'm')
         {
             Console.Clear();
@@ -122,6 +127,11 @@ public class Input
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowObjects);
         }
+        else if (KeyPress.KeyChar == 'p')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.Inventory_ShowPokemons);
+        }
         else if (KeyPress.KeyChar == 'm')
         {
             Console.Clear();
@@ -140,6 +150,15 @@ public class Input
         {
             Console.Clear();
             game.UpdateCurrentGameState(GameMenuStates.OnMap);       
+        }
+    }
+
+    public static void PokemonInventoryControl(Game game)
+    {
+        if (KeyPress.KeyChar == 'p')
+        {
+            Console.Clear();
+            game.UpdateCurrentGameState(GameMenuStates.OnMap);
         }
     }
 }
