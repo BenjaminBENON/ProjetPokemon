@@ -168,11 +168,6 @@ public class GameMenu
             Console.SetCursorPosition(windowWidth / 2 + 50, yPosition + y);
             Console.WriteLine("|");
         }
-
-        //if (selectedItem >= 0)
-        //{
-        //    objList[selectedItem].Use(p.GetPokemonList()[0]);
-        //}
     }
 
     public static void Display_PokemonMenu(Character p)
@@ -202,10 +197,6 @@ public class GameMenu
             Console.WriteLine("|");
         }
 
-        //if (selectedItem >= 0)
-        //{
-        //    objList[selectedItem].Use(p.GetPokemonList()[0]);
-        //}
     }
 
     public static void Display_SaveMenu(Game oGame)

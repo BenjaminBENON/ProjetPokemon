@@ -90,6 +90,12 @@ public class Input
                 game.UpdateCurrentGameState(GameMenuStates.OnFight);
             }
         }
+        if (Map.GetCaracOnPos(p.PosX + 1, p.PosY) == 'n')
+        {
+            NPC rival = new NPC(game);
+
+            rival.launchDialog();
+        }
     }
 
     public static void PlayerCenterControl(Game game, Character p)
