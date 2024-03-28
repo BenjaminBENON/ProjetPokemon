@@ -320,7 +320,8 @@ public class Game
 
     private void Play_Fight()
     {
-        currentGameState = GameMenuStates.OnMap;
+        Console.WriteLine("AAAAAAAAA");
+        //currentGameState = GameMenuStates.OnMap;
     }
 
     public void UpdateCurrentGameState(string choice, Dictionary<int, GameMenuStates> transitionArray)

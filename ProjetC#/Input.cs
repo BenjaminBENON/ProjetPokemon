@@ -74,6 +74,17 @@ public class Input
         {
             game.UpdateCurrentGameState(GameMenuStates.InPokemonCenter);
         }
+        if(Map.GetCaracOnPos(p.PosX, p.PosY) == 'H')
+        { 
+            Random rand = new Random();
+            int randNb = rand.Next(100);
+
+            if (randNb < 5) 
+            {
+                Console.Clear();
+                game.UpdateCurrentGameState(GameMenuStates.OnFight);
+            }
+        }
     }
 
     public static void PlayerCenterControl(Game game, Character p)
