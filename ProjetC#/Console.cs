@@ -242,7 +242,7 @@ public class CustomConsole
         for (int i = 0; i < leftTexts.Count; i++)
         {
             Console.SetCursorPosition(0, 10 + (i));
-            Console.Write($"Ennemi {i}: {leftTexts[i]}\n");
+            Console.Write($"           {leftTexts[i]}\n");
         }
     }
 
@@ -254,7 +254,7 @@ public class CustomConsole
         for (int i = 0; i < middleTexts.Count; i++)
         {
             Console.SetCursorPosition((Console.WindowWidth - 60) / 2, 10 + (i));
-            Console.Write($"Texte global {i} : {middleTexts[i]}\n");
+            Console.Write($"{middleTexts[i]}\n");
         }
     }
 
@@ -266,7 +266,7 @@ public class CustomConsole
         for (int i = 0; i < rightTexts.Count; i++)
         {
             Console.SetCursorPosition(Console.WindowWidth - 60, 10 + (i));
-            Console.Write($"Joueur {i}: {rightTexts[i]}\n");
+            Console.Write($"{rightTexts[i]}\n");
         }
     }
 

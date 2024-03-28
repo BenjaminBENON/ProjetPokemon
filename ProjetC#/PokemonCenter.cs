@@ -17,7 +17,7 @@ public class PokemonCenter
         "--------------------",
         "|    MM  @@  MM    |",
         "|    MMMMMMMMMM    |",
-        "|        Z         |",
+        "|        ZZ        |",
         "|                  |" +
         "|                  |",
         "|        OO        |",
