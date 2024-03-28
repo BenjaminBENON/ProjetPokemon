@@ -225,7 +225,7 @@ public class GameMenu
         {
             Console.SetCursorPosition(45, y + 3);
             Console.Write("|");
-            Console.SetCursorPosition(125, y + 3);
+            Console.SetCursorPosition(165, y + 3);
             Console.WriteLine("|");
         }
 
