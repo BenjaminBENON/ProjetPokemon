@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 public  class NPC
 {
     private List<Pokemon> m_vPokemons = new List<Pokemon>();
+    int relaunch = 0;
 
     public NPC(Game oGame)
     {
@@ -19,7 +20,6 @@ public  class NPC
 
     public void launchDialog(Game oGame)
     {
-        int relaunch = 0;
         int windowWidth = Console.WindowWidth;
         int windowHeight = Console.WindowHeight;
 
@@ -33,6 +33,8 @@ public  class NPC
         list.Add("Affrontons-nous pour que je teste ta force");
         list.Add("Tu veux bien ?");
 
+        string answer = "";
+
         if (relaunch == 0)
         {
             for (int i = 0; i < list.Count; i++)
@@ -40,32 +42,10 @@ public  class NPC
                 Console.SetCursorPosition(xPosition, yPosition + i * 2);
                 Console.WriteLine(list[i]);
                 Console.SetCursorPosition(xPosition, yPosition + i * 2 + 1);
-                Console.ReadLine();
+                answer = Console.ReadLine();
             }
 
-            string answer = Console.ReadLine();
-            if (answer.ToLower() == "oui")
-            {
-                launchFight(oGame);
-                return;
-            }
-            if (answer.ToLower() == "non")
-            {
-                oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
-                return;
-            }
-            else
-            {
-                relaunch++;
-                launchDialog(oGame);
-            }
-        }
-        
-        if (relaunch>0)
-        {
-            Console.SetCursorPosition(xPosition, yPosition + (list.Count+relaunch-1) * 2 );
-            Console.WriteLine("Je n'ai pas compris ta réponse ... Oui ou Non ?");
-            string answer = Console.ReadLine();
+            //string answer = Console.ReadLine();
             if (answer.ToLower() == "oui")
             {
                 launchFight(oGame);
@@ -77,7 +57,30 @@ public  class NPC
                 oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
                 return;
             }
-            else 
+            else
+            {
+                relaunch++;
+                launchDialog(oGame);
+            }
+        }
+
+        if (relaunch > 0)
+        {
+            Console.SetCursorPosition(xPosition, yPosition + (list.Count + relaunch - 1) * 2);
+            Console.WriteLine("Je n'ai pas compris ta réponse ... Oui ou Non ?");
+            answer = Console.ReadLine();
+            if (answer.ToLower() == "oui")
+            {
+                launchFight(oGame);
+                return;
+            }
+            if (answer.ToLower() == "non")
+            {
+                Console.Clear();
+                oGame.UpdateCurrentGameState(GameMenuStates.OnMap);
+                return;
+            }
+            else
             {
                 relaunch++;
                 launchDialog(oGame);

@@ -101,7 +101,7 @@ public class Map
         
         for (int y = -15; y <= 15; y++)
         {
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 50, Console.WindowHeight / 2 - 10 + y);
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 30, Console.WindowHeight / 2 - 5 + y);
             for (int x = -50; x <= 50; x++)
             {
                 if (p.PosX + x < 0 || p.PosX + x > SizeX || p.PosY + y < 0 || p.PosY + y > SizeY)
